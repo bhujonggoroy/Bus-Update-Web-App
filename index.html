@@ -272,26 +272,32 @@
     <nav class="bg-white border-b border-slate-200 shadow-sm sticky top-[49px] sm:top-[57px] md:top-[61px] z-30 hidden md:block">
         <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
             <div class="flex space-x-1 py-1.5 sm:py-2 overflow-x-auto no-scrollbar" id="desktopNavTabs">
-                <button onclick="showPage('live', this)" class="nav-tab active whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold rounded-lg text-violet-800 bg-violet-50 border border-violet-200 transition">
+                <button onclick="showPage('live', this)" class="nav-tab active whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3.5 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-bold rounded-xl text-white bg-violet-700 shadow-sm ring-2 ring-violet-400 border border-violet-700 transition cursor-pointer">
                     <span class="text-base">🟢</span> <span id="desktopNavLiveText">লাইভ বাস ট্র্যাকার</span>
                 </button>
-                <button onclick="showPage('map', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+                <button onclick="showPage('map', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3.5 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent transition cursor-pointer">
                     <span class="text-base">🗺️</span> <span id="desktopNavMapText">রুট ও স্টপ ম্যাপ</span>
                 </button>
-                <button onclick="showPage('schedule', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+                <button onclick="showPage('schedule', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3.5 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent transition cursor-pointer">
                     <span class="text-base">📅</span> <span id="desktopNavScheduleText">বাস শিডিউল</span>
                 </button>
-                <button onclick="showPage('report', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+                <button onclick="showPage('report', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3.5 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent transition cursor-pointer">
                     <span class="text-base">📡</span> <span id="desktopNavReportText">অবস্থান আপডেট ও GPS</span>
                 </button>
-                <button onclick="showPage('contacts', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+                <button onclick="showPage('contacts', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3.5 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent transition cursor-pointer">
                     <span class="text-base">📞</span> <span id="desktopNavContactsText">জরুরি হেল্পলাইন</span>
                 </button>
             </div>
 
-            <!-- Active Bus Counter Summary & Refresh Button -->
+            <!-- Current Dashboard Indicator & Active Bus Counter Summary & Refresh Button -->
             <div class="text-xs text-slate-500 font-medium flex items-center gap-2 flex-shrink-0 ml-2">
-                <span id="activeBusCountPill" class="px-2.5 py-1 rounded-full bg-violet-100 text-violet-900 font-bold border border-violet-200">০টি বাস সক্রিয়</span>
+                <!-- Highlight Current Dashboard Badge -->
+                <div id="desktopCurrentDashboardBadge" class="hidden xl:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-100 text-violet-950 font-extrabold border border-violet-300/80 shadow-xs">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span id="currentDashboardPrefix" class="text-violet-700 font-medium">বর্তমান ড্যাশবোর্ড:</span>
+                    <span id="currentDashboardName" class="text-violet-900 font-black">লাইভ বাস ট্র্যাকার</span>
+                </div>
+                <span id="activeBusCountPill" class="px-2.5 py-1 rounded-full bg-violet-50 text-violet-900 font-bold border border-violet-200">০টি বাস সক্রিয়</span>
                 <button id="refreshNavBtn" onclick="forceRefreshData(this)" title="এখনই তথ্য রিফ্রেশ করুন" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-slate-600 hover:text-violet-700 hover:bg-violet-50 border border-slate-200 transition cursor-pointer text-xs font-semibold active:scale-95 min-h-[32px]">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
@@ -303,7 +309,16 @@
     </nav>
 
     <!-- Main Container -->
-    <main class="max-w-7xl mx-auto w-full px-3 sm:px-4 py-4 md:py-6 flex-1">
+    <main class="max-w-7xl mx-auto w-full px-3 sm:px-4 py-3 md:py-6 flex-1">
+
+        <!-- Mobile Active Dashboard Highlight Bar -->
+        <div class="md:hidden flex items-center justify-between px-3 py-1.5 mb-2.5 bg-gradient-to-r from-violet-100 to-indigo-50 border border-violet-200 rounded-xl">
+            <div class="flex items-center gap-2 min-w-0">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                <span class="text-xs font-black text-violet-950 truncate" id="mobileCurrentDashboardName">ড্যাশবোর্ড: লাইভ বাস ট্র্যাকার</span>
+            </div>
+            <span id="mobileDashboardBadgeTag" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-violet-200 text-violet-900">সক্রিয়</span>
+        </div>
 
         <!-- ==================================================================== -->
         <!-- TAB 1: LIVE BUS TRACKER                                              -->
@@ -349,13 +364,28 @@
                 </button>
             </div>
 
-            <!-- Route Info Mini-Strip -->
-            <div class="bg-amber-50 border border-amber-200 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between text-xs text-amber-900">
-                <div class="flex items-center gap-2 overflow-x-auto no-scrollbar">
-                    <span class="text-base flex-shrink-0">💡</span>
-                    <span id="routeDescriptionText" class="leading-relaxed">রুট: ক্যাম্পাস ➔ গোপালগঞ্জ ➔ কলেজ মোড় ➔ বাস টার্মিনাল ➔ বটতলী ➔ শাহী মসজিদ ➔ বলাইয়ের মোড় ➔ সদর হাসপাতাল ➔ বড়মাঠ</span>
+            <!-- Route Info & View Mode Toggle Row -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <!-- Route Info Mini-Strip -->
+                <div class="bg-amber-50 border border-amber-200 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between text-xs text-amber-900 flex-1 min-w-0">
+                    <div class="flex items-center gap-2 overflow-x-auto no-scrollbar">
+                        <span class="text-base flex-shrink-0">💡</span>
+                        <span id="routeDescriptionText" class="leading-relaxed truncate">রুট: ক্যাম্পাস ➔ গোপালগঞ্জ ➔ কলেজ মোড় ➔ বাস টার্মিনাল ➔ বটতলী ➔ শাহী মসজিদ ➔ বলাইয়ের মোড় ➔ সদর হাসপাতাল ➔ বড়মাঠ</span>
+                    </div>
+                    <button onclick="showPage('map', null)" id="liveRouteMapLink" class="text-amber-800 hover:underline font-bold whitespace-nowrap ml-2 hidden sm:block flex-shrink-0">রুট ম্যাপ ➔</button>
                 </div>
-                <button onclick="showPage('map', null)" id="liveRouteMapLink" class="text-amber-800 hover:underline font-bold whitespace-nowrap ml-2 hidden sm:block flex-shrink-0">রুট ম্যাপ ➔</button>
+
+                <!-- Bus Cards View Mode Toggle (Quick View vs Detailed View) -->
+                <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200 shadow-2xs flex-shrink-0 self-end sm:self-auto" id="busViewModeToggle">
+                    <button onclick="setBusViewMode('quick')" id="quickViewBtn" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-violet-700 text-white shadow-xs">
+                        <span>⚡</span>
+                        <span id="quickViewLabel">এক নজরে ভিউ</span>
+                    </button>
+                    <button onclick="setBusViewMode('detailed')" id="detailedViewBtn" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5 hover:bg-slate-100">
+                        <span>📋</span>
+                        <span id="detailedViewLabel">বিস্তারিত ভিউ</span>
+                    </button>
+                </div>
             </div>
 
             <!-- Bus Cards Grid -->
@@ -500,102 +530,11 @@
                     </button>
                 </div>
 
-                <!-- Schedule Fragment Container -->
+                <!-- Schedule Fragment Container (Bangla Circular loaded dynamically from bus-schedule.html) -->
                 <div id="scheduleFragment" class="mt-4 overflow-x-auto rounded-xl border border-slate-200">
-                    <div class="sheet">
-                        <div class="header">
-                            <p style="margin:0;font-size:15px;" class="text-slate-600">পরিবহন ও যন্ত্র মেরামত শাখা</p>
-                            <h2>হাজী মোহাম্মদ দানেশ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়, দিনাজপুর</h2>
-                        </div>
-
-                        <div class="memo-row">
-                            <span>স্মারক নং: হাবিপ্রবি/২০২৬/পশা/</span>
-                            <span>তারিখ: ২০/০৭/২০২৬ খ্রি:</span>
-                        </div>
-
-                        <div class="title-box"><span>গাড়ীর সময় সূচী</span></div>
-                        <div class="subtitle">রবিবার হতে বৃহস্পতিবার (কার্যকর: ২১/০৭/২০২৬ খ্রীঃ হতে)</div>
-
-                        <div class="scroll-hint">👉 টেবিলটি পাশে scroll করে সম্পূর্ণ দেখুন</div>
-                        <div class="table-scroll">
-                        <table>
-                            <tr>
-                                <th colspan="3" class="section-title">ক্যাম্পাস হতে</th>
-                                <th colspan="3" class="section-title">শহর হতে</th>
-                            </tr>
-                            <tr>
-                                <th>ট্রিপের নাম</th><th>ছাড়ার সময়</th><th>গাড়ীর নম্বর</th>
-                                <th>ট্রিপের নাম</th><th>ছাড়ার স্থান ও সময়</th><th>গাড়ীর নম্বর</th>
-                            </tr>
-                            <tr><td>সাধারণ</td><td>সকাল-৬:৪০ মি:</td><td>১৫</td><td>ছাত্র-ছাত্রী</td><td>সকাল: ৭:৫০ মি: বালুবাড়ী (শ.মি.)</td><td>১৫</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল-৮:০০ টা</td><td>৪,২০</td><td>কর্মকর্তা</td><td>সকাল: ৮:২০ মি: (বালুবাড়ী শ.মি.),</td><td>৪,২০</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল-৮:০০ টা</td><td>৮</td><td>কর্মচারী</td><td>সকাল- ৮:১৫ মি: (বালুবাড়ী শ.মি.)</td><td>৮</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল-৮:০০ টা</td><td>১১</td><td>ছাত্র-ছাত্রী</td><td>সকাল-৮:২০মি:(বড়: দিতল-২)(স:৮:৩০মি: সুই:১২)</td><td>১১, দিতল-২</td></tr>
-                            <tr><td>শিক্ষক</td><td>সকাল-৮:০০ টা</td><td>১,২,৩,১৫(m-5)</td><td>শিক্ষক</td><td>সকাল- ৮:৩০ মি: (নির্ধারিত রুট)</td><td>(১,১৫)(২,m-5)(৩)</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল- ৮:৩০ মি:</td><td>৭,১৭</td><td>ছাত্র-ছাত্রী</td><td>সকাল-৯:০০ টা (বড়মাঠ) (স:৯:১৫ মি: টার্মিনাল-৭)</td><td>৭,১৭,দিতল-৩</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল- ৯:০০ টা</td><td>(সুইহারী ৮,১৬),১৯</td><td>ছাত্র-ছাত্রী</td><td>স:৯:৩০ মি:(বড়:দি:১,১৯)(৯:৩৫মি:সুই:৮,১৬)</td><td>৮,১৬,১৯,দিতল-১</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল-৯:৩০ মি:</td><td>১৫,২১</td><td>ছাত্র-ছাত্রী</td><td>সকাল-১০:০০ টা: (বড়মাঠ)</td><td>১৫,২১</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল-১০:০০ টা</td><td>৮,১১,দি:২</td><td>ছাত্র-ছাত্রী</td><td>সকাল-১০:৩০মি:(বড়-দি:২)(সুই:১১)(টার্মি-স:১০.৪৫মি: ৮)</td><td>৮,১১,দি:২</td></tr>
-                            <tr><td>ছাত্র-ছাত্র</td><td>সকাল-১০:৩০ মি:</td><td>১৬,১৯,২০</td><td>ছাত্র-ছাত্র</td><td>সকাল-১১:০০ টা: (বড়মাঠ) (টার্মি-স:১১.১৫মি: ১৯)</td><td>১৬,১৯,২০</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল-১১:০০ টা</td><td>১৭, দিতল-৩</td><td>ছাত্র-ছাত্রী</td><td>সকাল-১১:৩০ মি: (বড়-দি:৩) (টার্মি-১১:৪৫মি:১৭)</td><td>১৭,দিতল-৩</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল- ১১:৩০ মি:</td><td>১৫,২১</td><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১২:০০ টা (বড়মাঠ)</td><td>১৫,২১</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১২:০০ টা</td><td>১৬,১৯</td><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১২:৩০ মি: (বড়মাঠ)</td><td>১৬,১৯</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১২:৩০ মি:</td><td>১৭,দিতল-১</td><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১:০০ টা: (বড়মাঠ)</td><td>১৭,দিতল-১</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১:০০ টা</td><td>(টার্মি-১৫),২১,২০</td><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১:৩০ মি: (বড়মাঠ)</td><td>১৫,২১,২০</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১:৩০ মি:</td><td>দিতল-২</td><td>ছাত্র-ছাত্রী</td><td>দুপুর- ২:০০ টা (বড়মাঠ)</td><td>দিতল-২</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ২:০০ টা</td><td>৮,১১,১৯</td><td>ছাত্র-ছাত্রী</td><td>দুপুর- ২:৩০ মি: (বড়মাঠ)</td><td>১১,১৯</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ২:৩০ মি:</td><td>৭,দিতল-৩</td><td>ছাত্র-ছাত্রী</td><td>দুপুর- ৩:০০ টা (বড়মাঠ)</td><td>দিতল-৩</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ৩:০০ টা</td><td>১৬,১৭</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৩:৩০ মি: (বড়মাঠ)</td><td>১৬,১৭</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ৩:৩০ মি:</td><td>২১,দিতল-১</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৪:০০ টা (বড়মাঠ)</td><td>২১,দিতল-১</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৪:০৫ মি:</td><td>১১,১৯, দিতল-২</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৪:৩০ মি: (বড়মাঠ)</td><td>১১, দিতল-২</td></tr>
-                            <tr><td>শিক্ষক</td><td>বিকাল- ৪:০৫ মি:</td><td>১,২,৩,১৫(m-5)</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৫:০০ টা (বড়মাঠ)</td><td>১৫</td></tr>
-                            <tr><td>কর্মকর্তা কর্মচারী</td><td>বিকাল- ৪:০৫ মি:</td><td>৪,৮,২০</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৫:০০ টা (বড়মাঠ)</td><td>৮</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৪:৩০ মি:</td><td>১৭, দিতল-৩</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৫:৩০ মি: (বড়মাঠ)</td><td>১৭,দিতল-৩</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৫:০০ টা</td><td>২১,দি:-১</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৬:০০ টা (বড়মাঠ)</td><td>২১,দি:-১</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৫:৩০ মি:</td><td>১১,১৬,১৯</td><td>ছাত্র-ছাত্রী</td><td>সন্ধ্যা- ৬:৩০ মি: (বড়মাঠ)</td><td>১১,১৯</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৬:০০ টা</td><td>৮,দিতল-২</td><td>ছাত্র-ছাত্রী</td><td>রাত- ৭:০০ টা (বড়মাঠ)</td><td>৮, দিতল-২</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>সন্ধ্যা-৬:৩০ মি:</td><td>১৭,দিতলবাস-৩</td><td>ছাত্র-ছাত্রী</td><td>রাত- ৭:৩০ মি: (বড়মাঠ)</td><td>১৬,১৭, (২০ ছাত্রী)</td></tr>
-                            <tr><td>ছাত্র-ছাত্রী</td><td>রাত- ৭:০০ টা</td><td>২১,দিতলবাস-১</td><td>ছাত্র-ছাত্রী</td><td>রাত- ৮:০০ টা (বড়মাঠ)</td><td>২১,দিতলবাস-৩</td></tr>
-                            <tr><td>সাধারণ</td><td>রাত- ৭:৩০ মি:</td><td>বিআরটিসি ডিপো পর্যন্ত</td><td>ছাত্র-ছাত্রী</td><td>রাত- ৯:০০ টা (বড়মাঠ)</td><td>দিতলবাস-১</td></tr>
-                            <tr><td>সাধারণ</td><td>রাত- ৮:৩০ মি:</td><td></td><td colspan="3">দিতলবাস- ৩ (বিআরটিসি ডিপো পর্যন্ত)</td></tr>
-                            <tr><td></td><td>রাত- ৯:৩০ মি:</td><td></td><td colspan="3">দিতলবাস- ১ (বিআরটিসি ডিপো পর্যন্ত)</td></tr>
-                        </table>
-                        </div>
-
-                        <div class="table-scroll">
-                        <table>
-                            <tr><th colspan="6" class="section-title">বিশেষ ট্রিপ</th></tr>
-                            <tr>
-                                <th>বার</th><th>যাত্রী</th><th>ছাড়ার সময়</th>
-                                <th>বার</th><th>যাত্রী</th><th>ছাড়ার সময়</th>
-                            </tr>
-                            <tr><td>শুক্রবার</td><td>শিক্ষক, কর্মকর্তা,কর্মচারী</td><td>সকাল- ৯:০০ টা / ১৫</td><td>শুক্রবার</td><td>শিক্ষক, কর্মকর্তা,কর্মচারী</td><td>সকাল- ১১:০০ টা / ১৫</td></tr>
-                            <tr><td>শনিবার</td><td>শিক্ষক ও কর্মকর্তা</td><td>বিকাল- ৪:০০টা / ১৯</td><td>শনিবার</td><td>শিক্ষক ও কর্মকর্তা</td><td>বিকাল- ৬:০০ টা বড়মাঠ / ১৯</td></tr>
-                            <tr><td>শনিবার</td><td>কর্মচারী</td><td>বিকাল- ৪:০০টা / ১১</td><td>শনিবার</td><td>কর্মচারী</td><td>বিকাল- ৬:০০ টা বড়মাঠ / ১১</td></tr>
-                            <tr><td>শনিবার</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৪:০০টা / ৮,১৭,২১</td><td>শনিবার</td><td>ছাত্র-ছাত্রী</td><td>রাত- ৭:০০ টা বড়মাঠ / ৮,১৭,২১</td></tr>
-                            <tr><td>মঙ্গলবার</td><td>শিক্ষক ও কর্মকর্তা</td><td>বিকাল- ৪:০০ টা / ১৬,২০</td><td>মঙ্গলবার</td><td>শিক্ষক ও কর্মকর্তা</td><td>বিকাল- ৬:০০ টা বড়মাঠ / মাইজে-৫</td></tr>
-                        </table>
-                        </div>
-
-                        <div class="note">
-                            ***ছাত্র-ছাত্রীদের গাড়ীগুলি বাইপাস হয়ে চলাচল করবে এবং শিক্ষক/কর্মকর্তা ও কর্মচারীগণের গাড়ীগুলি নির্ধারিত রুটে চলাচল করবে।<br>
-                            বিশেষ দ্রষ্টব্য: প্রয়োজনে ট্রিপের সংখ্যা কম বা বেশী হতে পারে।
-                        </div>
-
-                        <div class="footer">
-                            <div>
-                                <p><u>সদয় জ্ঞাতার্থে ও বহুল প্রচারের জন্য অনুলিপি (জ্যেষ্ঠতার ভিত্তিতে নহে):</u></p>
-                                <ul>
-                                    <li>সহ-সভাপতি, পরিবহন কমিটি, হাবিপ্রবি, দিনাজপুর।</li>
-                                    <li>ডিন, সকল অনুষদ / চেয়ারম্যান, সকল বিভাগ / রেজিস্ট্রার / লাইব্রেরী / সকল হল সুপার / প্রক্টর / সকল পরিচালক / পরীক্ষা নিয়ন্ত্রক।</li>
-                                    <li>সকল শাখা প্রধান / আইটি সেল।</li>
-                                    <li>নোটিশ বোর্ড।</li>
-                                </ul>
-                            </div>
-                            <div class="sign">
-                                <p>পরিচালক (পরিবহন)<br>হাবিপ্রবি, দিনাজপুর।</p>
-                            </div>
-                        </div>
+                    <div class="p-8 text-center text-slate-500 bg-white">
+                        <span class="inline-block animate-spin text-2xl mb-2">⏳</span>
+                        <p class="text-xs font-semibold">বাসের সময়সূচী লোড হচ্ছে...</p>
                     </div>
                 </div>
 
@@ -986,6 +925,214 @@
 
     </main>
 
+    <!-- Floating Active GPS Loophole Protection Banner (Visible when GPS Sharing is active) -->
+    <div id="activeGpsFloatingBanner" class="hidden fixed bottom-18 md:bottom-5 left-3 right-3 md:left-auto md:right-5 z-40 max-w-md bg-gradient-to-r from-violet-950 via-purple-900 to-indigo-950 text-white rounded-2xl p-3.5 shadow-2xl border border-violet-400/40 backdrop-blur-md">
+        <div class="flex items-center justify-between gap-2.5">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping flex-shrink-0"></span>
+                <div class="min-w-0">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-300">
+                        <span>📡 লাইভ GPS শেয়ারিং চালু</span>
+                        <span id="activeGpsBusNameBadge" class="bg-violet-800 px-2 py-0.5 rounded text-[10px] text-white font-mono">বাস</span>
+                    </div>
+                    <p id="activeGpsStatusText" class="text-[11px] text-slate-300 truncate">পরবর্তী স্টপ শনাক্ত হচ্ছে...</p>
+                </div>
+            </div>
+            <button onclick="stopGpsShareWithReason('user_exit')" class="flex-shrink-0 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white font-bold text-xs px-3 py-2 rounded-xl shadow transition cursor-pointer min-h-[40px] flex items-center gap-1.5 touch-manipulation">
+                <span>🚪</span>
+                <span id="activeGpsExitBtnText">বাস থেকে নেমেছি</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal 1: Device Location Turned-Off Suggestion Modal -->
+    <div id="locationSuggestionModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-violet-800 via-purple-800 to-indigo-800 p-5 text-white relative">
+                <button onclick="closeModal('locationSuggestionModal')" class="absolute top-4 right-4 text-violet-200 hover:text-white text-xl p-1 leading-none cursor-pointer" aria-label="Close">✕</button>
+                <div class="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-2xl mb-2.5 border border-white/20">
+                    🛰️
+                </div>
+                <h3 id="locModalTitle" class="text-lg sm:text-xl font-black">ডিভাইসের লোকেশন চালু করার সুবিধা</h3>
+                <p id="locModalSubtitle" class="text-xs text-violet-200 mt-1">প্রতিটি স্টপেজে বারবার আপডেট করার ঝামেলা এড়ান</p>
+            </div>
+
+            <!-- Body -->
+            <div class="p-5 sm:p-6 space-y-4">
+                <!-- User requested message -->
+                <div class="p-4 rounded-2xl bg-violet-50 border border-violet-200 text-slate-800">
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl flex-shrink-0 mt-0.5">💡</span>
+                        <p id="locModalMessageText" class="text-xs sm:text-sm font-semibold text-violet-950 leading-relaxed">
+                            "যদি আপনি আপনার ডিভাইসের লোকেশন (GPS) চালু করেন, তবে একবার বাসের অবস্থান আপডেট করলেই বাসটি পরবর্তী প্রতিটি স্টপেজে পৌঁছালে লোকেশন স্বয়ংক্রিয়ভাবে আপডেট হয়ে যাবে—প্রতিটি স্টপেজে বারবার আপডেট করতে হবে না।"
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Loophole Clarification & Safety Guarantee -->
+                <div class="rounded-2xl p-4 bg-amber-50/90 border border-amber-200 text-xs text-amber-950 space-y-2">
+                    <div class="font-extrabold flex items-center gap-1.5 text-amber-900 text-sm">
+                        <span>🛡️</span>
+                        <span id="locModalLoopholeTitle">বাস থেকে নেমে গেলে কী হবে? (স্মার্ট সেফটি)</span>
+                    </div>
+                    <p id="locModalLoopholeText" class="text-[12px] leading-relaxed text-amber-900">
+                        আমাদের সিস্টেমে নিরাপত্তা ফিল্টার রয়েছে: আপনি বাস থেকে নেমে বাস রুট থেকে দূরে সরে গেলে (৭০০ মিটারের বেশি) অথবা বাস শেষ গন্তব্যে পৌঁছালে সিস্টেম <b>স্বয়ংক্রিয়ভাবে লাইভ ট্র্যাকিং বন্ধ</b> করে দেয় যেন ভুল আপডেট না ছড়ায়। এছাড়াও আপনি যেকোনো সময় স্ক্রিনে থাকা <b>'বাস থেকে নেমেছি'</b> বোতাম চেপে তাৎক্ষণিক ট্র্যাকিং বন্ধ করতে পারবেন।
+                    </p>
+                </div>
+
+                <!-- Actions -->
+                <div class="pt-2 flex flex-col sm:flex-row gap-2.5">
+                    <button onclick="acceptLocationSuggestionAndStartGps()" class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-violet-700 to-indigo-700 hover:from-violet-800 hover:to-indigo-800 active:scale-95 text-white font-bold text-xs sm:text-sm shadow-md transition cursor-pointer flex items-center justify-center gap-2 min-h-[44px] touch-manipulation">
+                        <span>📍</span>
+                        <span id="locModalBtnTurnOn">GPS চালু ও অটো-আপডেট শুরু</span>
+                    </button>
+                    <button onclick="dismissLocationSuggestionAndShowConfirm()" class="py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm transition cursor-pointer flex items-center justify-center gap-1.5 min-h-[44px] touch-manipulation">
+                        <span>✍️</span>
+                        <span id="locModalBtnManual">শুধু ১ বার ম্যানুয়াল আপডেট</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Confirm Bus Location Update Modal -->
+    <div id="confirmUpdateModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all">
+            <!-- Header -->
+            <div class="bg-amber-500 p-5 text-slate-950 relative">
+                <button onclick="closeModal('confirmUpdateModal')" class="absolute top-4 right-4 text-amber-950 hover:text-black text-xl p-1 leading-none cursor-pointer" aria-label="Close">✕</button>
+                <div class="w-11 h-11 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-2xl mb-2 border border-black/10">
+                    ⚠️
+                </div>
+                <h3 id="confirmModalTitle" class="text-lg font-black text-slate-900">অবস্থান নিশ্চিতকরণ</h3>
+                <p id="confirmModalSubtitle" class="text-xs text-amber-950 font-medium mt-0.5">তথ্যটি প্রকাশের আগে নিশ্চিত করুন</p>
+            </div>
+
+            <!-- Body -->
+            <div class="p-5 sm:p-6 space-y-4">
+                <p id="confirmModalPrompt" class="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+                    আপনি কি নিশ্চিত যে নিচের বাসটির বর্তমান অবস্থান ঠিক এই স্টপেজেই আছে?
+                </p>
+
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-2.5">
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-slate-500">বাসের নাম:</span>
+                        <span id="confirmModalBusName" class="font-black text-violet-900 text-sm">...</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-slate-500">বর্তমান স্টপেজ:</span>
+                        <span id="confirmModalStopName" class="font-extrabold text-emerald-800 text-sm">...</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-slate-500">যাত্রার দিক:</span>
+                        <span id="confirmModalDirection" class="font-semibold text-slate-800">...</span>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-blue-50 border border-blue-200 rounded-xl text-[11px] text-blue-900 flex items-start gap-2">
+                    <span class="text-base flex-shrink-0">👥</span>
+                    <span id="confirmModalInfoText">আপনার দেওয়া তথ্যের ওপর নির্ভর করে ক্যাম্পাসের সহস্রাধিক শিক্ষার্থী সময়মতো বাস ধরতে পারবে।</span>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="pt-2 flex gap-2.5">
+                    <button onclick="closeModal('confirmUpdateModal')" class="flex-1 py-3 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm transition cursor-pointer min-h-[44px] touch-manipulation">
+                        <span id="confirmModalBtnCancel">না, বাতিল</span>
+                    </button>
+                    <button onclick="proceedWithConfirmedReportSubmit()" id="confirmModalBtnSubmit" class="flex-1 py-3 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs sm:text-sm shadow-md transition cursor-pointer flex items-center justify-center gap-1.5 min-h-[44px] touch-manipulation">
+                        <span>✓</span>
+                        <span id="confirmModalBtnConfirm">হ্যাঁ, নিশ্চিত আপডেট</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Auto GPS Route Deviation Alert -->
+    <div id="routeDeviationModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full shadow-2xl border border-slate-200 p-6 text-center space-y-3">
+            <div class="w-14 h-14 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-2xl mx-auto">
+                🚶
+            </div>
+            <h4 id="devModalTitle" class="text-base font-bold text-slate-900">বাস থেকে নেমে গেছেন?</h4>
+            <p id="devModalDesc" class="text-xs text-slate-600 leading-relaxed">
+                আপনি বাসের রুট থেকে দূরে সরে গেছেন বলে শনাক্ত হয়েছে। ভুল বাস আপডেট প্রতিরোধ করতে আপনার লাইভ লোকেশন শেয়ারিং স্বয়ংক্রিয়ভাবে বন্ধ করা হয়েছে।
+            </p>
+            <button onclick="closeModal('routeDeviationModal')" class="w-full py-3 px-4 rounded-xl bg-slate-900 text-white font-bold text-xs hover:bg-slate-800 transition cursor-pointer min-h-[44px]">
+                ঠিক আছে
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal 4: Firebase Authorized Domain Guide & Instant Student Mode -->
+    <div id="unauthorizedDomainModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-violet-900 to-indigo-900 p-5 text-white relative">
+                <button onclick="closeModal('unauthorizedDomainModal')" class="absolute top-4 right-4 text-violet-200 hover:text-white text-xl p-1 leading-none cursor-pointer" aria-label="Close">✕</button>
+                <div class="w-11 h-11 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center text-2xl mb-2 border border-white/20">
+                    🔐
+                </div>
+                <h3 class="text-lg font-black" id="authDomainModalTitle">Firebase ডোমেন পারমিশন ও দ্রুত লগইন</h3>
+                <p class="text-xs text-violet-200 mt-0.5" id="authDomainModalSubtitle">Google Auth ডোমেন অনুমোদন অথবা সরাসরি শিক্ষার্থী হিসেবে প্রবেশ</p>
+            </div>
+
+            <!-- Body -->
+            <div class="p-5 sm:p-6 space-y-4 text-slate-800">
+                <div class="p-3.5 bg-amber-50 border border-amber-200 rounded-2xl text-xs space-y-1.5 text-amber-900">
+                    <div class="font-bold flex items-center gap-1.5 text-amber-950 text-sm">
+                        <span>⚠️</span>
+                        <span id="authDomainNoticeTitle">এই ডোমেনটি Firebase Authorized Domains-এ যুক্ত নেই</span>
+                    </div>
+                    <p id="authDomainNoticeDesc" class="text-[12px] leading-relaxed">
+                        বর্তমান ওয়েব ঠিকানাটি Firebase Console-এ অনুমোদন না করা পর্যন্ত Google দিয়ে সরাসরি সাইন-ইন সাময়িকভাবে সম্ভব নয়।
+                    </p>
+                </div>
+
+                <!-- Current Domain Box with 1-click copy -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-700 block" id="authDomainCopyLabel">বর্তমান ওয়েব ডোমেন (Firebase-এ যুক্ত করতে কপি করুন):</label>
+                    <div class="flex items-center gap-2 bg-slate-100 p-2.5 rounded-xl border border-slate-200">
+                        <code id="currentHostDomainDisplay" class="text-xs font-mono font-bold text-violet-950 flex-1 truncate select-all">--</code>
+                        <button id="copyDomainBtn" onclick="copyDomainToClipboard()" class="px-3 py-1.5 rounded-lg bg-violet-700 hover:bg-violet-800 text-white font-bold text-xs shadow-xs transition flex items-center gap-1 cursor-pointer flex-shrink-0">
+                            <span>📋</span>
+                            <span id="copyDomainBtnText">কপি করুন</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- How to fix in Firebase Console -->
+                <div class="text-[11px] sm:text-xs text-slate-600 bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1.5">
+                    <div class="font-bold text-slate-800 flex items-center gap-1.5" id="authDomainStepsTitle">
+                        <span>🛠️</span> Google Login স্থায়ীভাবে চালু করার ধাপ:
+                    </div>
+                    <ol class="list-decimal list-inside space-y-1 text-slate-600">
+                        <li>Firebase Console ➔ Project <b class="font-mono text-violet-900">student-bus-tracker-bc55b</b> খুলুন</li>
+                        <li><b>Authentication ➔ Settings ➔ Authorized Domains</b> এ যান</li>
+                        <li><b>Add domain</b> এ উপরের কপি করা ডোমেনটি পেস্ট করে সেভ করুন</li>
+                    </ol>
+                </div>
+
+                <!-- Instant Fallback: Continue as Student / Guest -->
+                <div class="pt-3 border-t border-slate-200">
+                    <p class="text-xs text-slate-600 font-medium mb-2.5 text-center" id="authDomainGuestPrompt">
+                        অথবা ডোমেন সেটআপ ছাড়াও তাৎক্ষণিক বাস লোকেশন আপডেট করতে:
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-2.5">
+                        <button onclick="promptCustomGuestStudent()" class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold text-xs sm:text-sm shadow-md transition cursor-pointer flex items-center justify-center gap-2 min-h-[44px] touch-manipulation">
+                            <span>👨‍🎓</span>
+                            <span id="authDomainBtnStudent">শিক্ষার্থী হিসেবে প্রবেশ করুন</span>
+                        </button>
+                        <button onclick="closeModal('unauthorizedDomainModal')" class="py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition cursor-pointer min-h-[44px]">
+                            বন্ধ করুন
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Mobile Bottom Navigation Bar (Fixed for all mobile devices) -->
     <nav aria-label="Mobile Navigation" class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-lg px-2 pt-1 pb-[calc(0.4rem+env(safe-area-inset-bottom,0px))]">
         <div class="flex justify-around items-center max-w-md mx-auto" id="mobileNavTabs">
@@ -1012,10 +1159,110 @@
         </div>
     </nav>
 
+    <!-- Sliced Bus Schedule Module -->
+    <script src="schedule.js"></script>
+
     <!-- ==================================================================== -->
     <!-- JAVASCRIPT CORE LOGIC                                                -->
     <!-- ==================================================================== -->
     <script>
+        // ====================================================================
+        // GLOBAL STATE & GPS INITIALIZATION (Hoisted early to prevent TDZ)
+        // ====================================================================
+        var gpsWatchId = null;
+        var gpsStartTime = 0;
+        var gpsLastSentStop = null;
+        var gpsLastSentTime = 0;
+        var pendingReportData = null;
+
+        // Shared Auth UI sync function
+        window.updateAuthUI = function(user) {
+            const statusEl = document.getElementById("authStatus");
+            const loginBtn = document.getElementById("loginBtn");
+            const userProfilePill = document.getElementById("userProfilePill");
+            const userShortName = document.getElementById("userShortName");
+            const notice = document.getElementById("reportLoginNotice");
+            const historyCard = document.getElementById("historyCard");
+
+            if (user) {
+                window.currentUser = user;
+                if (loginBtn) loginBtn.style.display = "none";
+                if (userProfilePill) userProfilePill.style.display = "flex";
+                if (userShortName) userShortName.textContent = user.displayName || user.email?.split('@')[0] || "User";
+                if (notice) notice.style.display = "none";
+
+                const roleBadge = window.currentRole === "admin" ? " 👑 Admin"
+                    : window.currentRole === "moderator" ? " 🛡️ Mod"
+                    : (user.isGuest ? " 🎓 Student" : "");
+                if (statusEl) statusEl.textContent = `${user.displayName || user.email}${roleBadge}`;
+                if (historyCard) historyCard.style.display = (window.currentRole === "admin") ? "block" : "none";
+            } else {
+                window.currentUser = null;
+                window.currentRole = null;
+                if (loginBtn) loginBtn.style.display = "inline-flex";
+                if (userProfilePill) userProfilePill.style.display = "none";
+                const isEn = window.currentLang === 'en';
+                if (statusEl) statusEl.textContent = isEn ? "Not logged in" : "লগইন করা নেই";
+                if (notice) notice.style.display = "flex";
+                if (historyCard) historyCard.style.display = "none";
+            }
+        };
+
+        // Student guest / fallback session handlers
+        window.promptCustomGuestStudent = function() {
+            const isEn = window.currentLang === 'en';
+            const defaultName = isEn ? "HSTU Student" : "হাবিপ্রবি শিক্ষার্থী";
+            let name = prompt(isEn ? "Enter your name or student ID (Optional):" : "আপনার নাম বা স্টুডেন্ট আইডি লিখুন (ঐচ্ছিক):", defaultName);
+            if (name === null) return;
+            name = name.trim() || defaultName;
+            window.setGuestStudentUser(name);
+        };
+
+        window.setGuestStudentUser = function(name = "HSTU Student") {
+            const guestUser = {
+                uid: "student_" + Math.random().toString(36).substring(2, 9),
+                displayName: name,
+                email: "student@hstu.ac.bd",
+                isGuest: true
+            };
+            try {
+                localStorage.setItem("hstu_guest_user", JSON.stringify(guestUser));
+            } catch (e) {}
+            window.currentUser = guestUser;
+            window.currentRole = "student";
+            closeModal("unauthorizedDomainModal");
+            if (typeof window.updateAuthUI === "function") {
+                window.updateAuthUI(guestUser);
+            }
+            const isEn = window.currentLang === 'en';
+            alert(isEn ? `✅ Signed in as ${name}. You can now update bus locations!` : `✅ ${name} হিসেবে সফলভাবে প্রবেশ করেছেন। এখন আপনি বাসের অবস্থান আপডেট করতে পারবেন!`);
+        };
+
+        window.copyDomainToClipboard = async function() {
+            const domain = window.location.hostname;
+            try {
+                await navigator.clipboard.writeText(domain);
+                const btnText = document.getElementById("copyDomainBtnText");
+                if (btnText) {
+                    const orig = btnText.textContent;
+                    btnText.textContent = "✅ কপি হয়েছে!";
+                    setTimeout(() => { btnText.textContent = orig; }, 2000);
+                }
+            } catch (e) {
+                prompt("কপি করতে চাপুন:", domain);
+            }
+        };
+
+        // Restore cached guest student session on startup
+        try {
+            const savedGuest = localStorage.getItem("hstu_guest_user");
+            if (savedGuest) {
+                const parsed = JSON.parse(savedGuest);
+                window.currentUser = parsed;
+                window.currentRole = "student";
+            }
+        } catch (e) {}
+
         // ====================================================================
         // PWA SERVICE WORKER & APP INSTALLATION (WebView / Standalone)
         // ====================================================================
@@ -1552,10 +1799,22 @@
         setInterval(updateLiveClock, 1000);
         updateLiveClock();
 
-        let scheduleLoaded = true;
+        let scheduleLoaded = false;
         async function loadSchedule(force = false) {
             if (scheduleLoaded && !force) return;
             const container = document.getElementById("scheduleFragment");
+            if (!container) return;
+
+            // Prioritize modular schedule script if available
+            if (window.HstuSchedule && typeof window.HstuSchedule.renderScheduleBangla === "function") {
+                window.HstuSchedule.renderScheduleBangla("scheduleFragment");
+                if (typeof window.HstuSchedule.renderScheduleEnglish === "function") {
+                    window.HstuSchedule.renderScheduleEnglish("scheduleEnglishContainer");
+                }
+                scheduleLoaded = true;
+                return;
+            }
+
             try {
                 let basePath = window.location.pathname;
                 if (basePath.endsWith("/index.html") || basePath.endsWith("/index.htm")) {
@@ -1571,8 +1830,7 @@
                     scheduleLoaded = true;
                 }
             } catch (err) {
-                // If fetch fails (e.g. offline or CORS), fallback to pre-rendered schedule smoothly
-                console.log("Schedule using pre-rendered fallback");
+                console.log("Schedule loaded via fallback", err);
             }
         }
 
@@ -1606,7 +1864,22 @@
             }
         };
 
-        // (filterScheduleTable is declared above)
+        // Modal Open / Close Helpers
+        function openModal(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
 
         function showPage(id, buttonEl) {
             // Hide all pages
@@ -1619,30 +1892,44 @@
                 target.classList.add("block");
             }
 
-            // Update Desktop Nav styles
+            // Update Desktop Nav styles with prominent active highlight
             document.querySelectorAll("#desktopNavTabs .nav-tab").forEach(btn => {
-                btn.classList.remove("active", "text-violet-800", "bg-violet-50", "border-violet-200");
-                btn.classList.add("text-slate-600", "hover:bg-slate-100");
+                btn.className = "nav-tab whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3.5 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent transition cursor-pointer";
             });
 
             // Update Mobile Nav styles
             document.querySelectorAll("#mobileNavTabs .mobile-nav-btn").forEach(btn => {
-                btn.classList.remove("active", "text-violet-700");
-                btn.classList.add("text-slate-500");
+                btn.className = "mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-500 hover:text-slate-800 font-medium min-h-[44px] min-w-[54px] touch-manipulation transition-all";
             });
 
-            // Highlight corresponding buttons
+            // Highlight corresponding desktop active button
             const desktopMatches = Array.from(document.querySelectorAll("#desktopNavTabs .nav-tab")).filter(b => b.getAttribute('onclick')?.includes(id));
             desktopMatches.forEach(b => {
-                b.classList.add("active", "text-violet-800", "bg-violet-50", "border-violet-200");
-                b.classList.remove("text-slate-600", "hover:bg-slate-100");
+                b.className = "nav-tab active whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3.5 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-bold rounded-xl text-white bg-violet-700 shadow-sm ring-2 ring-violet-400 border border-violet-700 transition cursor-pointer";
             });
 
+            // Highlight corresponding mobile active button
             const mobileMatches = Array.from(document.querySelectorAll("#mobileNavTabs .mobile-nav-btn")).filter(b => b.getAttribute('onclick')?.includes(id));
             mobileMatches.forEach(b => {
-                b.classList.add("active", "text-violet-700");
-                b.classList.remove("text-slate-500");
+                b.className = "mobile-nav-btn active flex flex-col items-center justify-center py-1 px-2 rounded-xl text-violet-950 bg-violet-100/90 font-black border border-violet-300 shadow-xs scale-105 min-h-[44px] min-w-[54px] touch-manipulation transition-all";
             });
+
+            // Update Active Dashboard Badges
+            const dashboardTitles = {
+                live: { bn: "লাইভ বাস ট্র্যাকার", en: "Live Bus Tracker" },
+                map: { bn: "রুট ও স্টপ ম্যাপ", en: "Route & Stop Map" },
+                schedule: { bn: "বাস শিডিউল", en: "Bus Schedule" },
+                report: { bn: "অবস্থান আপডেট ও GPS", en: "Location Update & GPS" },
+                contacts: { bn: "জরুরি হেল্পলাইন", en: "Emergency Helpline" }
+            };
+            const titleObj = dashboardTitles[id] || dashboardTitles.live;
+            const isEn = window.currentLang === 'en';
+            const titleText = isEn ? titleObj.en : titleObj.bn;
+
+            const nameEl = document.getElementById("currentDashboardName");
+            if (nameEl) nameEl.textContent = titleText;
+            const mobNameEl = document.getElementById("mobileCurrentDashboardName");
+            if (mobNameEl) mobNameEl.textContent = isEn ? `Dashboard: ${titleText}` : `ড্যাশবোর্ড: ${titleText}`;
 
             if (id === "schedule") {
                 loadSchedule();
@@ -1744,6 +2031,35 @@
             return minutes >= limit;
         }
 
+        // View Mode State: 'quick' (default) or 'detailed'
+        window.busViewMode = 'quick';
+        window.expandedBusCards = new Set();
+
+        window.setBusViewMode = function(mode) {
+            window.busViewMode = mode;
+            const quickBtn = document.getElementById("quickViewBtn");
+            const detailedBtn = document.getElementById("detailedViewBtn");
+            if (quickBtn && detailedBtn) {
+                if (mode === 'quick') {
+                    quickBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-violet-700 text-white shadow-xs";
+                    detailedBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5 hover:bg-slate-100";
+                } else {
+                    detailedBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-violet-700 text-white shadow-xs";
+                    quickBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5 hover:bg-slate-100";
+                }
+            }
+            renderBuses();
+        };
+
+        window.toggleBusCardDetail = function(busKey) {
+            if (window.expandedBusCards.has(busKey)) {
+                window.expandedBusCards.delete(busKey);
+            } else {
+                window.expandedBusCards.add(busKey);
+            }
+            renderBuses();
+        };
+
         // Render bus cards in Dashboard Grid
         function renderBuses() {
             const list = document.getElementById("busList");
@@ -1803,71 +2119,89 @@
                     ? (isEn ? 'Campus ➔ City' : 'ক্যাম্পাস ➔ শহর') 
                     : (isEn ? 'Boromath ➔ Campus' : 'বড়মাঠ ➔ ক্যাম্পাস');
 
+                const safeNameKey = name.replace(/[.#$[\]'"]/g, "_");
+                const isExpanded = window.busViewMode === 'detailed' || window.expandedBusCards.has(safeNameKey);
+
                 return `
-                    <div class="bus-card bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between" data-time="${bus.time}">
+                    <div class="bus-card bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between relative overflow-hidden" data-time="${bus.time}">
                         <div>
-                            <!-- Card Header -->
+                            <!-- Card Header: Bus Name + Live status badge -->
                             <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-100">
-                                <div class="flex items-center gap-2.5">
-                                    <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-800 font-bold flex items-center justify-center text-base border border-violet-200 shadow-xs">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-800 font-bold flex items-center justify-center text-lg flex-shrink-0 border border-violet-200 shadow-2xs">
                                         🚍
                                     </div>
-                                    <div>
-                                        <h3 class="font-bold text-base md:text-lg text-slate-800 leading-tight">${escapeHtml(getBusDisplayName(bus.name))}</h3>
-                                        <span class="text-[11px] text-slate-400 font-medium">${dirLabel}</span>
+                                    <div class="min-w-0">
+                                        <h3 class="font-extrabold text-base md:text-lg text-slate-800 leading-tight truncate">${escapeHtml(getBusDisplayName(bus.name))}</h3>
+                                        <div class="flex items-center gap-1.5 mt-0.5">
+                                            <span class="update-time text-[11px] text-slate-500 font-medium">${isEn ? 'Loading...' : 'লোড হচ্ছে...'}</span>
+                                            <span class="text-slate-300">•</span>
+                                            <span class="text-[11px] text-slate-400 font-medium truncate">${dirLabel}</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="flex items-center gap-1.5">
-                                    <button onclick="forceRefreshData(this)" title="${isEn ? 'Refresh bus location' : 'বাসের অবস্থান রিফ্রেশ করুন'}" class="p-1 rounded-lg text-slate-400 hover:text-violet-700 hover:bg-slate-100 transition cursor-pointer" aria-label="Refresh">
+                                <div class="flex items-center gap-1.5 flex-shrink-0">
+                                    <button onclick="forceRefreshData(this)" title="${isEn ? 'Refresh' : 'রিফ্রেশ'}" class="p-1 rounded-lg text-slate-400 hover:text-violet-700 hover:bg-slate-100 transition cursor-pointer" aria-label="Refresh">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                                         </svg>
                                     </button>
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300/40">
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300/40">
                                         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                                         LIVE
                                     </span>
                                 </div>
                             </div>
 
-                            <!-- Current Stop Indicator -->
-                            <div class="mt-4">
-                                <div class="text-[11px] font-bold text-violet-700 uppercase tracking-wider">${isEn ? 'CURRENT STOP:' : 'বর্তমান অবস্থান:'}</div>
-                                <div class="text-lg font-extrabold text-slate-900 mt-0.5 flex items-center gap-1.5">
-                                    <span>📍</span>
-                                    <span>${escapeHtml(stopNameDisplay)}</span>
+                            <!-- Current Location / Updated Location -->
+                            <div class="mt-3.5 bg-gradient-to-r from-violet-50/80 to-slate-50 p-3 rounded-xl border border-violet-100/90">
+                                <div class="text-[10px] sm:text-[11px] font-bold text-violet-800 uppercase tracking-wider flex items-center justify-between">
+                                    <span>${isEn ? 'CURRENT LOCATION' : 'বর্তমান অবস্থান'}</span>
+                                    <span class="text-violet-600 font-semibold">${isEn ? `Stop ${stopIdx + 1} of ${stops.length}` : `স্টপ ${stopIdx + 1} / ${stops.length}`}</span>
+                                </div>
+                                <div class="text-base sm:text-lg font-extrabold text-slate-900 mt-1 flex items-center gap-2">
+                                    <span class="text-rose-500 flex-shrink-0">📍</span>
+                                    <span class="truncate">${escapeHtml(stopNameDisplay)}</span>
                                 </div>
                             </div>
 
-                            <!-- Visual Route Progress Bar -->
-                            <div class="mt-4 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                                <div class="flex justify-between text-xs text-slate-500 font-medium mb-1.5">
-                                    <span>${isEn ? `Stop ${stopIdx + 1} of ${stops.length}` : `স্টপ ${stopIdx + 1} / ${stops.length}`}</span>
-                                    <span class="font-bold text-violet-700">${isEn ? `${progressPct}% complete` : `${progressPct}% সম্পন্ন`}</span>
-                                </div>
-                                <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
-                                    <div class="bg-gradient-to-r from-violet-600 via-indigo-600 to-sky-500 h-2 rounded-full transition-all duration-500" style="width: ${progressPct}%"></div>
-                                </div>
-                                <div class="flex justify-between text-[11px] text-slate-400 mt-1.5">
-                                    <span class="truncate">${isEn ? 'Start: ' : 'শুরু: '}${getStopName(stops[0])}</span>
-                                    <span class="truncate">${isEn ? 'End: ' : 'শেষ: '}${getStopName(stops[stops.length - 1])}</span>
-                                </div>
-                            </div>
+                            <!-- Optional Expandable Details -->
+                            ${isExpanded ? `
+                                <div class="mt-3 pt-3 border-t border-slate-100 space-y-3">
+                                    <!-- Visual Route Progress Bar -->
+                                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200/80">
+                                        <div class="flex justify-between text-xs text-slate-600 font-medium mb-1.5">
+                                            <span>${isEn ? 'Route Progress' : 'যাত্রার অগ্রগতি'}</span>
+                                            <span class="font-bold text-violet-700">${isEn ? `${progressPct}% complete` : `${progressPct}% সম্পন্ন`}</span>
+                                        </div>
+                                        <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                                            <div class="bg-gradient-to-r from-violet-600 via-indigo-600 to-sky-500 h-2 rounded-full transition-all duration-500" style="width: ${progressPct}%"></div>
+                                        </div>
+                                        <div class="flex justify-between text-[11px] text-slate-400 mt-1.5">
+                                            <span class="truncate">${isEn ? 'From: ' : 'শুরু: '}${getStopName(stops[0])}</span>
+                                            <span class="truncate">${isEn ? 'To: ' : 'শেষ: '}${getStopName(stops[stops.length - 1])}</span>
+                                        </div>
+                                    </div>
 
-                            <!-- Next Stop Info -->
-                            <div class="mt-3 text-xs text-slate-600 flex items-center justify-between">
-                                <span class="text-slate-400">${isEn ? 'Next Stop:' : 'পরবর্তী স্টপ:'}</span>
-                                <span class="font-bold text-slate-700">${escapeHtml(nextStopName)}</span>
-                            </div>
+                                    <!-- Next Stop Info -->
+                                    <div class="text-xs text-slate-600 flex items-center justify-between px-1">
+                                        <span class="text-slate-400">${isEn ? 'Next Stop:' : 'পরবর্তী স্টপ:'}</span>
+                                        <span class="font-bold text-slate-700">${escapeHtml(nextStopName)}</span>
+                                    </div>
+                                </div>
+                            ` : ''}
                         </div>
 
-                        <!-- Card Footer & Action Buttons -->
-                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-                            <span class="update-time text-xs text-slate-500 font-medium">${isEn ? 'Loading...' : 'লোড হচ্ছে...'}</span>
+                        <!-- Card Footer & Quick View More / Less Toggle -->
+                        <div class="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between gap-2">
+                            <button onclick="toggleBusCardDetail('${safeNameKey}')" class="text-xs font-bold text-violet-700 hover:text-violet-900 hover:bg-violet-50 px-2.5 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1 touch-manipulation">
+                                <span>${isExpanded ? (isEn ? '▲ Less info' : '▲ সংক্ষেপ করুন') : (isEn ? '▼ More details' : '▼ আরও বিস্তারিত')}</span>
+                            </button>
+                            
                             ${mapsUrl ? `
-                                <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs font-bold text-sky-700 hover:text-sky-800 bg-sky-50 hover:bg-sky-100 px-2.5 py-1.5 rounded-lg border border-sky-200 transition">
+                                <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] font-bold text-sky-700 hover:text-sky-800 bg-sky-50 hover:bg-sky-100 px-2.5 py-1.5 rounded-lg border border-sky-200 transition">
                                     <span>🗺️</span>
-                                    <span>${isEn ? 'View on Map' : 'ম্যাপে দেখুন'}</span>
+                                    <span>${isEn ? 'Map' : 'ম্যাপে দেখুন'}</span>
                                 </a>
                             ` : ''}
                         </div>
@@ -1961,34 +2295,109 @@
             changeDirection(type === 'campus' ? 'campus_city' : 'boromath_campus');
         }
 
-        // Manual Location Update Form Submission
-        async function submitReport() {
-            const btn = document.getElementById("submitBtn");
+        // Pending report state for confirmation dialog
+        pendingReportData = null;
+
+        // Manual Location Update Form Submission Interceptor
+        function submitReport() {
             const isEn = window.currentLang === 'en';
             if (!window.firebaseSaveBus) {
                 alert(isEn ? "❌ Firebase is not connected yet. Please reload the page." : "❌ Firebase এখনো সংযুক্ত হয়নি। পাতাটি রিলোড করুন।");
                 return;
             }
             if (!window.currentUser) {
-                alert(isEn ? "🔐 Please sign in with Google first to prevent inaccurate updates." : "🔐 আগে Google দিয়ে লগইন করতে হবে — ভুল/ফেক আপডেট ঠেকাতে এখন login বাধ্যতামূলক।");
+                const isEn = window.currentLang === 'en';
+                alert(isEn ? "🔐 Please sign in with Google or continue as student to update bus location." : "🔐 বাসের অবস্থান আপডেট করতে অনুগ্রহ করে লগইন করুন বা ছাত্র হিসেবে প্রবেশ করুন।");
                 window.doLogin();
                 return;
             }
+
+            const busSelect = document.getElementById("busSelect");
+            if (!busSelect || !busSelect.value) {
+                alert(isEn ? "Please select a bus first." : "অনুগ্রহ করে আগে একটি বাস নির্বাচন করুন।");
+                return;
+            }
+
             const direction = document.getElementById("directionSelect").value;
-            const busName = busNames[document.getElementById("busSelect").value];
+            const busName = busNames[busSelect.value];
             const stopIndex = Number(document.getElementById("stopSelect").value);
             const stops = direction === "campus_city" ? campusToBoromath : boromathToCampus;
 
-            const busData = {
-                name: busName,
-                stopIndex: stopIndex,
+            pendingReportData = {
+                direction,
+                busName,
+                stopIndex,
                 stopName: stops[stopIndex],
                 time: Date.now(),
                 updatedBy: window.currentUser.displayName || window.currentUser.email || window.currentUser.uid
             };
 
-            btn.disabled = true;
-            btn.innerHTML = `<span>⏳ ${isEn ? 'Submitting update...' : 'আপডেট পাঠানো হচ্ছে...'}</span>`;
+            // USER REQUIREMENT: If the user's device live location (GPS) is currently off,
+            // show the location suggestion pop up modal first!
+            if (gpsWatchId === null) {
+                openModal('locationSuggestionModal');
+                return;
+            }
+
+            // Otherwise, show the ensure/confirmation modal directly
+            showConfirmUpdateModal();
+        }
+
+        // Location Suggestion Modal Actions
+        function acceptLocationSuggestionAndStartGps() {
+            closeModal('locationSuggestionModal');
+            // Start device GPS auto-tracking
+            startGpsShare();
+            // Also proceed to submit the first update
+            showConfirmUpdateModal();
+        }
+
+        function dismissLocationSuggestionAndShowConfirm() {
+            closeModal('locationSuggestionModal');
+            showConfirmUpdateModal();
+        }
+
+        // Show Confirmation Modal before updating
+        function showConfirmUpdateModal() {
+            if (!pendingReportData) return;
+            const isEn = window.currentLang === 'en';
+            const busNameEl = document.getElementById("confirmModalBusName");
+            const stopNameEl = document.getElementById("confirmModalStopName");
+            const dirEl = document.getElementById("confirmModalDirection");
+
+            if (busNameEl) busNameEl.textContent = getBusDisplayName(pendingReportData.busName);
+            if (stopNameEl) stopNameEl.textContent = getStopName(pendingReportData.stopName);
+            if (dirEl) {
+                dirEl.textContent = pendingReportData.direction === "campus_city"
+                    ? (isEn ? "HSTU Campus ➔ Dinajpur City (Boromath)" : "হাবিপ্রবি ক্যাম্পাস ➔ দিনাজপুর শহর (বড়মাঠ)")
+                    : (isEn ? "Dinajpur City (Boromath) ➔ HSTU Campus" : "দিনাজপুর শহর (বড়মাঠ) ➔ হাবিপ্রবি ক্যাম্পাস");
+            }
+
+            openModal('confirmUpdateModal');
+        }
+
+        // Final confirmed submission execution
+        async function proceedWithConfirmedReportSubmit() {
+            closeModal('confirmUpdateModal');
+            if (!pendingReportData) return;
+
+            const btn = document.getElementById("submitBtn");
+            const isEn = window.currentLang === 'en';
+            const { direction, busName, stopIndex, stopName, time, updatedBy } = pendingReportData;
+
+            const busData = {
+                name: busName,
+                stopIndex: stopIndex,
+                stopName: stopName,
+                time: time,
+                updatedBy: updatedBy
+            };
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<span>⏳ ${isEn ? 'Submitting update...' : 'আপডেট পাঠানো হচ্ছে...'}</span>`;
+            }
+
             try {
                 await window.firebaseSaveBus(direction, busName, busData);
 
@@ -1998,15 +2407,18 @@
                 const opp = direction === "campus_city" ? "boromath_campus" : "campus_city";
                 if (window.buses[opp]) delete window.buses[opp][safeName];
 
-                alert(isEn ? "✅ Bus location updated successfully!" : "✅ বাসের অবস্থান সফলভাবে আপডেট হয়েছে!");
+                alert(isEn ? "✅ Bus location updated successfully!" : "✅ বাসের অবস্থান নিশ্চিত ও সফলভাবে আপডেট হয়েছে!");
                 showPage('live', null);
                 changeDirection(direction);
             } catch (error) {
                 console.error("Firebase save error:", error);
                 alert(isEn ? ("❌ Update failed: " + (error?.message || "Unknown error")) : ("❌ আপডেট করা যায়নি: " + (error?.message || "অজানা সমস্যা")));
             } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<span>${isEn ? '📡 Submit Bus Location' : '📡 বাসের অবস্থান আপডেট করুন'}</span>`;
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>${isEn ? '📡 Submit Bus Location' : '📡 বাসের অবস্থান আপডেট করুন'}</span>`;
+                }
+                pendingReportData = null;
             }
         }
 
@@ -2014,9 +2426,12 @@
         updateBusOptions();
         renderBuses();
         applyLanguage(currentLang);
+        if (window.currentUser && typeof window.updateAuthUI === "function") {
+            window.updateAuthUI(window.currentUser);
+        }
 
         // ====================================================================
-        // GPS TRACKING
+        // GPS LIVE TRACKING & LOOPHOLE SAFEGUARDS
         // ====================================================================
         function distanceMeters(lat1, lon1, lat2, lon2) {
             const R = 6371000;
@@ -2037,14 +2452,17 @@
             return best ? { stopName: best, stopIndex: bestIndex, distance: bestDist } : null;
         }
 
-        let gpsWatchId = null;
-        let gpsLastSentStop = null;
-        let gpsLastSentTime = 0;
+        // GPS tracking timing constants (variables hoisted at top of script)
+        gpsWatchId = null;
+        gpsStartTime = 0;
+        gpsLastSentStop = null;
+        gpsLastSentTime = 0;
         const GPS_HEARTBEAT_MS = 2 * 60 * 1000;
+        const GPS_MAX_DURATION_MS = 45 * 60 * 1000; // 45 minutes max trip safeguard
 
         function toggleGpsShare() {
             if (gpsWatchId !== null) {
-                stopGpsShare();
+                stopGpsShareWithReason('manual');
             } else {
                 startGpsShare();
             }
@@ -2057,7 +2475,7 @@
                 return;
             }
             if (!window.currentUser) {
-                alert(isEn ? "🔐 Please sign in with Google first." : "🔐 আগে Google দিয়ে লগইন করতে হবে।");
+                alert(isEn ? "🔐 Please sign in or continue as student first to share GPS." : "🔐 GPS শেয়ার করতে আগে Google দিয়ে লগইন করুন বা ছাত্র হিসেবে প্রবেশ করুন।");
                 window.doLogin();
                 return;
             }
@@ -2069,6 +2487,8 @@
 
             gpsLastSentStop = null;
             gpsLastSentTime = 0;
+            gpsStartTime = Date.now();
+
             const statusEl = document.getElementById("gpsStatus");
             const btn = document.getElementById("gpsBtn");
             if (statusEl) statusEl.textContent = isEn ? "⏳ Acquiring GPS signal..." : "⏳ GPS সিগন্যাল খোঁজা হচ্ছে...";
@@ -2076,6 +2496,14 @@
                 btn.innerHTML = `<span>⏹️ ${isEn ? 'Stop Location Sharing' : 'লোকেশন শেয়ার বন্ধ করো'}</span>`;
                 btn.className = "py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs md:text-sm shadow-sm transition flex items-center justify-center gap-2 cursor-pointer";
             }
+
+            // Show Floating GPS Banner
+            const banner = document.getElementById("activeGpsFloatingBanner");
+            const badge = document.getElementById("activeGpsBusBadge");
+            const bannerText = document.getElementById("activeGpsStatusText");
+            if (banner) banner.classList.remove("hidden");
+            if (badge) badge.textContent = getBusDisplayName(busNames[busSelectEl.value]);
+            if (bannerText) bannerText.textContent = isEn ? "GPS connected, tracking bus route..." : "GPS সক্রিয়, বাসের অবস্থান পর্যবেক্ষণ করা হচ্ছে...";
 
             gpsWatchId = navigator.geolocation.watchPosition(onGpsUpdate, onGpsError, {
                 enableHighAccuracy: true,
@@ -2085,15 +2513,32 @@
         }
 
         function stopGpsShare() {
+            stopGpsShareWithReason('manual');
+        }
+
+        function stopGpsShareWithReason(reason = 'manual') {
             const isEn = window.currentLang === 'en';
-            if (gpsWatchId !== null) navigator.geolocation.clearWatch(gpsWatchId);
-            gpsWatchId = null;
+            if (gpsWatchId !== null) {
+                navigator.geolocation.clearWatch(gpsWatchId);
+                gpsWatchId = null;
+            }
+
             const statusEl = document.getElementById("gpsStatus");
             const btn = document.getElementById("gpsBtn");
             if (statusEl) statusEl.textContent = isEn ? "GPS sharing is off." : "জিপিএস শেয়ার বন্ধ আছে।";
             if (btn) {
                 btn.innerHTML = `<span>📍 ${isEn ? 'Start Sharing Location' : 'লোকেশন শেয়ার শুরু করো'}</span>`;
                 btn.className = "py-2.5 px-4 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs md:text-sm shadow-sm transition flex items-center justify-center gap-2 cursor-pointer";
+            }
+
+            // Hide Floating Banner
+            const banner = document.getElementById("activeGpsFloatingBanner");
+            if (banner) banner.classList.add("hidden");
+
+            if (reason === 'user_exit') {
+                alert(isEn ? "🚪 You left the bus. GPS sharing has been safely stopped." : "🚪 আপনি বাস থেকে নেমেছেন—লাইভ ট্র্যাকিং সফলভাবে বন্ধ করা হয়েছে।");
+            } else if (reason === 'reached_destination') {
+                alert(isEn ? "🏁 The bus reached its final destination! Live tracking completed." : "🏁 বাসটি শেষ গন্তব্যে পৌঁছে গেছে। আজকের সফল ট্রিপ শেষে লাইভ শেয়ারিং সমাপ্ত করা হলো!");
             }
         }
 
@@ -2102,21 +2547,35 @@
             const { latitude, longitude } = position.coords;
             const direction = document.getElementById("directionSelect").value;
             const stops = direction === "campus_city" ? campusToBoromath : boromathToCampus;
+            const statusEl = document.getElementById("gpsStatus");
+            const bannerText = document.getElementById("activeGpsStatusText");
+
+            // Max Duration Safeguard (45 minutes)
+            if (Date.now() - gpsStartTime > GPS_MAX_DURATION_MS) {
+                stopGpsShareWithReason('timeout');
+                return;
+            }
 
             const match = findNearestStop(latitude, longitude, stops);
-            const statusEl = document.getElementById("gpsStatus");
 
-            if (!match) {
-                if (statusEl) statusEl.textContent = isEn ? "⚠️ No designated stop found nearby." : "⚠️ কাছাকাছি কোনো স্টপ পাওয়া যায়নি।";
+            // ================================================================
+            // LOOPHOLE SAFEGUARD: Check if user walked away from the bus route
+            // If the user's current GPS is >700 meters from the nearest stop on this route,
+            // they have exited the bus or deviated away. Stop auto-updates immediately!
+            // ================================================================
+            if (!match || match.distance > 700) {
+                stopGpsShareWithReason('off_route');
+                openModal('routeDeviationModal');
                 return;
             }
 
             const stopDisplay = getStopName(match.stopName);
-            if (statusEl) {
-                statusEl.textContent = isEn
-                    ? `📍 Nearest Stop: ${stopDisplay} (~${Math.round(match.distance)} m)`
-                    : `📍 নিকটবর্তী স্টপ: ${stopDisplay} (~${Math.round(match.distance)} মি.)`;
-            }
+            const statusMsg = isEn
+                ? `📍 Nearest: ${stopDisplay} (~${Math.round(match.distance)}m)`
+                : `📍 নিকটবর্তী: ${stopDisplay} (~${Math.round(match.distance)} মি.)`;
+
+            if (statusEl) statusEl.textContent = statusMsg;
+            if (bannerText) bannerText.textContent = `${statusMsg} • ${isEn ? 'On Route' : 'বাস রুটে আছে'}`;
 
             const now = Date.now();
             const stopChanged = match.stopName !== gpsLastSentStop;
@@ -2127,7 +2586,10 @@
 
             const busName = busNames[document.getElementById("busSelect").value];
             const busData = {
-                name: busName, stopIndex: match.stopIndex, stopName: match.stopName, time: now,
+                name: busName,
+                stopIndex: match.stopIndex,
+                stopName: match.stopName,
+                time: now,
                 updatedBy: window.currentUser.displayName || window.currentUser.email || window.currentUser.uid
             };
 
@@ -2142,10 +2604,24 @@
                 gpsLastSentStop = match.stopName;
                 gpsLastSentTime = now;
                 changeDirection(direction);
+
+                // Check if bus reached the final destination stop
+                if (match.stopIndex === stops.length - 1) {
+                    setTimeout(() => {
+                        stopGpsShareWithReason('reached_destination');
+                    }, 8000);
+                }
             } catch (err) {
                 console.error("GPS auto-update save error:", err);
             }
         }
+
+        // Clean up tracking when page unloads or navigates away
+        window.addEventListener('beforeunload', () => {
+            if (gpsWatchId !== null) {
+                navigator.geolocation.clearWatch(gpsWatchId);
+            }
+        });
 
         function onGpsError(err) {
             console.error("GPS error:", err);
@@ -2187,66 +2663,79 @@
             try {
                 await signInWithPopup(auth, provider);
             } catch (err) {
-                console.error("Login error:", err);
-                if (err.code === "auth/unauthorized-domain") {
-                    alert("⚠️ Firebase Unauthorized Domain: অনুগ্রহ করে Firebase Console -> Authentication -> Settings এ গিয়ে Authorized Domains এ 'bhujonggoroy.github.io' যুক্ত করুন।");
-                } else if (err.code !== "auth/popup-closed-by-user") {
+                if (err && err.code === "auth/unauthorized-domain") {
+                    console.warn("Firebase Auth: Current domain (" + window.location.hostname + ") is not authorized in Firebase Console.");
+                    const hostEl = document.getElementById("currentHostDomainDisplay");
+                    if (hostEl) hostEl.textContent = window.location.hostname;
+                    if (typeof window.openModal === "function") {
+                        window.openModal("unauthorizedDomainModal");
+                    }
+                    return;
+                }
+                if (err && err.code !== "auth/popup-closed-by-user") {
+                    console.error("Login error:", err);
                     alert("❌ লগইন করা যায়নি: " + (err.message || "অনুগ্রহ করে আবার চেষ্টা করুন।"));
                 }
             }
         };
+
         window.doLogout = async () => {
-            await signOut(auth);
+            try {
+                localStorage.removeItem("hstu_guest_user");
+            } catch (e) {}
+            try {
+                await signOut(auth);
+            } catch (e) {}
+            if (typeof window.updateAuthUI === "function") {
+                window.updateAuthUI(null);
+            }
         };
 
-            onAuthStateChanged(auth, async (user) => {
-                const statusEl = document.getElementById("authStatus");
-                const loginBtn = document.getElementById("loginBtn");
-                const userProfilePill = document.getElementById("userProfilePill");
-                const userShortName = document.getElementById("userShortName");
-                const notice = document.getElementById("reportLoginNotice");
-
-                if (user) {
-                    window.currentUser = user;
-                    if (loginBtn) loginBtn.style.display = "none";
-                    if (userProfilePill) userProfilePill.style.display = "flex";
-                    if (userShortName) userShortName.textContent = user.displayName || user.email?.split('@')[0] || "User";
-                    if (notice) notice.style.display = "none";
-
-                    const userRef = ref(db, `users/${user.uid}`);
-                    try {
-                        const snap = await get(userRef);
-                        if (!snap.exists()) {
-                            await set(userRef, {
-                                email: user.email || "",
-                                name: user.displayName || "",
-                                role: "student",
-                                createdAt: Date.now()
-                            });
-                            window.currentRole = "student";
-                        } else {
-                            window.currentRole = snap.val().role || "student";
-                        }
-                    } catch (e) {
-                        console.error("User profile load error:", e);
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                window.currentUser = user;
+                const userRef = ref(db, `users/${user.uid}`);
+                try {
+                    const snap = await get(userRef);
+                    if (!snap.exists()) {
+                        await set(userRef, {
+                            email: user.email || "",
+                            name: user.displayName || "",
+                            role: "student",
+                            createdAt: Date.now()
+                        });
                         window.currentRole = "student";
+                    } else {
+                        window.currentRole = snap.val().role || "student";
                     }
-
-                    const roleBadge = window.currentRole === "admin" ? " 👑 Admin"
-                        : window.currentRole === "moderator" ? " 🛡️ Mod" : "";
-                    if (statusEl) statusEl.textContent = `${user.displayName || user.email}${roleBadge}`;
-                } else {
-                    window.currentUser = null;
-                    window.currentRole = null;
-                    if (loginBtn) loginBtn.style.display = "inline-flex";
-                    if (userProfilePill) userProfilePill.style.display = "none";
-                    if (statusEl) statusEl.textContent = "লগইন করা নেই";
-                    if (notice) notice.style.display = "flex";
+                } catch (e) {
+                    console.error("User profile load error:", e);
+                    window.currentRole = "student";
                 }
 
-                const historyCard = document.getElementById("historyCard");
-                if (historyCard) historyCard.style.display = (window.currentRole === "admin") ? "block" : "none";
-            });
+                if (typeof window.updateAuthUI === "function") {
+                    window.updateAuthUI(user);
+                }
+            } else {
+                // If guest student session is active, don't clear it
+                try {
+                    const savedGuest = localStorage.getItem("hstu_guest_user");
+                    if (savedGuest) {
+                        const parsed = JSON.parse(savedGuest);
+                        window.currentUser = parsed;
+                        window.currentRole = "student";
+                        if (typeof window.updateAuthUI === "function") {
+                            window.updateAuthUI(parsed);
+                        }
+                        return;
+                    }
+                } catch (e) {}
+
+                if (typeof window.updateAuthUI === "function") {
+                    window.updateAuthUI(null);
+                }
+            }
+        });
 
             const oppositeDirection = { campus_city: "boromath_campus", boromath_campus: "campus_city" };
 
