@@ -1,0 +1,10 @@
+{
+  "name": "Student Bus Tracker",
+  "description": "HSTU bus tracking and schedule web application for students",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

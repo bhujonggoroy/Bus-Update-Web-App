@@ -1,0 +1,14 @@
+{
+  "name": "student-bus-tracker",
+  "version": "3.0.0",
+  "description": "Student Bus Tracker - HSTU bus tracking and schedule web app",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "node -e \"console.log('Build complete')\""
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
