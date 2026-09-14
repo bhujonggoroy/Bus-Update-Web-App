@@ -1,7 +1,7 @@
 {
-  "name": "student-bus-tracker",
+  "name": "bus-update-web-app",
   "version": "3.0.0",
-  "description": "Student Bus Tracker - HSTU bus tracking and schedule web app",
+  "description": "HSTU bus tracking and schedule web app",
   "type": "module",
   "scripts": {
     "dev": "node server.js",

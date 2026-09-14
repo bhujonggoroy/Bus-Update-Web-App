@@ -1,5 +1,5 @@
 {
-  "name": "Student Bus Tracker",
+  "name": "HSTU Bus Tracker",
   "description": "HSTU bus tracking and schedule web application for students",
   "requestFramePermissions": [
     "geolocation"
