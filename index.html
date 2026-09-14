@@ -9,6 +9,19 @@
     <meta property="og:title" content="HSTU Student Bus Tracker • হাবিপ্রবি বাস ট্র্যাকার">
     <meta property="og:description" content="HSTU বাস লাইভ ট্র্যাকিং, সময়সূচী ও রুট ড্যাশবোর্ড">
 
+    <!-- Progressive Web App (PWA) / WebView Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#047857">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HSTU Bus">
+    <link rel="icon" type="image/png" sizes="48x48" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -109,9 +122,7 @@
             
             <!-- App Brand & Status -->
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-brand-600 flex items-center justify-center text-white shadow-sm font-bold text-xl">
-                    🚌
-                </div>
+                <img src="icon-192.png" alt="HSTU Bus Logo" class="w-10 h-10 rounded-xl shadow-md border border-emerald-400/40 object-cover bg-emerald-700" />
                 <div>
                     <div class="flex items-center gap-2">
                         <h1 class="font-bold text-lg md:text-xl tracking-tight leading-tight text-white">হাবিপ্রবি বাস ট্র্যাকার</h1>
@@ -140,28 +151,60 @@
                 </div>
             </div>
 
-            <!-- User Auth Controls -->
-            <div id="authBox" class="flex items-center gap-2">
-                <div id="authStatusBadge" class="hidden sm:flex items-center gap-2 text-xs text-emerald-100 bg-brand-800/70 border border-brand-700 px-2.5 py-1 rounded-lg">
-                    <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-                    <span id="authStatus">লগইন চেক হচ্ছে...</span>
-                </div>
-                <button id="loginBtn" onclick="doLogin()" class="inline-flex items-center gap-1.5 bg-white text-brand-900 hover:bg-emerald-50 font-semibold text-xs md:text-sm px-3.5 py-2 rounded-lg shadow-sm transition active:scale-95 cursor-pointer">
-                    <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
+            <!-- Action Controls (Install & Auth) -->
+            <div class="flex items-center gap-2">
+                <!-- PWA In-App Install Button -->
+                <button id="pwaInstallBtn" onclick="triggerPWAInstall()" class="hidden items-center gap-1.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-900 font-bold text-xs md:text-sm px-3 py-1.5 md:py-2 rounded-lg shadow-sm transition active:scale-95 cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                     </svg>
-                    <span>লগইন</span>
+                    <span class="hidden sm:inline">অ্যাপ ইনস্টল</span>
+                    <span class="sm:hidden">ইনস্টল</span>
                 </button>
-                <div id="userProfilePill" class="hidden items-center gap-2">
-                    <span id="userShortName" class="text-xs font-semibold text-emerald-200 hidden md:inline-block max-w-[120px] truncate"></span>
-                    <button id="logoutBtn" onclick="doLogout()" class="border border-emerald-400/40 hover:bg-white/10 text-emerald-100 text-xs px-2.5 py-1.5 rounded-lg transition cursor-pointer">
-                        লগআউট
+
+                <!-- User Auth Controls -->
+                <div id="authBox" class="flex items-center gap-2">
+                    <div id="authStatusBadge" class="hidden sm:flex items-center gap-2 text-xs text-emerald-100 bg-brand-800/70 border border-brand-700 px-2.5 py-1 rounded-lg">
+                        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                        <span id="authStatus">লগইন চেক হচ্ছে...</span>
+                    </div>
+                    <button id="loginBtn" onclick="doLogin()" class="inline-flex items-center gap-1.5 bg-white text-brand-900 hover:bg-emerald-50 font-semibold text-xs md:text-sm px-3.5 py-2 rounded-lg shadow-sm transition active:scale-95 cursor-pointer">
+                        <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
+                        </svg>
+                        <span>লগইন</span>
                     </button>
+                    <div id="userProfilePill" class="hidden items-center gap-2">
+                        <span id="userShortName" class="text-xs font-semibold text-emerald-200 hidden md:inline-block max-w-[120px] truncate"></span>
+                        <button id="logoutBtn" onclick="doLogout()" class="border border-emerald-400/40 hover:bg-white/10 text-emerald-100 text-xs px-2.5 py-1.5 rounded-lg transition cursor-pointer">
+                            লগআউট
+                        </button>
+                    </div>
                 </div>
             </div>
 
         </div>
     </header>
+
+    <!-- PWA In-App Install Banner (Dismissible) -->
+    <div id="pwaInstallBanner" class="hidden bg-gradient-to-r from-emerald-800 to-teal-900 text-white border-b border-emerald-700/80 px-4 py-2.5 shadow-inner">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5 text-xs sm:text-sm">
+                <img src="icon-192.png" alt="App Logo" class="w-8 h-8 rounded-lg shadow border border-emerald-400/50 object-cover flex-shrink-0" />
+                <div>
+                    <span class="font-bold text-amber-300">হাবিপ্রবি বাস ট্র্যাকার অ্যাপ</span>
+                    <span class="text-emerald-100 hidden sm:inline ml-1">• ব্রাউজার ছাড়া ফুল-স্ক্রিন অ্যাপ হিসেবে ফোনে বা কম্পিউটারে ইনস্টল করুন</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 flex-shrink-0">
+                <button onclick="triggerPWAInstall()" class="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-900 font-bold text-xs px-3.5 py-1.5 rounded-lg shadow transition active:scale-95 flex items-center gap-1.5 cursor-pointer">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    <span>ইনস্টল করুন</span>
+                </button>
+                <button onclick="dismissPwaBanner()" class="text-emerald-300 hover:text-white p-1 text-base leading-none cursor-pointer" title="বন্ধ করুন">✕</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Desktop Navigation Bar -->
     <nav class="bg-white border-b border-slate-200 shadow-sm sticky top-[61px] z-30 hidden md:block">
@@ -774,6 +817,79 @@
     <!-- JAVASCRIPT CORE LOGIC                                                -->
     <!-- ==================================================================== -->
     <script>
+        // ====================================================================
+        // PWA SERVICE WORKER & APP INSTALLATION (WebView / Standalone)
+        // ====================================================================
+        let deferredPwaPrompt = null;
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(err => {
+                    console.log('SW registration note:', err);
+                });
+            });
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPwaPrompt = e;
+            const btn = document.getElementById('pwaInstallBtn');
+            const banner = document.getElementById('pwaInstallBanner');
+            if (btn && !isStandalone) {
+                btn.classList.remove('hidden');
+                btn.classList.add('inline-flex');
+            }
+            if (banner && !isStandalone && !localStorage.getItem('pwa_banner_dismissed')) {
+                banner.classList.remove('hidden');
+            }
+        });
+
+        window.addEventListener('appinstalled', () => {
+            deferredPwaPrompt = null;
+            const btn = document.getElementById('pwaInstallBtn');
+            const banner = document.getElementById('pwaInstallBanner');
+            if (btn) btn.classList.add('hidden');
+            if (banner) banner.classList.add('hidden');
+        });
+
+        window.triggerPWAInstall = async () => {
+            if (deferredPwaPrompt) {
+                deferredPwaPrompt.prompt();
+                const { outcome } = await deferredPwaPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    const btn = document.getElementById('pwaInstallBtn');
+                    const banner = document.getElementById('pwaInstallBanner');
+                    if (btn) btn.classList.add('hidden');
+                    if (banner) banner.classList.add('hidden');
+                }
+                deferredPwaPrompt = null;
+            } else {
+                const isIOS = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+                if (isIOS) {
+                    alert("📱 আইফোনে অ্যাপ ইনস্টল করতে:\n১. Safari ব্রাউজারের নিচে Share (শেয়ার) বোতাম চাপুন।\n২. স্ক্রল করে 'Add to Home Screen' (হোম স্ক্রিনে যোগ করুন) চাপুন।");
+                } else {
+                    alert("📱 অ্যাপ ইনস্টল করতে:\nব্রাউজারের ৩-ডট মেন্যু (⋮) চাপুন এবং 'Install app' বা 'Add to Home screen' (হোম স্ক্রিনে যোগ করুন) সিলেক্ট করুন।\nতাহলে ফেসবুকের মতো সুন্দর লোগো সহ অ্যাপ হিসেবে ইনস্টল হবে!");
+                }
+            }
+        };
+
+        window.dismissPwaBanner = () => {
+            const banner = document.getElementById('pwaInstallBanner');
+            if (banner) banner.classList.add('hidden');
+            localStorage.setItem('pwa_banner_dismissed', '1');
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!isStandalone) {
+                const btn = document.getElementById('pwaInstallBtn');
+                if (btn) {
+                    btn.classList.remove('hidden');
+                    btn.classList.add('inline-flex');
+                }
+            }
+        });
+
         const campusToBoromath = ["Campus", "Gopalganj", "College-mor", "Bus Terminal", "Bot-toli", "Shahi-Masjid", "Bolair-mor", "Sadar-hospital", "Boromath"];
         const boromathToCampus = [...campusToBoromath].reverse();
         
