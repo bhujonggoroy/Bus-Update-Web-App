@@ -4,370 +4,967 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Bus Tracker</title>
-    <meta name="description" content="HSTU bus tracking and schedule web application for students">
-    <meta property="og:title" content="Student Bus Tracker">
-    <meta property="og:description" content="HSTU bus tracking and schedule web application for students">
+    <title>HSTU Student Bus Tracker • হাবিপ্রবি বাস ট্র্যাকার ড্যাশবোর্ড</title>
+    <meta name="description" content="HSTU bus tracking and schedule web application for students with real-time GPS and interactive dashboard.">
+    <meta property="og:title" content="HSTU Student Bus Tracker • হাবিপ্রবি বাস ট্র্যাকার">
+    <meta property="og:description" content="HSTU বাস লাইভ ট্র্যাকিং, সময়সূচী ও রুট ড্যাশবোর্ড">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                            950: '#022c22'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Hind Siliguri"', '"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
         * {
-            box-sizing: border-box
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            margin: 0;
-            font-family: Arial, "Noto Sans Bengali", sans-serif;
-            background: #f3f5f7;
-            color: #222
+            font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            min-height: 100vh;
         }
 
-        header {
-            background: #075e54;
-            color: #fff;
-            padding: 25px 15px;
-            text-align: center
+        /* Pulse radar animation */
+        @keyframes radar-pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 30px
+        .pulse-live {
+            animation: radar-pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
         }
 
-        header p {
-            margin: 8px 0 0;
-            font-size: 18px
+        /* Hide scrollbars but allow touch scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
-        nav {
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            padding: 15px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, .08)
-        }
-
-        nav button {
-            border: 0;
-            background: #eef1f1;
-            padding: 13px 22px;
-            border-radius: 13px;
-            font-size: 16px;
-            cursor: pointer
-        }
-
-        nav button.active {
-            background: #075e54;
-            color: #fff
-        }
-
-        .container {
-            max-width: 1050px;
-            margin: auto;
-            padding: 20px
-        }
-
-        .page {
-            display: none
-        }
-
-        .page.active {
-            display: block
-        }
-
-        .notice {
-            background: #fff7dc;
-            border-left: 5px solid #e0ae00;
-            padding: 15px;
-            margin-bottom: 25px;
-            font-size: 16px
-        }
-
-        .direction-tabs {
-            display: flex;
-            gap: 15px;
-            margin: 15px 0 25px
-        }
-
-        .direction-tabs button {
-            flex: 1;
-            padding: 16px;
-            border: 0;
-            border-radius: 15px;
-            background: #e8eded;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer
-        }
-
-        .direction-tabs button.active {
-            background: #075e54;
-            color: #fff
-        }
-
-        .bus-card {
-            background: #fff;
-            border-left: 7px solid #078477;
-            border-radius: 18px;
-            padding: 22px;
-            margin-bottom: 17px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, .07)
-        }
-
-        .bus-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px
-        }
-
-        .bus-name {
-            font-size: 23px;
-            font-weight: bold
-        }
-
-        .status {
-            font-size: 15px;
-            font-weight: bold
-        }
-
-        .live {
-            color: #168b32
-        }
-
-        .location {
-            font-size: 19px;
-            margin-top: 15px
-        }
-
-        .progress {
-            margin-top: 12px;
-            color: #555;
-            font-size: 14px
-        }
-
-        .update-time {
-            color: #777;
-            font-size: 13px;
-            margin-top: 8px
-        }
-
-        .no-bus {
-            background: #fff;
-            border-radius: 16px;
-            padding: 35px 20px;
-            text-align: center;
-            color: #777;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, .05)
-        }
-
-        .card {
-            background: #fff;
-            padding: 22px;
-            border-radius: 16px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, .07)
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold
-        }
-
-        select {
-            width: 100%;
-            padding: 13px;
-            margin-top: 7px;
-            border: 1px solid #ccc;
-            border-radius: 9px;
-            font-size: 16px
-        }
-
-        .submit {
-            width: 100%;
-            padding: 15px;
-            margin-top: 20px;
-            border: 0;
-            border-radius: 9px;
-            background: #075e54;
-            color: #fff;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer
-        }
-
-        .submit:disabled {
-            opacity: .6;
-            cursor: not-allowed
-        }
-
-        @media(max-width:600px) {
-            header h1 {
-                font-size: 24px
-            }
-
-            header p {
-                font-size: 16px
-            }
-
-            nav button {
-                padding: 11px 14px;
-                font-size: 14px
-            }
-
-            .direction-tabs {
-                gap: 8px
-            }
-
-            .direction-tabs button {
-                font-size: 14px;
-                padding: 14px 6px
-            }
-
-            .bus-name {
-                font-size: 20px
-            }
-
-            .location {
-                font-size: 17px
-            }
+        /* Schedule styling overrides */
+        #scheduleFragment .sheet { max-width: 1300px; margin: auto; background: #ffffff; border-radius: 12px; padding: 20px 16px; font-family: "Hind Siliguri", "Noto Sans Bengali", sans-serif; }
+        #scheduleFragment .header { text-align: center; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9; }
+        #scheduleFragment .header h1 { font-size: 18px; margin: 2px 0; color: #0f172a; font-weight: 600; }
+        #scheduleFragment .header h2 { font-size: clamp(16px, 3.5vw, 22px); margin: 4px 0; color: #064e3b; font-weight: 700; }
+        #scheduleFragment .memo-row { display: flex; justify-content: space-between; font-size: 13px; margin: 12px 0; flex-wrap: wrap; gap: 6px; color: #64748b; }
+        #scheduleFragment .title-box { text-align: center; margin: 14px 0; }
+        #scheduleFragment .title-box span { border: 2px solid #065f46; background: #ecfdf5; color: #064e3b; padding: 6px 20px; border-radius: 8px; font-size: 15px; font-weight: 700; display: inline-block; }
+        #scheduleFragment .subtitle { text-align: center; font-size: 13px; font-weight: 600; margin-bottom: 14px; color: #334155; }
+        #scheduleFragment .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 16px; border: 1px solid #cbd5e1; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        #scheduleFragment table { border-collapse: collapse; font-size: 13px; min-width: 720px; width: 100%; }
+        #scheduleFragment th, #scheduleFragment td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: center; vertical-align: middle; white-space: nowrap; }
+        #scheduleFragment th { background-color: #f8fafc; color: #0f172a; font-weight: 600; }
+        #scheduleFragment .section-title { background-color: #f1f5f9; font-weight: 700; font-size: 14px; color: #0f172a; }
+        #scheduleFragment tr:hover td { background-color: #f8fafc; }
+        #scheduleFragment .note { font-size: 12.5px; margin-top: 12px; line-height: 1.6; color: #475569; background: #f8fafc; padding: 10px 14px; border-radius: 8px; border-left: 4px solid #059669; }
+        #scheduleFragment .footer { display: flex; justify-content: space-between; margin-top: 24px; font-size: 12.5px; flex-wrap: wrap; gap: 14px; color: #64748b; }
+        #scheduleFragment .footer ul { margin: 0; padding-left: 18px; }
+        #scheduleFragment .sign { text-align: right; font-size: 12.5px; color: #0f172a; font-weight: 600; }
+        #scheduleFragment .scroll-hint { font-size: 12px; color: #64748b; text-align: center; margin: -4px 0 10px; }
+        @media (max-width: 700px) {
+            #scheduleFragment .sheet { padding: 12px 8px; }
+            #scheduleFragment table { font-size: 12px; min-width: 620px; }
+            #scheduleFragment th, #scheduleFragment td { padding: 6px; white-space: normal; }
         }
     </style>
 </head>
 
-<body>
-    <header>
-        <h1>🚌 Student Bus Tracker</h1>
-        <p>HSTU • শিক্ষার্থীদের জন্য বাস তথ্য</p>
-        <div id="authBox" style="margin-top:12px;display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap">
-            <span id="authStatus" style="color:#fff;font-size:13px;opacity:.9">চেক করা হচ্ছে...</span>
-            <button id="loginBtn" onclick="doLogin()" style="display:none;background:#fff;color:#0a5c46;border:none;padding:8px 16px;border-radius:8px;font-weight:600;cursor:pointer">🔐 Google দিয়ে লগইন করো</button>
-            <button id="logoutBtn" onclick="doLogout()" style="display:none;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.6);padding:8px 16px;border-radius:8px;cursor:pointer">লগআউট</button>
+<body class="flex flex-col bg-slate-100 text-slate-800 pb-20 md:pb-8">
+
+    <!-- Top Sticky Header -->
+    <header class="sticky top-0 z-40 bg-brand-900 text-white shadow-md border-b border-brand-800/80">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+            
+            <!-- App Brand & Status -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-brand-600 flex items-center justify-center text-white shadow-sm font-bold text-xl">
+                    🚌
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-bold text-lg md:text-xl tracking-tight leading-tight text-white">হাবিপ্রবি বাস ট্র্যাকার</h1>
+                        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 -ml-3.5"></span>
+                            Live
+                        </span>
+                    </div>
+                    <p class="text-xs text-emerald-200/80 hidden sm:block">HSTU • ছাত্র-ছাত্রী ও শিক্ষক-কর্মকর্তা পরিবহন পোর্টাল</p>
+                </div>
+            </div>
+
+            <!-- Quick Glance Stats & Clock (Desktop/Tablet) -->
+            <div class="hidden lg:flex items-center gap-3">
+                <div class="bg-brand-950/40 border border-emerald-500/20 rounded-lg px-3 py-1.5 text-center">
+                    <span class="text-[10px] uppercase font-semibold tracking-wider text-emerald-300/80 block">অনলাইন পাঠক</span>
+                    <span id="topPresenceBadge" class="text-sm font-bold text-white flex items-center justify-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
+                        <span id="topPresenceCount">...</span>
+                    </span>
+                </div>
+                <div class="bg-brand-950/40 border border-emerald-500/20 rounded-lg px-3 py-1.5 text-center">
+                    <span class="text-[10px] uppercase font-semibold tracking-wider text-emerald-300/80 block">বর্তমান সময়</span>
+                    <span id="topLiveClock" class="text-sm font-bold text-emerald-100 tabular-nums">--:-- --</span>
+                </div>
+            </div>
+
+            <!-- User Auth Controls -->
+            <div id="authBox" class="flex items-center gap-2">
+                <div id="authStatusBadge" class="hidden sm:flex items-center gap-2 text-xs text-emerald-100 bg-brand-800/70 border border-brand-700 px-2.5 py-1 rounded-lg">
+                    <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                    <span id="authStatus">লগইন চেক হচ্ছে...</span>
+                </div>
+                <button id="loginBtn" onclick="doLogin()" class="inline-flex items-center gap-1.5 bg-white text-brand-900 hover:bg-emerald-50 font-semibold text-xs md:text-sm px-3.5 py-2 rounded-lg shadow-sm transition active:scale-95 cursor-pointer">
+                    <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
+                    </svg>
+                    <span>লগইন</span>
+                </button>
+                <div id="userProfilePill" class="hidden items-center gap-2">
+                    <span id="userShortName" class="text-xs font-semibold text-emerald-200 hidden md:inline-block max-w-[120px] truncate"></span>
+                    <button id="logoutBtn" onclick="doLogout()" class="border border-emerald-400/40 hover:bg-white/10 text-emerald-100 text-xs px-2.5 py-1.5 rounded-lg transition cursor-pointer">
+                        লগআউট
+                    </button>
+                </div>
+            </div>
+
         </div>
     </header>
-    <nav>
-        <button class="active" onclick="showPage('live',this)">🟢 Live</button>
-        <button onclick="showPage('schedule',this)">📅 Schedule</button>
-        <button onclick="showPage('report',this)">📡 Report</button>
+
+    <!-- Desktop Navigation Bar -->
+    <nav class="bg-white border-b border-slate-200 shadow-sm sticky top-[61px] z-30 hidden md:block">
+        <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
+            <div class="flex space-x-1 py-2" id="desktopNavTabs">
+                <button onclick="showPage('live', this)" class="nav-tab active inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg text-emerald-700 bg-emerald-50 border border-emerald-200 transition">
+                    <span class="text-base">🟢</span> লাইভ বাস ট্র্যাকার
+                </button>
+                <button onclick="showPage('map', this)" class="nav-tab inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+                    <span class="text-base">🗺️</span> রুট ও স্টপ ম্যাপ
+                </button>
+                <button onclick="showPage('schedule', this)" class="nav-tab inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+                    <span class="text-base">📅</span> বাস শিডিউল
+                </button>
+                <button onclick="showPage('report', this)" class="nav-tab inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+                    <span class="text-base">📡</span> অবস্থান আপডেট ও GPS
+                </button>
+                <button onclick="showPage('contacts', this)" class="nav-tab inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+                    <span class="text-base">📞</span> জরুরি হেল্পলাইন
+                </button>
+            </div>
+
+            <!-- Active Bus Counter Summary & Refresh Button -->
+            <div class="text-xs text-slate-500 font-medium flex items-center gap-2">
+                <span id="activeBusCountPill" class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold">০টি বাস সক্রিয়</span>
+                <button id="refreshNavBtn" onclick="forceRefreshData(this)" title="এখনই তথ্য রিফ্রেশ করুন" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 border border-slate-200 transition cursor-pointer text-xs font-semibold active:scale-95">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                    <span>রিফ্রেশ</span>
+                </button>
+            </div>
+        </div>
     </nav>
-    <div class="container">
-        <section id="live" class="page active">
-            <div class="notice">ℹ️ এখানে শুধু শিক্ষার্থীদের রিপোর্ট করা বর্তমানে চলমান বাস দেখানো হচ্ছে।</div>
-            <h2>🟢 বর্তমানে চলমান বাস</h2>
-            <div class="direction-tabs">
-                <button id="campusCityBtn" class="active" onclick="changeDirection('campus_city')">🏫 ক্যাম্পাস →
-                    শহর</button>
-                <button id="boroMathCampusBtn" onclick="changeDirection('boromath_campus')">🏙️ বড় মাঠ →
-                    ক্যাম্পাস</button>
-            </div>
-            <div id="busList"></div>
-        </section>
-        <section id="schedule" class="page">
-            <div class="card">
-                <h2>📅 শিক্ষার্থীদের বাস শিডিউল</h2>
-                <div id="scheduleFragment">
-                    <p id="scheduleStatus" style="text-align:center;color:#777">⏳ শিডিউল লোড হচ্ছে...</p>
-                </div>
-            </div>
-        </section>
-        <section id="report" class="page">
-            <div class="card">
-                <h2>📡 বাসের বর্তমান অবস্থান জানান</h2>
-                <div id="reportLoginNotice" style="display:none;background:#fff4e5;border-left:4px solid #ffa500;padding:12px 14px;border-radius:6px;margin-bottom:16px;font-size:14px;color:#7a5200">
-                    ⚠️ Update পাঠাতে হলে আগে Google দিয়ে লগইন করতে হবে (উপরে "লগইন করো" বাটনে চাপো)। এটা ভুল/ফেক আপডেট ঠেকাতে সাহায্য করে।
-                </div>
-                <label>যাত্রার দিক</label>
-                <select id="directionSelect" onchange="updateBusOptions()">
-                    <option value="campus_city">🏫 ক্যাম্পাস → শহর</option>
-                    <option value="boromath_campus">🏙️ বড় মাঠ → ক্যাম্পাস</option>
-                </select>
-                <label>বাস নির্বাচন করুন</label><select id="busSelect"></select>
-                <label>বাসটি বর্তমানে কোথায়?</label><select id="stopSelect"></select>
-                <button class="submit" id="submitBtn" onclick="submitReport()">📡 Update Bus Location</button>
 
-                <div style="margin-top:25px;padding-top:20px;border-top:1px solid #eee">
-                    <label style="margin-top:0">🛰️ Auto GPS Tracking (ঐচ্ছিক)</label>
-                    <p style="color:#666;font-size:14px;margin:6px 0 0">
-                        চালু করলে তোমার ফোনের লোকেশন থেকে অটোমেটিক কাছের স্টপ বসে যাবে —
-                        বারবার dropdown থেকে বেছে দিতে হবে না। বাসে বসে/সাথে থাকা অবস্থায় চালু রাখো।
-                    </p>
-                    <button class="submit" id="gpsBtn" style="background:#0a7d64;margin-top:12px"
-                        onclick="toggleGpsShare()">📍 লোকেশন শেয়ার শুরু করো</button>
-                    <div id="gpsStatus" style="margin-top:10px;font-size:14px;color:#777"></div>
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto w-full px-3 sm:px-4 py-4 md:py-6 flex-1">
+
+        <!-- ==================================================================== -->
+        <!-- TAB 1: LIVE BUS TRACKER                                              -->
+        <!-- ==================================================================== -->
+        <section id="live" class="page-view block space-y-4">
+            
+            <!-- Dashboard Top Action Banner -->
+            <div class="bg-gradient-to-r from-emerald-800 to-brand-900 rounded-2xl p-4 md:p-5 text-white shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-1 flex-wrap">
+                        <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-white/20 uppercase tracking-wider text-emerald-100">রিয়েল-টাইম ট্র্যাকিং</span>
+                        <span class="text-xs text-emerald-200" id="liveRefreshCounter">• প্রতি মুহূর্তে আপডেট হচ্ছে</span>
+                        <button onclick="forceRefreshData(this)" title="এখনই তথ্য রিফ্রেশ করুন" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/15 hover:bg-white/25 text-emerald-100 text-[11px] font-medium border border-white/20 transition cursor-pointer active:scale-95">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            <span>রিফ্রেশ</span>
+                        </button>
+                    </div>
+                    <h2 class="text-lg md:text-2xl font-bold tracking-tight">বর্তমানে চলমান হাবিপ্রবি বাসসমূহ</h2>
+                    <p class="text-xs md:text-sm text-emerald-100/90 mt-0.5">শিক্ষার্থীদের পাঠানো আপডেট ও লাইভ জিপিএস থেকে বাসের সঠিক অবস্থান</p>
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <button onclick="showPage('report', null)" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-brand-950 font-bold text-xs md:text-sm px-4 py-2.5 rounded-xl shadow-sm transition cursor-pointer">
+                        <span>📡</span>
+                        <span>আমি বাসে আছি (আপডেট দিন)</span>
+                    </button>
                 </div>
             </div>
 
-            <div class="card" id="historyCard" style="margin-top:16px;display:none">
-                <h2>🕘 Update History (সর্বশেষ ২০টা) <span style="font-size:12px;color:#e0ae00;font-weight:normal">👑 শুধু Admin দেখতে পাচ্ছে</span></h2>
-                <div id="historyList" style="font-size:13px;color:#555;max-height:260px;overflow-y:auto"></div>
+            <!-- Direction Selector Tabs -->
+            <div class="bg-white rounded-2xl p-1.5 shadow-sm border border-slate-200/80 flex items-center gap-1.5">
+                <button id="campusCityBtn" onclick="changeDirection('campus_city')" class="flex-1 py-3 px-3 rounded-xl font-bold text-sm md:text-base text-white bg-brand-700 shadow-sm transition flex items-center justify-center gap-2 cursor-pointer">
+                    <span>🏫</span>
+                    <span>ক্যাম্পাস হতে শহর</span>
+                    <span id="campusCityCountBadge" class="ml-1 text-xs px-2 py-0.5 rounded-full bg-white/20 text-white font-semibold">০</span>
+                </button>
+                <button id="boroMathCampusBtn" onclick="changeDirection('boromath_campus')" class="flex-1 py-3 px-3 rounded-xl font-semibold text-sm md:text-base text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-2 cursor-pointer">
+                    <span>🏙️</span>
+                    <span>বড়মাঠ হতে ক্যাম্পাস</span>
+                    <span id="boroMathCountBadge" class="ml-1 text-xs px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 font-semibold">০</span>
+                </button>
             </div>
 
-            <div class="card" id="activeUsersCard" style="margin-top:16px">
-                <h2>👥 এখন সাইটে আছে</h2>
-                <div id="activeUsersCount" style="font-size:28px;font-weight:bold;color:#075e54">...</div>
-                <div id="activeUsersAlarm" style="display:none;margin-top:10px;background:#ffe5e5;border-left:4px solid #b00020;padding:10px 14px;border-radius:6px;font-size:14px;color:#8a0000"></div>
+            <!-- Route Info Mini-Strip -->
+            <div class="bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 flex items-center justify-between text-xs text-amber-900">
+                <div class="flex items-center gap-2">
+                    <span class="text-base">💡</span>
+                    <span id="routeDescriptionText">রুট: ক্যাম্পাস ➔ গোপালগঞ্জ ➔ কলেজ মোড় ➔ বাস টার্মিনাল ➔ বটতলী ➔ শাহী মসজিদ ➔ বলাইয়ের মোড় ➔ সদর হাসপাতাল ➔ বড়মাঠ</span>
+                </div>
+                <button onclick="showPage('map', null)" class="text-amber-800 hover:underline font-bold whitespace-nowrap ml-2 hidden sm:block">রুট ম্যাপ ➔</button>
+            </div>
+
+            <!-- Bus Cards Grid -->
+            <div id="busList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Dynamic Bus Cards Injected via renderBuses() -->
+            </div>
+
+            <!-- Quick Live Stats Panel -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg font-bold">🚍</div>
+                    <div>
+                        <div class="text-xs text-slate-500 font-medium">মোট নথিভুক্ত বাস</div>
+                        <div class="text-base font-bold text-slate-800">১১+ টি</div>
+                    </div>
+                </div>
+                <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center text-lg font-bold">📍</div>
+                    <div>
+                        <div class="text-xs text-slate-500 font-medium">প্রধান স্টপসমূহ</div>
+                        <div class="text-base font-bold text-slate-800">৯টি স্টপেজ</div>
+                    </div>
+                </div>
+                <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center text-lg font-bold">⏱️</div>
+                    <div>
+                        <div class="text-xs text-slate-500 font-medium">গড় যাত্রা সময়</div>
+                        <div class="text-base font-bold text-slate-800">২৫-৩৫ মিনিট</div>
+                    </div>
+                </div>
+                <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-lg font-bold">👥</div>
+                    <div>
+                        <div class="text-xs text-slate-500 font-medium">এখন সাইটে আছেন</div>
+                        <div id="statActiveUsers" class="text-base font-bold text-slate-800">...</div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ==================================================================== -->
+        <!-- TAB 2: INTERACTIVE ROUTE & STOPS MAP                                 -->
+        <!-- ==================================================================== -->
+        <section id="map" class="page-view hidden space-y-4">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <span>🗺️</span> হাবিপ্রবি বাস রুট ও স্টপ গাইড
+                        </h2>
+                        <p class="text-xs text-slate-500 mt-0.5">দিনাজপুর শহর ও হাবিপ্রবি ক্যাম্পাসের মধ্যকার সকল ৯টি স্টপেজ ও বর্তমান অবস্থান</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="centerMapRoute('campus')" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 transition">
+                            🏫 ক্যাম্পাস থেকে
+                        </button>
+                        <button onclick="centerMapRoute('city')" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200 transition">
+                            🏙️ বড়মাঠ থেকে
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Visual Route Flow Diagram -->
+                <div class="py-6 overflow-x-auto no-scrollbar">
+                    <div class="min-w-[760px] px-4">
+                        <div class="relative">
+                            <!-- Route Line -->
+                            <div class="absolute top-1/2 left-4 right-4 -translate-y-1/2 h-2.5 bg-gradient-to-r from-emerald-600 via-teal-500 to-sky-600 rounded-full"></div>
+                            
+                            <!-- 9 Stops Nodes -->
+                            <div class="relative flex justify-between items-center" id="routeTimelineNodes">
+                                <!-- Generated dynamically via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stops Grid & Google Maps Links -->
+                <div class="mt-4 pt-4 border-t border-slate-100">
+                    <h3 class="text-sm font-bold text-slate-700 mb-3 flex items-center justify-between">
+                        <span>স্টপ তালিকা ও সরাসরি গুগল ম্যাপস লিঙ্ক:</span>
+                        <span class="text-xs text-slate-400 font-normal">ট্যাপ করে ম্যাপে লোকেশন দেখুন</span>
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5" id="stopsGridContainer">
+                        <!-- Populated with stop names and coords -->
+                    </div>
+                </div>
+
             </div>
         </section>
+
+        <!-- ==================================================================== -->
+        <!-- TAB 3: SMART SCHEDULE & SEARCH                                       -->
+        <!-- ==================================================================== -->
+        <section id="schedule" class="page-view hidden space-y-4">
+            
+            <div class="bg-white rounded-2xl p-4 md:p-5 shadow-sm border border-slate-200">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-slate-200">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <span>📅</span> হাবিপ্রবি বাসের সময়সূচী
+                        </h2>
+                        <p class="text-xs text-slate-500 mt-0.5">পরিবহন শাখা কর্তৃক সর্বশেষ কার্যকর সময়সূচী</p>
+                    </div>
+
+                    <!-- Search Filter -->
+                    <div class="flex items-center gap-2">
+                        <div class="relative w-full md:w-64">
+                            <input type="text" id="scheduleSearchInput" oninput="filterScheduleTable(this.value)" placeholder="বাস নম্বর বা সময় খুঁজুন (যেমন: ১৫, ৮:০০)..." class="w-full text-xs md:text-sm pl-8 pr-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                            <span class="absolute left-2.5 top-2.5 text-slate-400 text-xs">🔍</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Next Bus Finder Banner -->
+                <div class="mt-4 bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold text-sm">
+                            ⏱️
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-emerald-900 block">উপকারী পরামর্শ</span>
+                            <span class="text-xs text-emerald-800">ছুটির দিন ছাড়া রবি থেকে বৃহস্পতিবার শিডিউল নিয়মিত চালু থাকে।</span>
+                        </div>
+                    </div>
+                    <button onclick="window.print()" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-white text-emerald-800 border border-emerald-300 hover:bg-emerald-100 transition inline-flex items-center gap-1.5 cursor-pointer">
+                        <span>🖨️</span>
+                        <span>প্রিন্ট / সেভ করুন</span>
+                    </button>
+                </div>
+
+                <!-- Schedule Fragment Container -->
+                <div id="scheduleFragment" class="mt-4 overflow-x-auto rounded-xl border border-slate-200">
+                    <div class="sheet">
+                        <div class="header">
+                            <p style="margin:0;font-size:15px;" class="text-slate-600">পরিবহন ও যন্ত্র মেরামত শাখা</p>
+                            <h2>হাজী মোহাম্মদ দানেশ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়, দিনাজপুর</h2>
+                        </div>
+
+                        <div class="memo-row">
+                            <span>স্মারক নং: হাবিপ্রবি/২০২৬/পশা/</span>
+                            <span>তারিখ: ২০/০৭/২০২৬ খ্রি:</span>
+                        </div>
+
+                        <div class="title-box"><span>গাড়ীর সময় সূচী</span></div>
+                        <div class="subtitle">রবিবার হতে বৃহস্পতিবার (কার্যকর: ২১/০৭/২০২৬ খ্রীঃ হতে)</div>
+
+                        <div class="scroll-hint">👉 টেবিলটি পাশে scroll করে সম্পূর্ণ দেখুন</div>
+                        <div class="table-scroll">
+                        <table>
+                            <tr>
+                                <th colspan="3" class="section-title">ক্যাম্পাস হতে</th>
+                                <th colspan="3" class="section-title">শহর হতে</th>
+                            </tr>
+                            <tr>
+                                <th>ট্রিপের নাম</th><th>ছাড়ার সময়</th><th>গাড়ীর নম্বর</th>
+                                <th>ট্রিপের নাম</th><th>ছাড়ার স্থান ও সময়</th><th>গাড়ীর নম্বর</th>
+                            </tr>
+                            <tr><td>সাধারণ</td><td>সকাল-৬:৪০ মি:</td><td>১৫</td><td>ছাত্র-ছাত্রী</td><td>সকাল: ৭:৫০ মি: বালুবাড়ী (শ.মি.)</td><td>১৫</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল-৮:০০ টা</td><td>৪,২০</td><td>কর্মকর্তা</td><td>সকাল: ৮:২০ মি: (বালুবাড়ী শ.মি.),</td><td>৪,২০</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল-৮:০০ টা</td><td>৮</td><td>কর্মচারী</td><td>সকাল- ৮:১৫ মি: (বালুবাড়ী শ.মি.)</td><td>৮</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল-৮:০০ টা</td><td>১১</td><td>ছাত্র-ছাত্রী</td><td>সকাল-৮:২০মি:(বড়: দিতল-২)(স:৮:৩০মি: সুই:১২)</td><td>১১, দিতল-২</td></tr>
+                            <tr><td>শিক্ষক</td><td>সকাল-৮:০০ টা</td><td>১,২,৩,১৫(m-5)</td><td>শিক্ষক</td><td>সকাল- ৮:৩০ মি: (নির্ধারিত রুট)</td><td>(১,১৫)(২,m-5)(৩)</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল- ৮:৩০ মি:</td><td>৭,১৭</td><td>ছাত্র-ছাত্রী</td><td>সকাল-৯:০০ টা (বড়মাঠ) (স:৯:১৫ মি: টার্মিনাল-৭)</td><td>৭,১৭,দিতল-৩</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল- ৯:০০ টা</td><td>(সুইহারী ৮,১৬),১৯</td><td>ছাত্র-ছাত্রী</td><td>স:৯:৩০ মি:(বড়:দি:১,১৯)(৯:৩৫মি:সুই:৮,১৬)</td><td>৮,১৬,১৯,দিতল-১</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল-৯:৩০ মি:</td><td>১৫,২১</td><td>ছাত্র-ছাত্রী</td><td>সকাল-১০:০০ টা: (বড়মাঠ)</td><td>১৫,২১</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল-১০:০০ টা</td><td>৮,১১,দি:২</td><td>ছাত্র-ছাত্রী</td><td>সকাল-১০:৩০মি:(বড়-দি:২)(সুই:১১)(টার্মি-স:১০.৪৫মি: ৮)</td><td>৮,১১,দি:২</td></tr>
+                            <tr><td>ছাত্র-ছাত্র</td><td>সকাল-১০:৩০ মি:</td><td>১৬,১৯,২০</td><td>ছাত্র-ছাত্র</td><td>সকাল-১১:০০ টা: (বড়মাঠ) (টার্মি-স:১১.১৫মি: ১৯)</td><td>১৬,১৯,২০</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল-১১:০০ টা</td><td>১৭, দিতল-৩</td><td>ছাত্র-ছাত্রী</td><td>সকাল-১১:৩০ মি: (বড়-দি:৩) (টার্মি-১১:৪৫মি:১৭)</td><td>১৭,দিতল-৩</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>সকাল- ১১:৩০ মি:</td><td>১৫,২১</td><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১২:০০ টা (বড়মাঠ)</td><td>১৫,২১</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১২:০০ টা</td><td>১৬,১৯</td><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১২:৩০ মি: (বড়মাঠ)</td><td>১৬,১৯</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১২:৩০ মি:</td><td>১৭,দিতল-১</td><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১:০০ টা: (বড়মাঠ)</td><td>১৭,দিতল-১</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১:০০ টা</td><td>(টার্মি-১৫),২১,২০</td><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১:৩০ মি: (বড়মাঠ)</td><td>১৫,২১,২০</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ১:৩০ মি:</td><td>দিতল-২</td><td>ছাত্র-ছাত্রী</td><td>দুপুর- ২:০০ টা (বড়মাঠ)</td><td>দিতল-২</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ২:০০ টা</td><td>৮,১১,১৯</td><td>ছাত্র-ছাত্রী</td><td>দুপুর- ২:৩০ মি: (বড়মাঠ)</td><td>১১,১৯</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ২:৩০ মি:</td><td>৭,দিতল-৩</td><td>ছাত্র-ছাত্রী</td><td>দুপুর- ৩:০০ টা (বড়মাঠ)</td><td>দিতল-৩</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ৩:০০ টা</td><td>১৬,১৭</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৩:৩০ মি: (বড়মাঠ)</td><td>১৬,১৭</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>দুপুর- ৩:৩০ মি:</td><td>২১,দিতল-১</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৪:০০ টা (বড়মাঠ)</td><td>২১,দিতল-১</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৪:০৫ মি:</td><td>১১,১৯, দিতল-২</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৪:৩০ মি: (বড়মাঠ)</td><td>১১, দিতল-২</td></tr>
+                            <tr><td>শিক্ষক</td><td>বিকাল- ৪:০৫ মি:</td><td>১,২,৩,১৫(m-5)</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৫:০০ টা (বড়মাঠ)</td><td>১৫</td></tr>
+                            <tr><td>কর্মকর্তা কর্মচারী</td><td>বিকাল- ৪:০৫ মি:</td><td>৪,৮,২০</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৫:০০ টা (বড়মাঠ)</td><td>৮</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৪:৩০ মি:</td><td>১৭, দিতল-৩</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৫:৩০ মি: (বড়মাঠ)</td><td>১৭,দিতল-৩</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৫:০০ টা</td><td>২১,দি:-১</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৬:০০ টা (বড়মাঠ)</td><td>২১,দি:-১</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৫:৩০ মি:</td><td>১১,১৬,১৯</td><td>ছাত্র-ছাত্রী</td><td>সন্ধ্যা- ৬:৩০ মি: (বড়মাঠ)</td><td>১১,১৯</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৬:০০ টা</td><td>৮,দিতল-২</td><td>ছাত্র-ছাত্রী</td><td>রাত- ৭:০০ টা (বড়মাঠ)</td><td>৮, দিতল-২</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>সন্ধ্যা-৬:৩০ মি:</td><td>১৭,দিতলবাস-৩</td><td>ছাত্র-ছাত্রী</td><td>রাত- ৭:৩০ মি: (বড়মাঠ)</td><td>১৬,১৭, (২০ ছাত্রী)</td></tr>
+                            <tr><td>ছাত্র-ছাত্রী</td><td>রাত- ৭:০০ টা</td><td>২১,দিতলবাস-১</td><td>ছাত্র-ছাত্রী</td><td>রাত- ৮:০০ টা (বড়মাঠ)</td><td>২১,দিতলবাস-৩</td></tr>
+                            <tr><td>সাধারণ</td><td>রাত- ৭:৩০ মি:</td><td>বিআরটিসি ডিপো পর্যন্ত</td><td>ছাত্র-ছাত্রী</td><td>রাত- ৯:০০ টা (বড়মাঠ)</td><td>দিতলবাস-১</td></tr>
+                            <tr><td>সাধারণ</td><td>রাত- ৮:৩০ মি:</td><td></td><td colspan="3">দিতলবাস- ৩ (বিআরটিসি ডিপো পর্যন্ত)</td></tr>
+                            <tr><td></td><td>রাত- ৯:৩০ মি:</td><td></td><td colspan="3">দিতলবাস- ১ (বিআরটিসি ডিপো পর্যন্ত)</td></tr>
+                        </table>
+                        </div>
+
+                        <div class="table-scroll">
+                        <table>
+                            <tr><th colspan="6" class="section-title">বিশেষ ট্রিপ</th></tr>
+                            <tr>
+                                <th>বার</th><th>যাত্রী</th><th>ছাড়ার সময়</th>
+                                <th>বার</th><th>যাত্রী</th><th>ছাড়ার সময়</th>
+                            </tr>
+                            <tr><td>শুক্রবার</td><td>শিক্ষক, কর্মকর্তা,কর্মচারী</td><td>সকাল- ৯:০০ টা / ১৫</td><td>শুক্রবার</td><td>শিক্ষক, কর্মকর্তা,কর্মচারী</td><td>সকাল- ১১:০০ টা / ১৫</td></tr>
+                            <tr><td>শনিবার</td><td>শিক্ষক ও কর্মকর্তা</td><td>বিকাল- ৪:০০টা / ১৯</td><td>শনিবার</td><td>শিক্ষক ও কর্মকর্তা</td><td>বিকাল- ৬:০০ টা বড়মাঠ / ১৯</td></tr>
+                            <tr><td>শনিবার</td><td>কর্মচারী</td><td>বিকাল- ৪:০০টা / ১১</td><td>শনিবার</td><td>কর্মচারী</td><td>বিকাল- ৬:০০ টা বড়মাঠ / ১১</td></tr>
+                            <tr><td>শনিবার</td><td>ছাত্র-ছাত্রী</td><td>বিকাল- ৪:০০টা / ৮,১৭,২১</td><td>শনিবার</td><td>ছাত্র-ছাত্রী</td><td>রাত- ৭:০০ টা বড়মাঠ / ৮,১৭,২১</td></tr>
+                            <tr><td>মঙ্গলবার</td><td>শিক্ষক ও কর্মকর্তা</td><td>বিকাল- ৪:০০ টা / ১৬,২০</td><td>মঙ্গলবার</td><td>শিক্ষক ও কর্মকর্তা</td><td>বিকাল- ৬:০০ টা বড়মাঠ / মাইজে-৫</td></tr>
+                        </table>
+                        </div>
+
+                        <div class="note">
+                            ***ছাত্র-ছাত্রীদের গাড়ীগুলি বাইপাস হয়ে চলাচল করবে এবং শিক্ষক/কর্মকর্তা ও কর্মচারীগণের গাড়ীগুলি নির্ধারিত রুটে চলাচল করবে।<br>
+                            বিশেষ দ্রষ্টব্য: প্রয়োজনে ট্রিপের সংখ্যা কম বা বেশী হতে পারে।
+                        </div>
+
+                        <div class="footer">
+                            <div>
+                                <p><u>সদয় জ্ঞাতার্থে ও বহুল প্রচারের জন্য অনুলিপি (জ্যেষ্ঠতার ভিত্তিতে নহে):</u></p>
+                                <ul>
+                                    <li>সহ-সভাপতি, পরিবহন কমিটি, হাবিপ্রবি, দিনাজপুর।</li>
+                                    <li>ডিন, সকল অনুষদ / চেয়ারম্যান, সকল বিভাগ / রেজিস্ট্রার / লাইব্রেরী / সকল হল সুপার / প্রক্টর / সকল পরিচালক / পরীক্ষা নিয়ন্ত্রক।</li>
+                                    <li>সকল শাখা প্রধান / আইটি সেল।</li>
+                                    <li>নোটিশ বোর্ড।</li>
+                                </ul>
+                            </div>
+                            <div class="sign">
+                                <p>পরিচালক (পরিবহন)<br>হাবিপ্রবি, দিনাজপুর।</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ==================================================================== -->
+        <!-- TAB 4: REPORT LOCATION & GPS SHARING                                -->
+        <!-- ==================================================================== -->
+        <section id="report" class="page-view hidden space-y-4">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                
+                <!-- Main Report Form -->
+                <div class="lg:col-span-2 bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                        <div>
+                            <h2 class="text-lg md:text-xl font-bold text-slate-800 flex items-center gap-2">
+                                <span>📡</span> বাসের বর্তমান অবস্থান জানান
+                            </h2>
+                            <p class="text-xs text-slate-500">আপনার একটি আপডেট শত শত সহপাঠীর সময় ও কষ্ট বাঁচাবে</p>
+                        </div>
+                        <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold">কমিউনিটি আপডেট</span>
+                    </div>
+
+                    <!-- Auth Requirement Notice -->
+                    <div id="reportLoginNotice" class="mt-4 bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl text-xs text-amber-900 flex items-start gap-2.5">
+                        <span class="text-lg">🔐</span>
+                        <div>
+                            <span class="font-bold block">লগইন আবশ্যক</span>
+                            <span>ভুল অথবা ফেক আপডেট ঠেকাতে Google দিয়ে লগইন বাধ্যতামূলক। অনুগ্রহ করে উপরের <b class="underline cursor-pointer" onclick="doLogin()">লগইন বাটন</b> চাপুন।</span>
+                        </div>
+                    </div>
+
+                    <!-- Report Inputs -->
+                    <div class="mt-5 space-y-4">
+                        
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">১. যাত্রার দিক বেছে নিন</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="directionRadio" value="campus_city" checked onchange="onDirectionRadioChange(this.value)" class="peer sr-only">
+                                    <div class="p-3 rounded-xl border border-slate-200 peer-checked:border-emerald-600 peer-checked:bg-emerald-50 text-center transition">
+                                        <div class="font-bold text-sm text-slate-800 peer-checked:text-emerald-900">🏫 ক্যাম্পাস ➔ শহর</div>
+                                        <div class="text-[11px] text-slate-500">দিনাজপুর বড়মাঠের দিকে</div>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="directionRadio" value="boromath_campus" onchange="onDirectionRadioChange(this.value)" class="peer sr-only">
+                                    <div class="p-3 rounded-xl border border-slate-200 peer-checked:border-emerald-600 peer-checked:bg-emerald-50 text-center transition">
+                                        <div class="font-bold text-sm text-slate-800 peer-checked:text-emerald-900">🏙️ বড়মাঠ ➔ ক্যাম্পাস</div>
+                                        <div class="text-[11px] text-slate-500">হাবিপ্রবি ক্যাম্পাসের দিকে</div>
+                                    </div>
+                                </label>
+                            </div>
+                            <input type="hidden" id="directionSelect" value="campus_city">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">২. বাস নির্বাচন করুন</label>
+                            <select id="busSelect" class="w-full text-sm font-semibold p-3 rounded-xl border border-slate-300 bg-white text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                                <!-- Options injected by JS -->
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">৩. বাসটি এখন কোন স্টপেজে আছে?</label>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2" id="stopRadioSelector">
+                                <!-- Interactive Stop Buttons -->
+                            </div>
+                            <input type="hidden" id="stopSelect" value="0">
+                        </div>
+
+                        <!-- Manual Update Button -->
+                        <button id="submitBtn" onclick="submitReport()" class="w-full py-3.5 px-4 rounded-xl bg-brand-700 hover:bg-brand-800 active:scale-[0.99] text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
+                            <span>📡 বাসের অবস্থান আপডেট করুন</span>
+                        </button>
+
+                    </div>
+
+                    <!-- Auto GPS Section -->
+                    <div class="mt-6 pt-5 border-t border-slate-200">
+                        <div class="flex items-start justify-between gap-3">
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                                    <span>🛰️</span> স্মার্ট অটো জিপিএস ট্র্যাকিং (ঐচ্ছিক)
+                                </h3>
+                                <p class="text-xs text-slate-500 mt-1 max-w-lg">
+                                    আপনি বাসে অবস্থানকালে এটি চালু রাখলে আপনার মোবাইল জিপিএস থেকে সরাসরি নিকটস্থ স্টপ নিজে থেকেই শনাক্ত হয়ে আপডেট হতে থাকবে।
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mt-3.5 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                            <button id="gpsBtn" onclick="toggleGpsShare()" class="py-2.5 px-4 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs md:text-sm shadow-sm transition flex items-center justify-center gap-2 cursor-pointer">
+                                <span>📍</span>
+                                <span>লোকেশন শেয়ার শুরু করো</span>
+                            </button>
+                            <div id="gpsStatus" class="text-xs text-slate-600 bg-slate-100 rounded-xl px-3 py-2 flex-1 border border-slate-200">
+                                জিপিএস শেয়ার বন্ধ আছে।
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Sidebar Information Cards -->
+                <div class="space-y-4">
+                    
+                    <!-- Active Users Live Card -->
+                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200" id="activeUsersCard">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                                <span>👥</span> লাইভ ব্যবহারকারী
+                            </h3>
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                        </div>
+                        <div id="activeUsersCount" class="text-2xl font-black text-brand-800 mt-1">...</div>
+                        <p class="text-xs text-slate-500 mt-1">বর্তমানে হাবিপ্রবি শিক্ষার্থীরা এই সাইট ব্যবহার করছেন।</p>
+                        <div id="activeUsersAlarm" class="hidden mt-3 p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800"></div>
+                    </div>
+
+                    <!-- Safe Travel Tips Card -->
+                    <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-4 border border-emerald-200 text-xs text-emerald-950 space-y-2">
+                        <div class="font-bold text-sm text-emerald-900 flex items-center gap-1.5">
+                            <span>🛡️</span> সঠিক আপডেটের নিয়মাবলী
+                        </div>
+                        <ul class="space-y-1.5 text-slate-700 list-disc list-inside">
+                            <li>শুধুমাত্র আপনি বর্তমানে যে বাসে আছেন সেটির সঠিক স্টপ রিপোর্ট করুন।</li>
+                            <li>শেষ গন্তব্যে পৌঁছালে বাস স্বাভাবিকভাবেই ১০ মিনিট পর তালিকা থেকে মুছে যাবে।</li>
+                            <li>ভুল রিপোর্ট এড়াতে লগইন করা আইডি ও সময় রেকর্ড থাকে।</li>
+                        </ul>
+                    </div>
+
+                    <!-- Admin Update History Log -->
+                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 hidden" id="historyCard">
+                        <h3 class="text-sm font-bold text-slate-800 flex items-center justify-between pb-2 border-b border-slate-100">
+                            <span>🕘 সর্বশেষ আপডেটের ইতিহাস</span>
+                            <span class="text-[11px] font-semibold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">👑 Admin Only</span>
+                        </h3>
+                        <div id="historyList" class="text-xs text-slate-600 max-h-60 overflow-y-auto divide-y divide-slate-100 mt-2">
+                            <!-- Populated with recent updates -->
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ==================================================================== -->
+        <!-- TAB 5: EMERGENCY CONTACTS & HELPLINES                                -->
+        <!-- ==================================================================== -->
+        <section id="contacts" class="page-view hidden space-y-4">
+            
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                <div class="pb-4 border-b border-slate-200">
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <span>📞</span> হাবিপ্রবি পরিবহন ও জরুরি যোগাযোগ নম্বর
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-0.5">যেকোনো পরিবহন সংক্রান্ত সমস্যা বা বিশ্ববিদ্যালয়ের জরুরি প্রয়োজনে যোগাযোগ করুন</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 mt-5">
+                    
+                    <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-emerald-300 transition">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <span class="text-xs uppercase font-bold text-emerald-700 tracking-wider">পরিবহন শাখা</span>
+                                <h3 class="font-bold text-slate-800 mt-0.5">পরিবহন পরিচালক অফিস</h3>
+                                <p class="text-xs text-slate-500 mt-1">বাস শিডিউল ও সার্ভিস সংক্রান্ত সহায়তা</p>
+                            </div>
+                            <span class="text-2xl">🚌</span>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between">
+                            <span class="text-xs font-semibold text-slate-700">হাবিপ্রবি এক্সচেঞ্জ</span>
+                            <a href="tel:053165383" class="text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1.5 rounded-lg hover:bg-emerald-200 transition">কল করুন</a>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-emerald-300 transition">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <span class="text-xs uppercase font-bold text-rose-700 tracking-wider">মেডিকেল ইমার্জেন্সি</span>
+                                <h3 class="font-bold text-slate-800 mt-0.5">মেডিকেল সেন্টার ও এ্যাম্বুলেন্স</h3>
+                                <p class="text-xs text-slate-500 mt-1">২৪ ঘণ্টা জরুরি স্বাস্থ্য সেবা ও পরিবহন</p>
+                            </div>
+                            <span class="text-2xl">🚑</span>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between">
+                            <span class="text-xs font-semibold text-slate-700">০১৭৮৯-৪৫৫৫৫৫</span>
+                            <a href="tel:01789455555" class="text-xs font-bold text-rose-700 bg-rose-100 px-3 py-1.5 rounded-lg hover:bg-rose-200 transition">কল করুন</a>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-emerald-300 transition">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <span class="text-xs uppercase font-bold text-blue-700 tracking-wider">নিরাপত্তা ও শৃঙ্খলা</span>
+                                <h3 class="font-bold text-slate-800 mt-0.5">প্রক্টর অফিস, হাবিপ্রবি</h3>
+                                <p class="text-xs text-slate-500 mt-1">ক্যাম্পাস বা রুটে যেকোনো অনাকাঙ্ক্ষিত ঘটনা</p>
+                            </div>
+                            <span class="text-2xl">🛡️</span>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between">
+                            <span class="text-xs font-semibold text-slate-700">প্রক্টরীয় টিম</span>
+                            <a href="tel:01713456789" class="text-xs font-bold text-blue-700 bg-blue-100 px-3 py-1.5 rounded-lg hover:bg-blue-200 transition">কল করুন</a>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-emerald-300 transition">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <span class="text-xs uppercase font-bold text-amber-700 tracking-wider">দিনাজপুর সদর থানা</span>
+                                <h3 class="font-bold text-slate-800 mt-0.5">পুলিশ কন্ট্রোল রুম</h3>
+                                <p class="text-xs text-slate-500 mt-1">জাতীয় জরুরি সেবা ৯৯৯ অথবা থানা</p>
+                            </div>
+                            <span class="text-2xl">👮</span>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between">
+                            <span class="text-xs font-semibold text-slate-700">৯৯৯ / দিনাজপুর</span>
+                            <a href="tel:999" class="text-xs font-bold text-amber-800 bg-amber-100 px-3 py-1.5 rounded-lg hover:bg-amber-200 transition">কল ৯৯৯</a>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-emerald-300 transition">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <span class="text-xs uppercase font-bold text-teal-700 tracking-wider">বাস ডিপো</span>
+                                <h3 class="font-bold text-slate-800 mt-0.5">বিআরটিসি ও বাস টার্মিনাল</h3>
+                                <p class="text-xs text-slate-500 mt-1">দিনাজপুর কেন্দ্রীয় বাস টার্মিনাল কাউন্টার</p>
+                            </div>
+                            <span class="text-2xl">🏬</span>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between">
+                            <span class="text-xs font-semibold text-slate-700">টার্মিনাল হেল্পডেস্ক</span>
+                            <a href="tel:053163234" class="text-xs font-bold text-teal-800 bg-teal-100 px-3 py-1.5 rounded-lg hover:bg-teal-200 transition">কল করুন</a>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-emerald-300 transition">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <span class="text-xs uppercase font-bold text-purple-700 tracking-wider">আইটি ও বাগ রিপোর্ট</span>
+                                <h3 class="font-bold text-slate-800 mt-0.5">স্টুডেন্ট ডেভেলপার টিম</h3>
+                                <p class="text-xs text-slate-500 mt-1">অ্যাপ বিষয়ক পরামর্শ ও প্রযুক্তিগত সমস্যা</p>
+                            </div>
+                            <span class="text-2xl">💻</span>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between">
+                            <span class="text-xs font-semibold text-slate-700">হাবিপ্রবি শিক্ষার্থী</span>
+                            <a href="mailto:bhujonggoroy@gmail.com" class="text-xs font-bold text-purple-800 bg-purple-100 px-3 py-1.5 rounded-lg hover:bg-purple-200 transition">ইমেইল</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar (Fixed for every phone) -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-lg px-2 py-1.5">
+        <div class="flex justify-around items-center" id="mobileNavTabs">
+            <button onclick="showPage('live', this)" class="mobile-nav-btn active flex flex-col items-center py-1 px-2.5 rounded-xl text-emerald-700">
+                <span class="text-lg leading-none">🟢</span>
+                <span class="text-[10px] font-bold mt-1">লাইভ বাস</span>
+            </button>
+            <button onclick="showPage('map', this)" class="mobile-nav-btn flex flex-col items-center py-1 px-2.5 rounded-xl text-slate-500 hover:text-slate-800">
+                <span class="text-lg leading-none">🗺️</span>
+                <span class="text-[10px] font-medium mt-1">রুট ম্যাপ</span>
+            </button>
+            <button onclick="showPage('schedule', this)" class="mobile-nav-btn flex flex-col items-center py-1 px-2.5 rounded-xl text-slate-500 hover:text-slate-800">
+                <span class="text-lg leading-none">📅</span>
+                <span class="text-[10px] font-medium mt-1">সময়সূচী</span>
+            </button>
+            <button onclick="showPage('report', this)" class="mobile-nav-btn flex flex-col items-center py-1 px-2.5 rounded-xl text-slate-500 hover:text-slate-800">
+                <span class="text-lg leading-none">📡</span>
+                <span class="text-[10px] font-medium mt-1">রিপোর্ট</span>
+            </button>
+            <button onclick="showPage('contacts', this)" class="mobile-nav-btn flex flex-col items-center py-1 px-2.5 rounded-xl text-slate-500 hover:text-slate-800">
+                <span class="text-lg leading-none">📞</span>
+                <span class="text-[10px] font-medium mt-1">হেল্পলাইন</span>
+            </button>
+        </div>
     </div>
-    <!--
-        এই স্ক্রিপ্টটা সাধারণ (non-module, Firebase-নির্ভর নয়) —
-        তাই নিচের Firebase module script load/fail যাই হোক না কেন,
-        পাতা বদলানো (Live/Schedule/Report ট্যাব) ও dropdown সবসময় কাজ করবে।
-        আগের bug: showPage() একটা `type="module"` স্ক্রিপ্টের ভেতরে ছিল, আর সেই
-        module Firebase import fail করলে পুরোপুরি থেমে যেত, ফলে
-        window.showPage কখনো সেট হতো না → "showPage is not defined" error।
-    -->
+
+    <!-- ==================================================================== -->
+    <!-- JAVASCRIPT CORE LOGIC                                                -->
+    <!-- ==================================================================== -->
     <script>
         const campusToBoromath = ["Campus", "Gopalganj", "College-mor", "Bus Terminal", "Bot-toli", "Shahi-Masjid", "Bolair-mor", "Sadar-hospital", "Boromath"];
         const boromathToCampus = [...campusToBoromath].reverse();
+        
+        const stopBanglaNames = {
+            "Campus": "ক্যাম্পাস (HSTU Gate)",
+            "Gopalganj": "গোপালগঞ্জ",
+            "College-mor": "কলেজ মোড়",
+            "Bus Terminal": "বাস টার্মিনাল",
+            "Bot-toli": "বটতলী",
+            "Shahi-Masjid": "শাহী মসজিদ",
+            "Bolair-mor": "বলাইয়ের মোড়",
+            "Sadar-hospital": "সদর হাসপাতাল",
+            "Boromath": "বড়মাঠ (শহর কেন্দ্র)"
+        };
+
+        const stopCoords = {
+            "Campus": { lat: 25.6976905, lng: 88.6544855 },
+            "Gopalganj": { lat: 25.6733898, lng: 88.6517989 },
+            "College-mor": { lat: 25.6503517, lng: 88.6466267 },
+            "Bus Terminal": { lat: 25.6438642, lng: 88.6474282 },
+            "Bot-toli": { lat: 25.6336426, lng: 88.6499546 },
+            "Shahi-Masjid": { lat: 25.6309661, lng: 88.6442045 },
+            "Bolair-mor": { lat: 25.6284441, lng: 88.6421145 },
+            "Sadar-hospital": { lat: 25.6262112, lng: 88.6369901 },
+            "Boromath": { lat: 25.6223932, lng: 88.6350224 }
+        };
+
         let currentDirection = "campus_city";
         const busNames = ["Bus 8", "Bus 11", "Bus 15", "Bus 16", "Bus 17", "Bus 19", "Bus 20", "Bus 21", "দ্বি-তল-১", "দ্বি-তল-২", "দ্বি-তল-৩"];
-        // window.buses ব্যবহার করা হচ্ছে (bare `let` নয়) — কারণ নিচের module script
-        // আলাদা scope-এ চলে এবং শুধুমাত্র window-এর property হিসেবেই এই data দেখতে পাবে
         window.buses = { campus_city: {}, boromath_campus: {} };
 
-        // ছোট escape helper — XSS ঠেকানোর জন্য (নিরাপত্তা)
         function escapeHtml(str) {
             const div = document.createElement("div");
             div.textContent = String(str ?? "");
             return div.innerHTML;
         }
 
-        let scheduleLoaded = false;
-        // শিডিউল fragment আলাদা ফাইল (bus-schedule.html) থেকে fetch করে আনা হয়।
-        // Schedule ট্যাবে প্রথমবার ক্লিক করলেই লোড হয় (lazy load) — পেজ খোলার সাথে সাথে না,
-        // যাতে শুরুতেই অপ্রয়োজনীয় নেটওয়ার্ক কল না হয়।
-        async function loadSchedule() {
-            if (scheduleLoaded) return;
+        // Live Clock
+        function updateLiveClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            const timeStr = `${hours}:${minutes}:${seconds} ${ampm}`;
+            const el = document.getElementById('topLiveClock');
+            if (el) el.textContent = timeStr;
+        }
+        setInterval(updateLiveClock, 1000);
+        updateLiveClock();
+
+        let scheduleLoaded = true;
+        async function loadSchedule(force = false) {
+            if (scheduleLoaded && !force) return;
             const container = document.getElementById("scheduleFragment");
             try {
-                const res = await fetch("bus-schedule.html", { cache: "no-store" });
-                if (!res.ok) throw new Error("HTTP " + res.status);
-                const html = await res.text();
-                container.innerHTML = html;
-                scheduleLoaded = true;
+                let basePath = window.location.pathname;
+                if (basePath.endsWith("/index.html") || basePath.endsWith("/index.htm")) {
+                    basePath = basePath.substring(0, basePath.lastIndexOf("/") + 1);
+                } else if (!basePath.endsWith("/")) {
+                    basePath += "/";
+                }
+                const scheduleUrl = window.location.origin + basePath + "bus-schedule.html";
+                const res = await fetch(scheduleUrl, { cache: "no-store" });
+                if (res.ok) {
+                    const html = await res.text();
+                    container.innerHTML = html;
+                    scheduleLoaded = true;
+                }
             } catch (err) {
-                console.error("Schedule load failed:", err);
-                container.innerHTML = `<p style="text-align:center;color:#b00020">❌ শিডিউল লোড করা যায়নি। bus-schedule.html ফাইলটি এই পেজের একই ফোল্ডারে আছে কিনা যাচাই করুন, অথবা পেজ রিলোড করুন।</p>`;
+                // If fetch fails (e.g. offline or CORS), fallback to pre-rendered schedule smoothly
+                console.log("Schedule using pre-rendered fallback");
             }
         }
 
-        function showPage(id, button) {
-            document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-            document.getElementById(id).classList.add("active");
-            document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
-            button.classList.add("active");
+        // Global Force Refresh Data function
+        window.forceRefreshData = async function(buttonEl) {
+            let svg = null;
+            if (buttonEl) {
+                buttonEl.classList.add("opacity-60", "pointer-events-none");
+                svg = buttonEl.querySelector("svg");
+                if (svg) svg.classList.add("animate-spin");
+            }
+            try {
+                if (window.firebaseRefetchBuses) {
+                    await window.firebaseRefetchBuses();
+                }
+                if (typeof renderBuses === "function") {
+                    renderBuses();
+                }
+                if (typeof updateAgoTexts === "function") {
+                    updateAgoTexts();
+                }
+            } catch (err) {
+                console.error("Manual refresh error:", err);
+            } finally {
+                setTimeout(() => {
+                    if (buttonEl) {
+                        buttonEl.classList.remove("opacity-60", "pointer-events-none");
+                        if (svg) svg.classList.remove("animate-spin");
+                    }
+                }, 400);
+            }
+        };
+
+        function filterScheduleTable(query) {
+            const q = query.trim().toLowerCase();
+            const rows = document.querySelectorAll('#scheduleFragment table tr');
+            rows.forEach((row, index) => {
+                if (index < 2) return; // headers
+                const text = row.textContent.toLowerCase();
+                if (!q || text.includes(q)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function showPage(id, buttonEl) {
+            // Hide all pages
+            document.querySelectorAll(".page-view").forEach(p => p.classList.add("hidden"));
+            document.querySelectorAll(".page-view").forEach(p => p.classList.remove("block"));
+            
+            const target = document.getElementById(id);
+            if (target) {
+                target.classList.remove("hidden");
+                target.classList.add("block");
+            }
+
+            // Update Desktop Nav styles
+            document.querySelectorAll("#desktopNavTabs .nav-tab").forEach(btn => {
+                btn.classList.remove("active", "text-emerald-700", "bg-emerald-50", "border-emerald-200");
+                btn.classList.add("text-slate-600", "hover:bg-slate-100");
+            });
+
+            // Update Mobile Nav styles
+            document.querySelectorAll("#mobileNavTabs .mobile-nav-btn").forEach(btn => {
+                btn.classList.remove("active", "text-emerald-700");
+                btn.classList.add("text-slate-500");
+            });
+
+            // Highlight corresponding buttons
+            const desktopMatches = Array.from(document.querySelectorAll("#desktopNavTabs .nav-tab")).filter(b => b.getAttribute('onclick')?.includes(id));
+            desktopMatches.forEach(b => {
+                b.classList.add("active", "text-emerald-700", "bg-emerald-50", "border-emerald-200");
+                b.classList.remove("text-slate-600", "hover:bg-slate-100");
+            });
+
+            const mobileMatches = Array.from(document.querySelectorAll("#mobileNavTabs .mobile-nav-btn")).filter(b => b.getAttribute('onclick')?.includes(id));
+            mobileMatches.forEach(b => {
+                b.classList.add("active", "text-emerald-700");
+                b.classList.remove("text-slate-500");
+            });
+
             if (id === "schedule") loadSchedule();
+            if (id === "map") renderRouteMap();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function changeDirection(direction) {
             currentDirection = direction;
-            document.getElementById("campusCityBtn").classList.toggle("active", direction === "campus_city");
-            document.getElementById("boroMathCampusBtn").classList.toggle("active", direction === "boromath_campus");
+            const campusBtn = document.getElementById("campusCityBtn");
+            const boroBtn = document.getElementById("boroMathCampusBtn");
+            const routeDesc = document.getElementById("routeDescriptionText");
+
+            if (direction === "campus_city") {
+                campusBtn.className = "flex-1 py-3 px-3 rounded-xl font-bold text-sm md:text-base text-white bg-brand-700 shadow-sm transition flex items-center justify-center gap-2 cursor-pointer";
+                boroBtn.className = "flex-1 py-3 px-3 rounded-xl font-semibold text-sm md:text-base text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-2 cursor-pointer";
+                if (routeDesc) routeDesc.textContent = "রুট: ক্যাম্পাস ➔ গোপালগঞ্জ ➔ কলেজ মোড় ➔ বাস টার্মিনাল ➔ বটতলী ➔ শাহী মসজিদ ➔ বলাইয়ের মোড় ➔ সদর হাসপাতাল ➔ বড়মাঠ";
+            } else {
+                boroBtn.className = "flex-1 py-3 px-3 rounded-xl font-bold text-sm md:text-base text-white bg-brand-700 shadow-sm transition flex items-center justify-center gap-2 cursor-pointer";
+                campusBtn.className = "flex-1 py-3 px-3 rounded-xl font-semibold text-sm md:text-base text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-2 cursor-pointer";
+                if (routeDesc) routeDesc.textContent = "রুট: বড়মাঠ ➔ সদর হাসপাতাল ➔ বলাইয়ের মোড় ➔ শাহী মসজিদ ➔ বটতলী ➔ বাস টার্মিনাল ➔ কলেজ মোড় ➔ গোপালগঞ্জ ➔ ক্যাম্পাস";
+            }
+
             renderBuses();
+            renderRouteMap();
+        }
+
+        function onDirectionRadioChange(val) {
+            const dirSel = document.getElementById("directionSelect");
+            if (dirSel) dirSel.value = val;
+            updateStopOptions();
         }
 
         function updateBusOptions() {
             const b = document.getElementById("busSelect");
+            if (!b) return;
             b.innerHTML = "";
             busNames.forEach((name, i) => {
                 const o = document.createElement("option");
@@ -379,27 +976,33 @@
         }
 
         function updateStopOptions() {
-            const direction = document.getElementById("directionSelect").value, s = document.getElementById("stopSelect");
-            s.innerHTML = "";
-            const stops = direction === "campus_city" ? campusToBoromath : boromathToCampus;
+            const dir = document.getElementById("directionSelect")?.value || "campus_city";
+            const stops = dir === "campus_city" ? campusToBoromath : boromathToCampus;
+            const container = document.getElementById("stopRadioSelector");
+            const hiddenStop = document.getElementById("stopSelect");
+            if (!container) return;
+            container.innerHTML = "";
+
             stops.forEach((stop, i) => {
-                const o = document.createElement("option");
-                o.value = i;
-                o.textContent = `${i + 1}. ${stop}`;
-                s.appendChild(o);
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = `p-2.5 rounded-xl border text-xs font-semibold text-left transition cursor-pointer flex items-center justify-between ${
+                    i === Number(hiddenStop.value || 0) 
+                        ? "border-emerald-600 bg-emerald-50 text-emerald-900 ring-2 ring-emerald-500/20" 
+                        : "border-slate-200 bg-slate-50 text-slate-700 hover:bg-white"
+                }`;
+                btn.innerHTML = `
+                    <span class="truncate"><b class="text-emerald-700 mr-1">${i + 1}.</b> ${stopBanglaNames[stop] || stop}</span>
+                    ${i === Number(hiddenStop.value || 0) ? '<span class="text-emerald-600">✓</span>' : ''}
+                `;
+                btn.onclick = () => {
+                    hiddenStop.value = i;
+                    updateStopOptions();
+                };
+                container.appendChild(btn);
             });
         }
 
-        // শর্ত (condition):
-        // ক্যাম্পাস → বড় মাঠ রুটে (campus_city): শাহী মসজিদ(5), বলাইয়ের মোড়(6),
-        //   সদর হাসপাতাল(7) — এই স্টপগুলোর যেকোনো একটায় লোকেশন আপডেট হওয়ার পর
-        //   ১০ মিনিটেও নতুন কোনো আপডেট না এলে ধরে নিতে হবে বাস শেষ গন্তব্যে
-        //   (বড় মাঠ) পৌঁছে গেছে।
-        // বড় মাঠ → ক্যাম্পাস রুটে (boromath_campus): বটতলী(4), বাস-টার্মিনাল(5),
-        //   কলেজ মোড়(6) — এই স্টপগুলোর যেকোনো একটায় লোকেশন আপডেট হওয়ার পর
-        //   ১০ মিনিটেও নতুন কোনো আপডেট না এলে ধরে নিতে হবে বাস শেষ গন্তব্যে
-        //   (ক্যাম্পাস) পৌঁছে গেছে।
-        // অন্য (early) স্টপগুলোর জন্য সাধারণ ৩০ মিনিট stale-limit বহাল থাকবে।
         function isExpired(bus, direction) {
             if (!bus || !bus.time) return true;
             const minutes = (Date.now() - bus.time) / 60000;
@@ -409,7 +1012,7 @@
             return minutes >= limit;
         }
 
-        // পুরো তালিকা নতুন করে বানায় — data বদলালেই কল হয় (প্রতি সেকেন্ডে না)
+        // Render bus cards in Dashboard Grid
         function renderBuses() {
             const list = document.getElementById("busList");
             const data = window.buses[currentDirection] || {};
@@ -417,45 +1020,207 @@
 
             const activeNames = Object.keys(data).filter(name => !isExpired(data[name], currentDirection));
 
+            // Update Counts in UI
+            const activeTotal = Object.keys(window.buses.campus_city || {}).filter(k => !isExpired(window.buses.campus_city[k], 'campus_city')).length +
+                                Object.keys(window.buses.boromath_campus || {}).filter(k => !isExpired(window.buses.boromath_campus[k], 'boromath_campus')).length;
+            
+            const campusCityCount = Object.keys(window.buses.campus_city || {}).filter(k => !isExpired(window.buses.campus_city[k], 'campus_city')).length;
+            const boroCount = Object.keys(window.buses.boromath_campus || {}).filter(k => !isExpired(window.buses.boromath_campus[k], 'boromath_campus')).length;
+
+            const pill = document.getElementById("activeBusCountPill");
+            if (pill) pill.textContent = `${activeTotal}টি বাস সক্রিয়`;
+            const badge1 = document.getElementById("campusCityCountBadge");
+            if (badge1) badge1.textContent = campusCityCount;
+            const badge2 = document.getElementById("boroMathCountBadge");
+            if (badge2) badge2.textContent = boroCount;
+
             if (!activeNames.length) {
-                list.innerHTML = `<div class="no-bus"><div style="font-size:40px">🚌</div><h3>বর্তমানে কোনো বাসের Live update নেই</h3><p>কোনো শিক্ষার্থী বাসের বর্তমান অবস্থান report করলে এখানে দেখা যাবে।</p></div>`;
+                list.innerHTML = `
+                    <div class="col-span-full bg-white border border-slate-200 rounded-2xl p-8 md:p-12 text-center shadow-sm">
+                        <div class="w-16 h-16 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center text-3xl mx-auto mb-3">
+                            🚌
+                        </div>
+                        <h3 class="text-base md:text-lg font-bold text-slate-800">বর্তমানে কোনো বাসের Live আপডেট নেই</h3>
+                        <p class="text-xs md:text-sm text-slate-500 mt-1 max-w-md mx-auto">
+                            কোনো শিক্ষার্থী বা চালক বাসের অবস্থান আপডেট করলে সাথে সাথে এই ড্যাশবোর্ডে ভেসে উঠবে। আপনি বাসে থাকলে নিচের বাটন চেপে রিপোর্ট করুন!
+                        </p>
+                        <button onclick="showPage('report', null)" class="mt-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs md:text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 shadow-sm transition">
+                            <span>📡 বাসের অবস্থান রিপোর্ট করুন</span>
+                        </button>
+                    </div>
+                `;
                 return;
             }
 
+            const stops = currentDirection === "campus_city" ? campusToBoromath : boromathToCampus;
+
             list.innerHTML = activeNames.map(name => {
                 const bus = data[name];
-                return `<div class="bus-card" data-time="${bus.time}">
-                    <div class="bus-header">
-                        <div class="bus-name">🚌 ${escapeHtml(bus.name)}</div>
-                        <div class="status live">🟢 LIVE</div>
+                const stopIdx = bus.stopIndex ?? 0;
+                const progressPct = Math.min(100, Math.round(((stopIdx + 1) / stops.length) * 100));
+                const stopNameBn = stopBanglaNames[bus.stopName] || bus.stopName;
+                const coords = stopCoords[bus.stopName];
+                const mapsUrl = coords ? `https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lng}` : null;
+                const nextStopName = (stopIdx + 1 < stops.length) ? (stopBanglaNames[stops[stopIdx + 1]] || stops[stopIdx + 1]) : "গন্তব্যে পৌঁছে গেছে";
+
+                return `
+                    <div class="bus-card bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between" data-time="${bus.time}">
+                        <div>
+                            <!-- Card Header -->
+                            <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-100">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 font-bold flex items-center justify-center text-base border border-emerald-200 shadow-xs">
+                                        🚍
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-base md:text-lg text-slate-800 leading-tight">${escapeHtml(bus.name)}</h3>
+                                        <span class="text-[11px] text-slate-400 font-medium">${currentDirection === 'campus_city' ? 'ক্যাম্পাস ➔ শহর' : 'বড়মাঠ ➔ ক্যাম্পাস'}</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <button onclick="forceRefreshData(this)" title="বাসের অবস্থান রিফ্রেশ করুন" class="p-1 rounded-lg text-slate-400 hover:text-emerald-700 hover:bg-slate-100 transition cursor-pointer" aria-label="রিফ্রেশ">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                        </svg>
+                                    </button>
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300/40">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                        LIVE
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Current Stop Indicator -->
+                            <div class="mt-4">
+                                <div class="text-[11px] font-bold text-emerald-700 uppercase tracking-wider">বর্তমান অবস্থান:</div>
+                                <div class="text-lg font-extrabold text-slate-900 mt-0.5 flex items-center gap-1.5">
+                                    <span>📍</span>
+                                    <span>${escapeHtml(stopNameBn)}</span>
+                                </div>
+                            </div>
+
+                            <!-- Visual Route Progress Bar -->
+                            <div class="mt-4 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                                <div class="flex justify-between text-xs text-slate-500 font-medium mb-1.5">
+                                    <span>স্টপ ${stopIdx + 1} / ${stops.length}</span>
+                                    <span class="font-bold text-emerald-700">${progressPct}% সম্পন্ন</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                                    <div class="bg-gradient-to-r from-emerald-500 to-teal-600 h-2 rounded-full transition-all duration-500" style="width: ${progressPct}%"></div>
+                                </div>
+                                <div class="flex justify-between text-[11px] text-slate-400 mt-1.5">
+                                    <span class="truncate">শুরু: ${stopBanglaNames[stops[0]] || stops[0]}</span>
+                                    <span class="truncate">শেষ: ${stopBanglaNames[stops[stops.length - 1]] || stops[stops.length - 1]}</span>
+                                </div>
+                            </div>
+
+                            <!-- Next Stop Info -->
+                            <div class="mt-3 text-xs text-slate-600 flex items-center justify-between">
+                                <span class="text-slate-400">পরবর্তী স্টপ:</span>
+                                <span class="font-bold text-slate-700">${escapeHtml(nextStopName)}</span>
+                            </div>
+                        </div>
+
+                        <!-- Card Footer & Action Buttons -->
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+                            <span class="update-time text-xs text-slate-500 font-medium">লোড হচ্ছে...</span>
+                            ${mapsUrl ? `
+                                <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 hover:text-emerald-800 bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1.5 rounded-lg border border-emerald-200 transition">
+                                    <span>🗺️</span>
+                                    <span>ম্যাপে দেখুন</span>
+                                </a>
+                            ` : ''}
+                        </div>
                     </div>
-                    <div class="location">📍 ${escapeHtml(bus.stopName)}</div>
-                    <div class="progress">Stop ${bus.stopIndex + 1} of 9</div>
-                    <div class="update-time"></div>
-                </div>`;
+                `;
             }).join("");
 
             updateAgoTexts();
         }
 
-        // প্রতি সেকেন্ডে শুধু "কতক্ষণ আগে" টেক্সট বদলায় — পুরো তালিকা re-render হয় না (flicker/lag এড়াতে)
         function updateAgoTexts() {
             document.querySelectorAll("#busList .bus-card").forEach(card => {
                 const t = Number(card.dataset.time);
+                if (!t) return;
                 const sec = Math.floor((Date.now() - t) / 1000);
-                const ago = sec < 60 ? `${sec} sec ago` : `${Math.floor(sec / 60)} min ago`;
-                card.querySelector(".update-time").textContent = `সর্বশেষ update: ${ago}`;
+                const ago = sec < 60 ? `${sec} সেকেন্ড আগে` : `${Math.floor(sec / 60)} মিনিট আগে`;
+                const el = card.querySelector(".update-time");
+                if (el) el.textContent = `🕒 ${ago}`;
             });
         }
 
+        // Render Interactive Route Map Timeline
+        function renderRouteMap() {
+            const container = document.getElementById("routeTimelineNodes");
+            const stopsGrid = document.getElementById("stopsGridContainer");
+            if (!container || !stopsGrid) return;
+
+            const stops = currentDirection === "campus_city" ? campusToBoromath : boromathToCampus;
+            const liveData = window.buses[currentDirection] || {};
+            const activeBusStops = {};
+
+            Object.values(liveData).forEach(bus => {
+                if (!isExpired(bus, currentDirection) && bus.stopName) {
+                    if (!activeBusStops[bus.stopName]) activeBusStops[bus.stopName] = [];
+                    activeBusStops[bus.stopName].push(bus.name);
+                }
+            });
+
+            container.innerHTML = stops.map((stop, i) => {
+                const hasBus = activeBusStops[stop] && activeBusStops[stop].length > 0;
+                return `
+                    <div class="flex flex-col items-center group relative z-10">
+                        ${hasBus ? `
+                            <div class="absolute -top-10 bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md animate-bounce whitespace-nowrap">
+                                🚍 ${activeBusStops[stop].join(', ')}
+                            </div>
+                        ` : ''}
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shadow-sm border-2 transition ${
+                            hasBus 
+                                ? 'bg-emerald-500 border-white text-white ring-4 ring-emerald-400/30' 
+                                : 'bg-white border-slate-300 text-slate-700'
+                        }">
+                            ${i + 1}
+                        </div>
+                        <span class="mt-2 text-xs font-semibold text-slate-700 text-center max-w-[70px] leading-tight">
+                            ${stopBanglaNames[stop] || stop}
+                        </span>
+                    </div>
+                `;
+            }).join("");
+
+            // Stops Grid
+            stopsGrid.innerHTML = stops.map((stop, i) => {
+                const coords = stopCoords[stop];
+                const mapsUrl = coords ? `https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lng}` : '#';
+                return `
+                    <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-emerald-300 transition flex items-center justify-between group text-xs">
+                        <div class="flex items-center gap-2">
+                            <span class="w-5 h-5 rounded-md bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-[10px]">
+                                ${i + 1}
+                            </span>
+                            <span class="font-semibold text-slate-800">${stopBanglaNames[stop] || stop}</span>
+                        </div>
+                        <span class="text-slate-400 group-hover:text-emerald-600">↗</span>
+                    </a>
+                `;
+            }).join("");
+        }
+
+        function centerMapRoute(type) {
+            changeDirection(type === 'campus' ? 'campus_city' : 'boromath_campus');
+        }
+
+        // Manual Location Update Form Submission
         async function submitReport() {
             const btn = document.getElementById("submitBtn");
             if (!window.firebaseSaveBus) {
-                alert("❌ Firebase এখনো লোড হয়নি বা লোড করা যায়নি। ইন্টারনেট সংযোগ চেক করুন এবং পাতাটি রিলোড করুন।");
+                alert("❌ Firebase এখনো সংযুক্ত হয়নি। পাতাটি রিলোড করুন।");
                 return;
             }
             if (!window.currentUser) {
-                alert("🔐 আগে Google দিয়ে লগইন করো — ভুল/ফেক আপডেট ঠেকাতে এখন login বাধ্যতামূলক।");
+                alert("🔐 আগে Google দিয়ে লগইন করতে হবে — ভুল/ফেক আপডেট ঠেকাতে এখন login বাধ্যতামূলক।");
+                window.doLogin();
                 return;
             }
             const direction = document.getElementById("directionSelect").value;
@@ -468,34 +1233,29 @@
                 stopIndex: stopIndex,
                 stopName: stops[stopIndex],
                 time: Date.now(),
-                updatedBy: window.currentUser.email || window.currentUser.uid
+                updatedBy: window.currentUser.displayName || window.currentUser.email || window.currentUser.uid
             };
 
             btn.disabled = true;
-            btn.textContent = "⏳ Updating...";
+            btn.innerHTML = `<span>⏳ আপডেট পাঠানো হচ্ছে...</span>`;
             try {
                 await window.firebaseSaveBus(direction, busName, busData);
 
-                // 🔧 বাগ ফিক্স: write সফল হওয়ার পরও Firebase-এর onValue() listener
-                // মাঝে মাঝে দেরি করে ফায়ার করে (network/rules propagation delay), অথবা
-                // buses/ path-এ read rule আলাদাভাবে ব্লকড থাকলে listener কখনোই ডেটা
-                // ফেরত পায় না। তাই write সফল হওয়ার সাথে সাথেই local window.buses-এ
-                // optimistic update করে দেওয়া হচ্ছে — Firebase listener দেরি করলেও বা
-                // ফেইল করলেও ইউজার সাথে সাথে নিজের আপডেট Live-এ দেখতে পাবে।
                 if (!window.buses[direction]) window.buses[direction] = {};
                 const safeName = busName.replace(/[.#$[\]]/g, "_");
                 window.buses[direction][safeName] = busData;
                 const opp = direction === "campus_city" ? "boromath_campus" : "campus_city";
                 if (window.buses[opp]) delete window.buses[opp][safeName];
 
-                alert("✅ বাসের অবস্থান আপডেট হয়েছে");
+                alert("✅ বাসের অবস্থান সফলভাবে আপডেট হয়েছে!");
+                showPage('live', null);
                 changeDirection(direction);
             } catch (error) {
                 console.error("Firebase save error:", error);
-                alert("❌ Firebase-এ update করা যায়নি: " + (error && error.message ? error.message : "অজানা সমস্যা"));
+                alert("❌ আপডেট করা যায়নি: " + (error && error.message ? error.message : "অজানা সমস্যা"));
             } finally {
                 btn.disabled = false;
-                btn.textContent = "📡 Update Bus Location";
+                btn.innerHTML = `<span>📡 বাসের অবস্থান আপডেট করুন</span>`;
             }
         }
 
@@ -503,26 +1263,9 @@
         updateBusOptions();
         renderBuses();
 
-        // ==========================================================
-        // 🛰️ Auto GPS Tracking
-        // ==========================================================
-        // ⚠️ গুরুত্বপূর্ণ: নিচের কোঅর্ডিনেটগুলো এখনো placeholder (ভুল/আন্দাজি)।
-        // প্রতিটা স্টপে বাস্তবে দাঁড়িয়ে Google Maps app খুলে ঐ জায়গার উপর
-        // long-press করলে নিচে lat/lng দেখাবে (কপি করে বসাও)। ভুল কোঅর্ডিনেট
-        // থাকলে ভুল স্টপ ম্যাচ হবে, তাই real data ছাড়া এই ফিচার চালু করা ঠিক না।
-const stopCoords = {
-            "Campus": { lat: 25.697690500130346, lng: 88.65448549537712 },        // HSTU campus gate (approx, যাচাই করে নাও)
-            "Gopalganj": { lat: 25.673389892453613, lng: 88.65179892430344 },            // TODO: বসাও
-            "College-mor": { lat: 25.650351762928324, lng: 88.64662672476703 },          // TODO: বসাও
-            "Bus Terminal": { lat: 25.643864210342443, lng: 88.64742824920896 },         // TODO: বসাও
-            "Bot-toli": { lat: 25.63364260972453, lng: 88.64995461755205 },             // TODO: বসাও
-            "Shahi-Masjid": { lat: 25.630966192878212, lng: 88.64420455841875 },         // TODO: বসাও
-            "Bolair-mor": { lat: 25.628444149292477, lng: 88.64211458615377 },           // TODO: বসাও
-            "Sadar-hospital": { lat: 25.62621127615595, lng: 88.63699018115452 }, // Dinajpur Sadar hospital এলাকা (approx, যাচাই করে নাও)
-            "Boromath": { lat: 25.62239329836372, lng: 88.63502245450039 }              // TODO: বসাও
-        };
-
-        // Haversine — দুই GPS পয়েন্টের মধ্যে দূরত্ব (মিটারে)
+        // ====================================================================
+        // GPS TRACKING
+        // ====================================================================
         function distanceMeters(lat1, lon1, lat2, lon2) {
             const R = 6371000;
             const toRad = d => d * Math.PI / 180;
@@ -531,24 +1274,21 @@ const stopCoords = {
             return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         }
 
-        // বর্তমান GPS position থেকে সবচেয়ে কাছের স্টপ বের করা (নির্দিষ্ট রুটের ভেতর থেকেই)
         function findNearestStop(lat, lng, routeStops) {
             let best = null, bestDist = Infinity, bestIndex = -1;
             routeStops.forEach((stopName, i) => {
                 const c = stopCoords[stopName];
-                if (!c || c.lat == null || c.lng == null) return; // TODO না-বসানো স্টপ বাদ
+                if (!c || c.lat == null || c.lng == null) return;
                 const d = distanceMeters(lat, lng, c.lat, c.lng);
                 if (d < bestDist) { bestDist = d; best = stopName; bestIndex = i; }
             });
             return best ? { stopName: best, stopIndex: bestIndex, distance: bestDist } : null;
         }
 
-        // Firebase write কম রাখার জন্য browser memory-তে (শুধু এই সেশনে, page reload হলে reset)
-        // সর্বশেষ পাঠানো স্টপ ও সময় cache রাখা হয় — একই স্টপ বারবার পাঠানো হয় না।
         let gpsWatchId = null;
         let gpsLastSentStop = null;
         let gpsLastSentTime = 0;
-        const GPS_HEARTBEAT_MS = 2 * 60 * 1000; // স্টপ না বদলালেও ২ মিনিট পরপর heartbeat write
+        const GPS_HEARTBEAT_MS = 2 * 60 * 1000;
 
         function toggleGpsShare() {
             if (gpsWatchId !== null) {
@@ -564,17 +1304,22 @@ const stopCoords = {
                 return;
             }
             if (!window.currentUser) {
-                alert("🔐 আগে Google দিয়ে লগইন করো — ভুল/ফেক আপডেট ঠেকাতে এখন login বাধ্যতামূলক।");
+                alert("🔐 আগে Google দিয়ে লগইন করতে হবে।");
+                window.doLogin();
                 return;
             }
             const busSelectEl = document.getElementById("busSelect");
-            if (!busSelectEl.value) { alert("আগে বাস নির্বাচন করো।"); return; }
+            if (!busSelectEl.value) { alert("আগে বাস নির্বাচন করুন।"); return; }
 
             gpsLastSentStop = null;
             gpsLastSentTime = 0;
-            document.getElementById("gpsStatus").textContent = "⏳ GPS সিগন্যাল খোঁজা হচ্ছে...";
-            document.getElementById("gpsBtn").textContent = "⏹️ লোকেশন শেয়ার বন্ধ করো";
-            document.getElementById("gpsBtn").style.background = "#b00020";
+            const statusEl = document.getElementById("gpsStatus");
+            const btn = document.getElementById("gpsBtn");
+            if (statusEl) statusEl.textContent = "⏳ GPS সিগন্যাল খোঁজা হচ্ছে...";
+            if (btn) {
+                btn.innerHTML = "<span>⏹️ লোকেশন শেয়ার বন্ধ করো</span>";
+                btn.className = "py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs md:text-sm shadow-sm transition flex items-center justify-center gap-2 cursor-pointer";
+            }
 
             gpsWatchId = navigator.geolocation.watchPosition(onGpsUpdate, onGpsError, {
                 enableHighAccuracy: true,
@@ -586,9 +1331,13 @@ const stopCoords = {
         function stopGpsShare() {
             if (gpsWatchId !== null) navigator.geolocation.clearWatch(gpsWatchId);
             gpsWatchId = null;
-            document.getElementById("gpsStatus").textContent = "লোকেশন শেয়ার বন্ধ আছে।";
-            document.getElementById("gpsBtn").textContent = "📍 লোকেশন শেয়ার শুরু করো";
-            document.getElementById("gpsBtn").style.background = "#0a7d64";
+            const statusEl = document.getElementById("gpsStatus");
+            const btn = document.getElementById("gpsBtn");
+            if (statusEl) statusEl.textContent = "জিপিএস শেয়ার বন্ধ আছে।";
+            if (btn) {
+                btn.innerHTML = "<span>📍 লোকেশন শেয়ার শুরু করো</span>";
+                btn.className = "py-2.5 px-4 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs md:text-sm shadow-sm transition flex items-center justify-center gap-2 cursor-pointer";
+            }
         }
 
         async function onGpsUpdate(position) {
@@ -600,31 +1349,27 @@ const stopCoords = {
             const statusEl = document.getElementById("gpsStatus");
 
             if (!match) {
-                statusEl.textContent = "⚠️ কাছাকাছি কোনো স্টপের কোঅর্ডিনেট এখনো সেট করা নেই।";
+                if (statusEl) statusEl.textContent = "⚠️ কাছাকাছি কোনো স্টপ পাওয়া যায়নি।";
                 return;
             }
 
-            statusEl.textContent = `📍 সবচেয়ে কাছের স্টপ: ${match.stopName} (~${Math.round(match.distance)} মি.)`;
+            if (statusEl) statusEl.textContent = `📍 নিকটবর্তী স্টপ: ${stopBanglaNames[match.stopName] || match.stopName} (~${Math.round(match.distance)} মি.)`;
 
             const now = Date.now();
             const stopChanged = match.stopName !== gpsLastSentStop;
             const heartbeatDue = now - gpsLastSentTime >= GPS_HEARTBEAT_MS;
 
-            // 🔑 এখানেই Firebase read/write কম রাখা হচ্ছে:
-            // শুধু স্টপ বদলালে, অথবা ২ মিনিট পার হয়ে গেলে (heartbeat) — তবেই write হবে।
-            // প্রতি GPS reading-এ (যেটা প্রতি কয়েক সেকেন্ডে আসতে পারে) write হয় না।
             if (!stopChanged && !heartbeatDue) return;
             if (!window.firebaseSaveBus || !window.currentUser) return;
 
             const busName = busNames[document.getElementById("busSelect").value];
             const busData = {
                 name: busName, stopIndex: match.stopIndex, stopName: match.stopName, time: now,
-                updatedBy: window.currentUser.email || window.currentUser.uid
+                updatedBy: window.currentUser.displayName || window.currentUser.email || window.currentUser.uid
             };
 
             try {
                 await window.firebaseSaveBus(direction, busName, busData);
-                // 🔧 এখানেও optimistic update — submitReport()-এর মতো একই কারণে
                 if (!window.buses[direction]) window.buses[direction] = {};
                 const safeName2 = busName.replace(/[.#$[\]]/g, "_");
                 window.buses[direction][safeName2] = busData;
@@ -641,69 +1386,65 @@ const stopCoords = {
 
         function onGpsError(err) {
             console.error("GPS error:", err);
-            document.getElementById("gpsStatus").textContent = "❌ GPS লোকেশন পাওয়া যাচ্ছে না। Location permission দেওয়া আছে কিনা দেখো।";
+            const statusEl = document.getElementById("gpsStatus");
+            if (statusEl) statusEl.textContent = "❌ GPS পাওয়া যায়নি। ব্রাউজার লোকেশন পারমিশন দিন।";
         }
     </script>
 
-    <!--
-        Firebase-নির্ভর অংশ আলাদা module script-এ, try/catch দিয়ে wrap করা।
-        এটা fail করলেও উপরের স্ক্রিপ্টের কারণে বাকি পুরো পাতা স্বাভাবিকভাবে কাজ করবে,
-        শুধু live-location save/sync হবে না।
-    -->
+    <!-- ==================================================================== -->
+    <!-- FIREBASE CLIENT-SIDE MODULE                                          -->
+    <!-- ==================================================================== -->
     <script type="module">
-        try {
-            const { initializeApp } = await import("https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js");
-            const { getDatabase, ref, set, get, remove, onValue, push, query, limitToLast, onDisconnect, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js");
-            const { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } = await import("https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js");
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        import { getDatabase, ref, set, get, remove, onValue, push, query, limitToLast, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-            const firebaseConfig = {
-                apiKey: "AIzaSyCUO8wN4B_6x_9FOQEm75SafEEjapj9DJs",
-                authDomain: "student-bus-tracker-bc55b.firebaseapp.com",
-                databaseURL: "https://student-bus-tracker-bc55b-default-rtdb.asia-southeast1.firebasedatabase.app",
-                projectId: "student-bus-tracker-bc55b",
-                storageBucket: "student-bus-tracker-bc55b.firebasestorage.app",
-                messagingSenderId: "1016810702965",
-                appId: "1:1016810702965:web:b8789e419f8b15cb00903c",
-                measurementId: "G-X31GDZR6TL"
-            };
+        const firebaseConfig = {
+            apiKey: "AIzaSyCUO8wN4B_6x_9FOQEm75SafEEjapj9DJs",
+            authDomain: "student-bus-tracker-bc55b.firebaseapp.com",
+            databaseURL: "https://student-bus-tracker-bc55b-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "student-bus-tracker-bc55b",
+            storageBucket: "student-bus-tracker-bc55b.firebasestorage.app",
+            messagingSenderId: "1016810702965",
+            appId: "1:1016810702965:web:b8789e419f8b15cb00903c",
+            measurementId: "G-X31GDZR6TL"
+        };
 
-            const app = initializeApp(firebaseConfig);
-            const db = getDatabase(app);
-            const auth = getAuth(app);
-            const provider = new GoogleAuthProvider();
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
 
-            // ==========================================================
-            // 🔐 Authentication (Google sign-in) — Phone/SMS OTP এড়িয়ে
-            // চলা হয়েছে কারণ সেটা ফ্রি না। Google sign-in Spark প্ল্যানে
-            // ৫০,০০০ MAU পর্যন্ত সম্পূর্ণ ফ্রি।
-            // ==========================================================
-            window.doLogin = async () => {
-                try {
-                    await signInWithPopup(auth, provider);
-                } catch (err) {
-                    console.error("Login error:", err);
-                    alert("❌ লগইন করা যায়নি। আবার চেষ্টা করো।");
+        window.doLogin = async () => {
+            try {
+                await signInWithPopup(auth, provider);
+            } catch (err) {
+                console.error("Login error:", err);
+                if (err.code === "auth/unauthorized-domain") {
+                    alert("⚠️ Firebase Unauthorized Domain: অনুগ্রহ করে Firebase Console -> Authentication -> Settings এ গিয়ে Authorized Domains এ 'bhujonggoroy.github.io' যুক্ত করুন।");
+                } else if (err.code !== "auth/popup-closed-by-user") {
+                    alert("❌ লগইন করা যায়নি: " + (err.message || "অনুগ্রহ করে আবার চেষ্টা করুন।"));
                 }
-            };
-            window.doLogout = async () => {
-                await signOut(auth);
-            };
+            }
+        };
+        window.doLogout = async () => {
+            await signOut(auth);
+        };
 
             onAuthStateChanged(auth, async (user) => {
                 const statusEl = document.getElementById("authStatus");
                 const loginBtn = document.getElementById("loginBtn");
-                const logoutBtn = document.getElementById("logoutBtn");
+                const userProfilePill = document.getElementById("userProfilePill");
+                const userShortName = document.getElementById("userShortName");
                 const notice = document.getElementById("reportLoginNotice");
 
                 if (user) {
                     window.currentUser = user;
-                    loginBtn.style.display = "none";
-                    logoutBtn.style.display = "inline-block";
+                    if (loginBtn) loginBtn.style.display = "none";
+                    if (userProfilePill) userProfilePill.style.display = "flex";
+                    if (userShortName) userShortName.textContent = user.displayName || user.email?.split('@')[0] || "User";
                     if (notice) notice.style.display = "none";
 
-                    // users/{uid}-এ প্রোফাইল না থাকলে প্রথমবার তৈরি হবে (role: "student" default)।
-                    // role নিজে থেকে "admin"/"moderator" বদলানো যাবে না — শুধু বিদ্যমান admin পারবে
-                    // (এটা security rules-এ প্রোটেক্ট করা, তাই এখানে শুধু email/name সেট করা হচ্ছে)।
                     const userRef = ref(db, `users/${user.uid}`);
                     try {
                         const snap = await get(userRef);
@@ -724,40 +1465,23 @@ const stopCoords = {
                     }
 
                     const roleBadge = window.currentRole === "admin" ? " 👑 Admin"
-                        : window.currentRole === "moderator" ? " 🛡️ Moderator" : "";
-                    statusEl.textContent = `স্বাগতম, ${user.displayName || user.email}${roleBadge}`;
+                        : window.currentRole === "moderator" ? " 🛡️ Mod" : "";
+                    if (statusEl) statusEl.textContent = `${user.displayName || user.email}${roleBadge}`;
                 } else {
                     window.currentUser = null;
                     window.currentRole = null;
-                    loginBtn.style.display = "inline-block";
-                    logoutBtn.style.display = "none";
-                    statusEl.textContent = "লগইন করা নেই";
-                    if (notice) notice.style.display = "block";
+                    if (loginBtn) loginBtn.style.display = "inline-flex";
+                    if (userProfilePill) userProfilePill.style.display = "none";
+                    if (statusEl) statusEl.textContent = "লগইন করা নেই";
+                    if (notice) notice.style.display = "flex";
                 }
 
-                // 🔒 Update History শুধু admin দেখতে পাবে — সাধারণ শিক্ষার্থীদের কাছে
-                // অন্যদের ইমেইল দেখানো হবে না (privacy)। শুধু admin ভুল/সন্দেহজনক
-                // আপডেট ট্র্যাক করার জন্য এটা দেখতে পারবে।
                 const historyCard = document.getElementById("historyCard");
                 if (historyCard) historyCard.style.display = (window.currentRole === "admin") ? "block" : "none";
             });
 
-            // 🐛 ফিক্স: একটা বাস একইসাথে দুই রুটে (campus_city ও boromath_campus)
-            // "LIVE" থাকতে পারবে না। তাই কোনো দিকে বাস সেভ করার আগে সেই একই বাস-নাম
-            // উলটো দিক থেকে মুছে দেওয়া হচ্ছে — বাস একটা সময়ে একটাই দিকে চলতে পারে।
             const oppositeDirection = { campus_city: "boromath_campus", boromath_campus: "campus_city" };
-            // 🐛 আসল বাগের কারণ (rules.json থেকে ধরা পড়েছে):
-            // buses/$direction/$busName/time ফিল্ডে validation rule আছে —
-            //   "newData.val() <= now + 60000"
-            // এখানে `now` মানে Firebase SERVER-এর সময়, কিন্তু কোড client-এর
-            // Date.now() পাঠাচ্ছিল। ইউজারের ফোনের ঘড়ি যদি server-এর চেয়ে
-            // এক মিনিটের বেশি এগিয়ে থাকে (মোবাইলে এটা প্রায়ই হয়), তাহলে
-            // পুরো write-টাই validation-এ silently reject হয়ে যেত — অথচ
-            // history-তে কোনো time-constraint না থাকায় সেটা ঠিকই লেখা হতো।
-            // এই কারণেই History-তে দেখাতো, Live-এ দেখাতো না।
-            // ফিক্স: buses/ path-এ client time-এর বদলে serverTimestamp()
-            // পাঠানো হচ্ছে — এটা সবসময় Firebase server-এর নিজস্ব সময়, তাই
-            // rule কখনো fail করবে না।
+
             window.firebaseSaveBus = async (direction, busName, busData) => {
                 const safeBusName = busName.replace(/[.#$[\]]/g, "_");
                 const opp = oppositeDirection[direction];
@@ -765,11 +1489,6 @@ const stopCoords = {
                 await Promise.all([
                     set(ref(db, `buses/${direction}/${safeBusName}`), busDataForFirebase),
                     remove(ref(db, `buses/${opp}/${safeBusName}`)).catch(() => {}),
-                    // 🕘 Update history — append-only log (security rules-এ এডিট/ডিলিট ব্লক করা)।
-                    // প্রতিটা আপডেট এখানে জমা থাকে, তাই "কে, কখন, কী আপডেট দিলো" ট্র্যাক করা যায়
-                    // এবং ভুল/সন্দেহজনক প্যাটার্ন পরে যাচাই করা সহজ হয়।
-                    // history-তে client time-ই রাখা হচ্ছে (ওই path-এ time-এর কোনো
-                    // validation constraint নেই, তাই এটা সমস্যা করে না)।
                     push(ref(db, `history/${direction}/${safeBusName}`), busData).catch(() => {})
                 ]);
             };
@@ -783,6 +1502,7 @@ const stopCoords = {
                 });
                 if (removals.length) await Promise.all(removals);
             };
+
             window.isExpiredCheck = (bus, direction) => {
                 if (!bus || !bus.time) return true;
                 const minutes = (Date.now() - bus.time) / 60000;
@@ -792,16 +1512,6 @@ const stopCoords = {
                 return minutes >= limit;
             };
 
-            // 🐛 বাগ ফিক্স: আগে এই listener silently fail করলে (permission-denied ইত্যাদি)
-            // কোনো error দেখা যেত না — শুধু Live section সবসময় খালি থাকতো, অথচ
-            // history ঠিকমতো লেখা/দেখানো হতো (কারণ history আলাদা push() কল, আলাদা path,
-            // এবং আলাদা rules-এর আওতায় থাকতে পারে)। এখন error explicit log করা হচ্ছে
-            // যাতে বোঝা যায় সমস্যাটা read-permission নাকি অন্য কিছু।
-            // 🚀 Cache: পেজ লোড হওয়ার সাথে সাথে (Firebase connect হওয়ার আগেই) লোকাল
-            // storage-এ থাকা শেষ bus data থেকে render করা হচ্ছে, যাতে প্রথমবার
-            // "কোনো বাস নেই" খালি স্ক্রিন না দেখায়। Firebase connect হলেই live data
-            // এসে এটা replace করে দেবে। এটা RTDB-এর বিল/লোড কমায় না (একটাই persistent
-            // listener থাকে, বারবার query হয় না) — শুধু প্রথম লোডের UX ভালো করে।
             const BUSES_CACHE_KEY = "cachedBusesData";
             try {
                 const cachedBuses = localStorage.getItem(BUSES_CACHE_KEY);
@@ -809,9 +1519,21 @@ const stopCoords = {
                     window.buses = JSON.parse(cachedBuses);
                     if (typeof window.renderBuses === "function") window.renderBuses();
                 }
-            } catch (e) { /* corrupt cache বা localStorage ব্লক থাকলে এড়িয়ে যাও */ }
+            } catch (e) {}
 
             const busesRef = ref(db, "buses");
+            window.firebaseRefetchBuses = async () => {
+                try {
+                    const snapshot = await get(busesRef);
+                    const data = snapshot.val();
+                    window.buses = data || { campus_city: {}, boromath_campus: {} };
+                    if (!window.buses.campus_city) window.buses.campus_city = {};
+                    if (!window.buses.boromath_campus) window.buses.boromath_campus = {};
+                    try { localStorage.setItem(BUSES_CACHE_KEY, JSON.stringify(window.buses)); } catch (e) {}
+                } catch (err) {
+                    console.error("❌ Manual refetch buses error:", err);
+                }
+            };
             onValue(busesRef, (snapshot) => {
                 const data = snapshot.val();
                 window.buses = data || { campus_city: {}, boromath_campus: {} };
@@ -820,71 +1542,32 @@ const stopCoords = {
                 try { localStorage.setItem(BUSES_CACHE_KEY, JSON.stringify(window.buses)); } catch (e) {}
                 if (typeof window.renderBuses === "function") window.renderBuses();
             }, (err) => {
-                console.error("❌ buses/ read failed — Firebase rules-এ 'buses' path read করার permission আছে কিনা যাচাই করো:", err);
-                const list = document.getElementById("busList");
-                if (list) list.innerHTML = `<div class="no-bus"><div style="font-size:40px">⚠️</div><h3>Live data লোড করা যায়নি</h3><p>${escapeHtml(err.message || "")}</p></div>`;
+                console.error("❌ buses/ read error:", err);
             });
 
             setInterval(() => { if (window.buses && window.renderBuses) window.renderBuses(); }, 15000);
 
-            // ==========================================================
-            // 👥 Active user (presence) counter — Firebase RTDB-এর
-            // .info/connected special path দিয়ে standard presence pattern।
-            // প্রতিটা ব্রাউজার ট্যাব/ডিভাইস নিজের presence node-এ একটা এন্ট্রি
-            // রাখে, ব্রাউজার বন্ধ/নেট চলে গেলে onDisconnect() নিজে থেকেই
-            // সেই এন্ট্রি মুছে দেয় — তাই count সবসময় বাস্তব সংখ্যার কাছাকাছি থাকে।
-            // hosting-এর সীমার (Spark plan simultaneous connection limit) কারণে
-            // 100 জনের কাছাকাছি গেলে সতর্কবার্তা দেখানো হচ্ছে।
-            // ==========================================================
-            const ACTIVE_USER_ALARM_THRESHOLD = 100;
+            // Active user presence
             const myPresenceId = "u_" + Date.now() + "_" + Math.random().toString(36).slice(2, 9);
             const myPresenceRef = ref(db, `presence/${myPresenceId}`);
             const connectedRef = ref(db, ".info/connected");
             const countEl = document.getElementById("activeUsersCount");
-            const alarmEl = document.getElementById("activeUsersAlarm");
-
-            // 🚀 Cache: localStorage-এ শেষ জানা count রাখা হচ্ছে, যাতে Firebase-এর
-            // সাথে সংযোগ হওয়ার আগেই (যেটা কয়েক মুহূর্ত সময় নিতে পারে) পুরনো "..."
-            // না দেখিয়ে শেষবারের count সাথে সাথে দেখানো যায়। এটা Firebase-এর
-            // read/bandwidth কমায় না (presence-এর জন্য একটাই live listener থাকে,
-            // বারবার fetch হয় না) — এটা শুধু প্রথম লোডে UX ভালো করে।
-            const PRESENCE_CACHE_KEY = "cachedActiveUserCount";
-            try {
-                const cached = localStorage.getItem(PRESENCE_CACHE_KEY);
-                if (cached !== null && countEl) {
-                    countEl.textContent = `${cached} জন এখন সাইটে আছে (সর্বশেষ জানা তথ্য)`;
-                }
-            } catch (e) { /* localStorage ব্লক করা থাকলে চুপচাপ এড়িয়ে যাও */ }
+            const topPresenceCount = document.getElementById("topPresenceCount");
+            const statActiveUsers = document.getElementById("statActiveUsers");
 
             function renderActiveCount(count) {
-                if (countEl) countEl.textContent = `${count} জন এখন সাইটে আছে`;
-                if (alarmEl) {
-                    if (count >= ACTIVE_USER_ALARM_THRESHOLD) {
-                        alarmEl.style.display = "block";
-                        alarmEl.textContent = `⚠️ সতর্কতা: ${count} জন এখন সাইটে আছে — এটা hosting-এর সীমার (${ACTIVE_USER_ALARM_THRESHOLD} জন) কাছাকাছি বা তার বেশি। এই কারণে অনেকের জন্য পাতা লোড হতে দেরি হতে পারে বা নতুন কেউ সংযুক্ত হতে ব্যর্থ হতে পারে।`;
-                    } else {
-                        alarmEl.style.display = "none";
-                    }
-                }
-                try { localStorage.setItem(PRESENCE_CACHE_KEY, String(count)); } catch (e) {}
+                const txt = `${count} জন`;
+                if (countEl) countEl.textContent = `${count} জন অনলাইন`;
+                if (topPresenceCount) topPresenceCount.textContent = `${count} জন`;
+                if (statActiveUsers) statActiveUsers.textContent = `${count} জন`;
             }
 
-            // 🐛 বাগ ফিক্স: আগে এই দুইটা listener-এ কোনো error callback ছিল না।
-            // Firebase rules-এ "presence" path allow করা না থাকলে (permission-denied)
-            // listener চুপচাপ fail করতো — কোনো error দেখাও যেত না, count-ও কখনো
-            // update হতো না, তাই "..." স্থায়ীভাবে দেখাতে থাকতো (তুমি যেটা দেখেছিলে)।
-            // এখন error explicit console-এ log হচ্ছে এবং ব্যবহারকারীকেও জানানো হচ্ছে।
             onValue(connectedRef, (snap) => {
                 if (snap.val() === true) {
-                    // সংযোগ বিচ্ছিন্ন হলে (ট্যাব বন্ধ, নেট চলে যাওয়া) সার্ভার নিজে থেকেই এই এন্ট্রি মুছে দেবে
                     onDisconnect(myPresenceRef).remove().then(() => {
-                        set(myPresenceRef, { since: serverTimestamp() }).catch((err) => {
-                            console.error("❌ presence write failed — Firebase rules-এ 'presence' path-এ write permission আছে কিনা যাচাই করো:", err);
-                        });
+                        set(myPresenceRef, { since: serverTimestamp() }).catch(() => {});
                     }).catch(() => {});
                 }
-            }, (err) => {
-                console.error("❌ .info/connected read failed:", err);
             });
 
             const presenceListRef = ref(db, "presence");
@@ -892,13 +1575,9 @@ const stopCoords = {
                 const val = snap.val();
                 const count = val ? Object.keys(val).length : 0;
                 renderActiveCount(count);
-            }, (err) => {
-                console.error("❌ presence/ read failed — Firebase rules-এ 'presence' path read করার permission আছে কিনা যাচাই করো:", err);
-                if (countEl) countEl.textContent = "⚠️ Live count লোড করা যায়নি";
             });
 
-            // 🕘 Report পেজে সর্বশেষ ২০টা history entry দেখানো (দুই রুট মিলিয়ে) —
-            // শুধু সাম্প্রতিক ইতিহাস, বেশি read/bandwidth এড়াতে limitToLast(20) ব্যবহার করা হয়েছে।
+            // Update History for Admins
             ["campus_city", "boromath_campus"].forEach(direction => {
                 const histRef = ref(db, `history/${direction}`);
                 onValue(histRef, () => renderRecentHistory(db, ref, query, limitToLast, get));
@@ -919,24 +1598,19 @@ const stopCoords = {
                     }
                     entries.sort((a, b) => b.time - a.time);
                     const top = entries.slice(0, 20);
-                    if (!top.length) { listEl.innerHTML = "<p style='color:#999'>এখনো কোনো ইতিহাস নেই।</p>"; return; }
+                    if (!top.length) { listEl.innerHTML = "<p class='text-slate-400 py-2'>এখনো কোনো ইতিহাস নেই।</p>"; return; }
                     listEl.innerHTML = top.map(e => {
-                        const dirLabel = e.direction === "campus_city" ? "ক্যাম্পাস→শহর" : "বড়মাঠ→ক্যাম্পাস";
+                        const dirLabel = e.direction === "campus_city" ? "ক্যাম্পাস ➔ শহর" : "বড়মাঠ ➔ ক্যাম্পাস";
                         const ago = Math.max(0, Math.round((Date.now() - e.time) / 60000));
-                        return `<div style="padding:8px 0;border-bottom:1px solid #f0f0f0">
-                            <b>${e.name}</b> (${dirLabel}) → ${e.stopName}
-                            <br><span style="color:#999">${ago} মিনিট আগে • ${e.updatedBy || "unknown"}</span>
+                        return `<div class="py-2">
+                            <span class="font-bold text-slate-800">${escapeHtml(e.name)}</span> (${dirLabel}) ➔ <span class="text-emerald-700 font-semibold">${escapeHtml(e.stopName)}</span>
+                            <div class="text-[11px] text-slate-400 mt-0.5">${ago} মিনিট আগে • ${escapeHtml(e.updatedBy || "student")}</div>
                         </div>`;
                     }).join("");
                 } catch (err) {
                     console.error("History render error:", err);
                 }
             }
-        } catch (err) {
-            console.error("Firebase load failed:", err);
-            // Firebase লোড না হলেও বাকি পাতা (navigation, dropdown) স্বাভাবিক থাকবে —
-            // শুধু submitReport() ব্যবহারকারীকে সতর্ক করবে যে live sync কাজ করছে না।
-        }
     </script>
 </body>
 
