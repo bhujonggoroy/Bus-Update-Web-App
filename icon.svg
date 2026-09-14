@@ -1,59 +1,60 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <!-- Background: White Circle / Rounded Square with subtle margin for maskable compatibility -->
+  <!-- Clean rounded background -->
   <rect width="512" height="512" rx="112" fill="#ffffff"/>
 
   <g transform="translate(0, 0)">
-    <!-- 1. Left Navy Arc -->
-    <path d="M 86 304 A 184 184 0 0 1 158 148" fill="none" stroke="#1b3d6d" stroke-width="24" stroke-linecap="round"/>
+    <!-- 1. Left Royal Violet Arc -->
+    <path d="M 86 304 A 184 184 0 0 1 158 148" fill="none" stroke="#5b21b6" stroke-width="24" stroke-linecap="round"/>
 
-    <!-- 2. Right Navy Arc -->
-    <path d="M 354 148 A 184 184 0 0 1 426 304" fill="none" stroke="#1b3d6d" stroke-width="24" stroke-linecap="round"/>
+    <!-- 2. Right Royal Violet Arc -->
+    <path d="M 354 148 A 184 184 0 0 1 426 304" fill="none" stroke="#5b21b6" stroke-width="24" stroke-linecap="round"/>
 
-    <!-- 3. Top Green Location Pin -->
+    <!-- 3. Top Bio-Green Location Pin (From HSTU Official Monogram DNA Helix) -->
     <g>
-      <!-- Teardrop pin body -->
-      <path d="M 256 62 C 218 62 184 94 184 136 C 184 188 256 262 256 262 C 256 262 328 188 328 136 C 328 94 294 62 256 62 Z" fill="#0f8e5d"/>
-      <!-- Inner white cutout circle -->
-      <circle cx="256" cy="132" r="26" fill="#ffffff"/>
+      <path d="M 256 60 C 218 60 184 92 184 134 C 184 186 256 260 256 260 C 256 260 328 186 328 134 C 328 92 294 60 256 60 Z" fill="#059669"/>
+      <circle cx="256" cy="130" r="26" fill="#ffffff"/>
     </g>
 
-    <!-- 4. Center Navy Bus -->
-    <g fill="#1b3d6d">
-      <!-- Bus Main Hull with Side Mirrors -->
-      <!-- Left Mirror -->
-      <rect x="142" y="248" width="22" height="64" rx="11" fill="#1b3d6d"/>
-      <!-- Right Mirror -->
-      <rect x="348" y="248" width="22" height="64" rx="11" fill="#1b3d6d"/>
-      <!-- Mirror connecting arms -->
-      <rect x="156" y="268" width="16" height="12" fill="#1b3d6d"/>
-      <rect x="340" y="268" width="16" height="12" fill="#1b3d6d"/>
+    <!-- 4. Center HSTU Bus (Dual-Tone Livery: Violet Top + Sky Blue Bottom) -->
+    <g>
+      <!-- Side Mirrors (Royal Violet) -->
+      <rect x="140" y="248" width="22" height="64" rx="11" fill="#6d28d9"/>
+      <rect x="350" y="248" width="22" height="64" rx="11" fill="#6d28d9"/>
+      <rect x="156" y="268" width="16" height="12" fill="#6d28d9"/>
+      <rect x="340" y="268" width="16" height="12" fill="#6d28d9"/>
 
-      <!-- Main Bus Chassis -->
-      <rect x="162" y="214" width="188" height="206" rx="36" fill="#1b3d6d"/>
-      <!-- Lower tires -->
-      <rect x="180" y="412" width="28" height="18" rx="8" fill="#1b3d6d"/>
-      <rect x="304" y="412" width="28" height="18" rx="8" fill="#1b3d6d"/>
+      <!-- Lower Tires -->
+      <rect x="180" y="416" width="30" height="18" rx="8" fill="#1e1b4b"/>
+      <rect x="302" y="416" width="30" height="18" rx="8" fill="#1e1b4b"/>
 
-      <!-- Destination display cutout bar -->
-      <rect x="204" y="226" width="104" height="10" rx="5" fill="#ffffff"/>
+      <!-- Bus Main Chassis Base (Sky Blue lower body) -->
+      <rect x="162" y="214" width="188" height="206" rx="36" fill="#0284c7"/>
 
-      <!-- Large Front Windshield Cutout -->
+      <!-- Bus Upper Chassis (Royal Violet upper half) -->
+      <path d="M 162 250 C 162 230 178 214 198 214 L 314 214 C 334 214 350 230 350 250 L 350 330 L 162 330 Z" fill="#6d28d9"/>
+
+      <!-- Separation accent stripe -->
+      <line x1="162" y1="330" x2="350" y2="330" stroke="#ffffff" stroke-width="4"/>
+
+      <!-- Destination Sign / Header Display -->
+      <rect x="202" y="226" width="108" height="12" rx="6" fill="#ffffff"/>
+
+      <!-- Large Front Windshield (White with subtle sky tint) -->
       <rect x="182" y="248" width="148" height="74" rx="14" fill="#ffffff"/>
 
-      <!-- Left Headlight Cutout (Angled) -->
-      <path d="M 186 338 L 226 344 L 208 372 Z" fill="#ffffff"/>
+      <!-- Headlights on Sky Blue Lower Half -->
+      <path d="M 186 348 L 226 354 L 208 382 Z" fill="#ffffff"/>
+      <path d="M 326 348 L 286 354 L 304 382 Z" fill="#ffffff"/>
 
-      <!-- Right Headlight Cutout (Angled) -->
-      <path d="M 326 338 L 286 344 L 304 372 Z" fill="#ffffff"/>
+      <!-- Central Grille / HSTU Bus Emblem on lower body -->
+      <rect x="238" y="360" width="36" height="14" rx="4" fill="#0369a1"/>
     </g>
 
-    <!-- 5. Bottom Green Curved Road Ribbon -->
+    <!-- 5. Bottom Curved Road Ribbon (HSTU Sky Blue to Bio Green) -->
     <g>
-      <!-- Road Ribbon Shape -->
-      <path d="M 152 428 C 220 428 290 410 390 334 C 420 376 430 398 426 406 C 362 468 266 468 152 454 Z" fill="#0f8e5d"/>
-      
-      <!-- Dashed White Road Center Line -->
-      <path d="M 204 438 C 266 432 324 410 380 374" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-dasharray="24 16"/>
+      <path d="M 152 430 C 220 430 290 412 390 334 C 420 376 430 398 426 406 C 362 470 266 470 152 456 Z" fill="#0284c7"/>
+      <!-- Dashed White Road Marks -->
+      <path d="M 204 440 C 266 434 324 412 380 374" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-dasharray="24 16"/>
     </g>
   </g>
 </svg>
