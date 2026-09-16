@@ -3,7 +3,7 @@
  * Enhanced with dedicated Bus Schedule caching for offline & limited connection access.
  */
 
-const CACHE_VERSION = "hstu-bus-v5";
+const CACHE_VERSION = "hstu-bus-v6";
 const STATIC_CACHE = `hstu-static-${CACHE_VERSION}`;
 const SCHEDULE_CACHE = `hstu-schedule-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `hstu-runtime-${CACHE_VERSION}`;

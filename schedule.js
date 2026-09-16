@@ -445,42 +445,12 @@
     };
 
     /**
-     * Touch Swipe Gesture: Swipe left to go to English, swipe right to go to Bangla
+     * Schedule Swipe Gestures:
+     * Explicitly disabled to allow users to smoothly scroll the wide schedule table left-to-right 
+     * and right-to-left without inadvertently triggering language switches.
      */
     function initScheduleSwipeGestures() {
-        const wrapper = document.getElementById("scheduleViewWrapper") || document.getElementById("scheduleFragment")?.parentElement;
-        if (!wrapper) return;
-
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let isTouching = false;
-
-        wrapper.addEventListener("touchstart", (e) => {
-            if (!e.touches || e.touches.length !== 1) return;
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-            isTouching = true;
-        }, { passive: true });
-
-        wrapper.addEventListener("touchend", (e) => {
-            if (!isTouching || !e.changedTouches || e.changedTouches.length !== 1) return;
-            isTouching = false;
-            const touchEndX = e.changedTouches[0].clientX;
-            const touchEndY = e.changedTouches[0].clientY;
-            const diffX = touchEndX - touchStartX;
-            const diffY = touchEndY - touchStartY;
-
-            // Trigger swipe if horizontal displacement is >= 50px and predominantly horizontal
-            if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY) * 1.4) {
-                if (diffX < 0) {
-                    // Swiped Left -> Go to English version
-                    window.switchScheduleView("en");
-                } else {
-                    // Swiped Right -> Go to Bangla version
-                    window.switchScheduleView("bn");
-                }
-            }
-        }, { passive: true });
+        // No-op: Table horizontal scroll is fully preserved for natural column inspection
     }
 
     /**
