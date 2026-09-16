@@ -125,25 +125,13 @@
                     </div>
                 </div>
 
-                <!-- Foreign Student Quick Guide Note -->
-                <div class="bg-blue-50 border border-blue-200 rounded-xl p-3.5 text-xs text-blue-900 flex items-start gap-2.5">
+                <!-- Foreign Student Note -->
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-blue-900 flex items-center gap-2">
                     <span class="text-base flex-shrink-0">ℹ️</span>
-                    <div>
-                        <span class="font-bold block mb-0.5">Key Locations & Terminology for Foreign Students:</span>
-                        <p class="text-blue-800 leading-relaxed">
-                            • <b>Campus:</b> HSTU Main Gate & Bus Terminal.<br>
-                            • <b>Boromath (বড়মাঠ):</b> Dinajpur City Center & Central Field.<br>
-                            • <b>Suihari / Terminal:</b> Intermediate stops along the National Highway (N508).<br>
-                            • <b>Double Decker (দিতল):</b> High-capacity double-decker university buses (Buses 1, 2, 3).
-                        </p>
-                    </div>
+                    <span><b>Campus:</b> Main Terminal • <b>Boromath:</b> Dinajpur City Center • <b>Double Decker:</b> Buses 1, 2, 3</span>
                 </div>
 
                 <!-- Regular Weekday Table (Sunday to Thursday) -->
-                <div class="sm:hidden flex items-center justify-between text-[11px] text-slate-500 mb-1.5 px-1 font-medium">
-                    <span>👉 Swipe horizontally to view full schedule</span>
-                    <span class="text-[10px] text-slate-400">6 Columns</span>
-                </div>
                 <div class="overflow-x-auto rounded-xl border border-slate-200 touch-pan-x">
                     <table class="w-full text-left text-xs sm:text-sm border-collapse min-w-[620px]">
                         <thead>
@@ -193,7 +181,7 @@
                 </div>
 
                 <div class="text-xs text-slate-500 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    *** Student buses operate primarily via the Bypass road, while Teacher & Officer buses follow the designated city-crossing route. Trip counts may be adjusted by the Transport Director based on examination schedules and holiday seasons.
+                    *** Student buses operate via the Bypass road. Teacher & Officer buses follow designated city routes.
                 </div>
             </div>
         `;
@@ -314,7 +302,6 @@
                     <span style="border: 1.5px solid #000; background: #fff; color: #000; padding: 4px 22px; font-weight: 800; font-size: 16px; border-radius: 4px; display: inline-block;">গাড়ীর সময় সূচী</span>
                 </div>
                 <div class="subtitle text-center text-xs font-bold text-slate-800 mb-2.5">রবিবার হতে বৃহস্পতিবার (কার্যকর: ২১/০৭/২০২৬ খ্রীঃ হতে)</div>
-                <div class="text-[12px] text-slate-600 text-center mb-1 font-medium">👉 টেবিলটি পাশে scroll করে সম্পূর্ণ দেখুন</div>
                 <div class="overflow-x-auto rounded border border-[#737373] touch-pan-x mb-4 bg-white">
                     <table class="w-full text-xs text-center border-collapse min-w-[720px] text-black">
                         <thead>
