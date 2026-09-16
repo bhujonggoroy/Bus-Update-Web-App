@@ -7,32 +7,32 @@
   যেটা invalid nested HTML ছিল — এখন সেই সমস্যা নেই।)
 -->
 <style>
-  #scheduleFragment .sheet{max-width:1300px;margin:auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:24px 20px;font-family:"Hind Siliguri","Noto Sans Bengali","SolaimanLipi",sans-serif;}
-  #scheduleFragment .header{text-align:center;padding-bottom:12px;border-bottom:1px solid #f1f5f9;}
-  #scheduleFragment .header h1{font-size:20px;margin:2px 0;color:#0f172a;}
-  #scheduleFragment .header h2{font-size:clamp(16px,4vw,22px);margin:4px 0;color:#064e3b;font-weight:700;}
-  #scheduleFragment .memo-row{display:flex;justify-content:space-between;font-size:13px;margin:12px 0;flex-wrap:wrap;gap:6px;color:#64748b;}
-  #scheduleFragment .title-box{text-align:center;margin:14px 0;}
-  #scheduleFragment .title-box span{border:2px solid #065f46;background:#ecfdf5;color:#064e3b;padding:6px 24px;border-radius:8px;font-size:16px;font-weight:700;display:inline-block;}
-  #scheduleFragment .subtitle{text-align:center;font-size:14px;font-weight:600;margin-bottom:14px;color:#334155;}
+  #scheduleFragment .sheet{max-width:1150px;margin:auto;background:#ffffff;border:1.5px solid #64748b;border-radius:8px;padding:24px 20px;font-family:"Hind Siliguri","Noto Sans Bengali","SolaimanLipi",sans-serif;color:#000000;box-shadow:0 4px 12px rgba(0,0,0,0.06);}
+  #scheduleFragment .header{text-align:center;padding-bottom:10px;border-bottom:1px solid #cbd5e1;}
+  #scheduleFragment .header p{margin:0;font-size:15px;font-weight:600;color:#1e293b;}
+  #scheduleFragment .header h2{font-size:clamp(18px,3.8vw,23px);margin:4px 0;color:#044e3b;font-weight:800;letter-spacing:-0.01em;}
+  #scheduleFragment .memo-row{display:flex;justify-content:space-between;font-size:13.5px;margin:12px 0 10px;flex-wrap:wrap;gap:6px;color:#334155;font-weight:500;}
+  #scheduleFragment .title-box{text-align:center;margin:12px 0;}
+  #scheduleFragment .title-box span{border:1.5px solid #000000;background:#ffffff;color:#000000;padding:4px 24px;border-radius:4px;font-size:16px;font-weight:800;display:inline-block;letter-spacing:0.5px;}
+  #scheduleFragment .subtitle{text-align:center;font-size:13.5px;font-weight:700;margin-bottom:12px;color:#1e293b;}
 
-  #scheduleFragment .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:16px;border:1px solid #cbd5e1;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
-  #scheduleFragment table{border-collapse:collapse;font-size:13px;min-width:720px;width:100%;}
-  #scheduleFragment th,#scheduleFragment td{border:1px solid #e2e8f0;padding:8px 10px;text-align:center;vertical-align:middle;white-space:nowrap;}
-  #scheduleFragment th{background:#f8fafc;color:#0f172a;font-weight:600;}
-  #scheduleFragment .section-title{background:#f1f5f9;font-weight:700;font-size:14px;color:#0f172a;}
+  #scheduleFragment .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:16px;border:1.5px solid #737373;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.05);background:#ffffff;}
+  #scheduleFragment table{border-collapse:collapse;font-size:13px;min-width:760px;width:100%;color:#000000;}
+  #scheduleFragment th,#scheduleFragment td{border:1px solid #737373;padding:7px 8px;text-align:center;vertical-align:middle;white-space:nowrap;}
+  #scheduleFragment th{background:#dcd8c9;color:#000000;font-weight:700;}
+  #scheduleFragment .section-title{background:#dcd8c9;font-weight:800;font-size:14.5px;color:#000000;}
   #scheduleFragment tr:hover td{background:#f8fafc;}
-  #scheduleFragment .note{font-size:12.5px;margin-top:12px;line-height:1.6;color:#475569;background:#f8fafc;padding:10px 14px;border-radius:8px;border-left:4px solid #059669;}
-  #scheduleFragment .footer{display:flex;justify-content:space-between;margin-top:24px;font-size:12.5px;flex-wrap:wrap;gap:14px;color:#64748b;}
+  #scheduleFragment .note{font-size:12.5px;margin-top:12px;line-height:1.6;color:#1e293b;background:#f8fafc;padding:10px 14px;border-radius:6px;border-left:4px solid #059669;}
+  #scheduleFragment .footer{display:flex;justify-content:space-between;margin-top:24px;font-size:12.5px;flex-wrap:wrap;gap:14px;color:#475569;}
   #scheduleFragment .footer ul{margin:0;padding-left:18px;}
-  #scheduleFragment .sign{text-align:right;font-size:12.5px;color:#0f172a;font-weight:600;}
+  #scheduleFragment .sign{text-align:right;font-size:12.5px;color:#0f172a;font-weight:700;}
 
-  #scheduleFragment .scroll-hint{font-size:12px;color:#64748b;text-align:center;margin:-4px 0 10px;}
+  #scheduleFragment .scroll-hint{font-size:12px;color:#475569;text-align:center;margin:-2px 0 8px;font-weight:500;}
 
   @media (max-width:700px){
-    #scheduleFragment .sheet{padding:14px 10px;}
-    #scheduleFragment table{font-size:12px;min-width:640px;}
-    #scheduleFragment th,#scheduleFragment td{padding:6px 6px;white-space:normal;}
+    #scheduleFragment .sheet{padding:14px 8px;border-width:1px;}
+    #scheduleFragment table{font-size:12px;min-width:680px;}
+    #scheduleFragment th,#scheduleFragment td{padding:6px 5px;}
   }
 </style>
 

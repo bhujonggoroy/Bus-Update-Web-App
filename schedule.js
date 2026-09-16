@@ -250,36 +250,58 @@
         `).join("");
 
         container.innerHTML = `
-            <div class="sheet p-4 sm:p-6 bg-white">
-                <div class="header text-center pb-3 border-b border-slate-100">
-                    <p style="margin:0;font-size:15px;" class="text-slate-600">পরিবহন ও যন্ত্র মেরামত শাখা</p>
-                    <h2 class="text-emerald-900 font-bold text-lg md:text-xl">হাজী মোহাম্মদ দানেশ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়, দিনাজপুর</h2>
+            <div class="sheet p-4 sm:p-6 bg-white border border-[#737373] rounded-lg max-w-[1150px] mx-auto shadow-sm">
+                <div class="header text-center pb-2.5 border-b border-slate-200">
+                    <p style="margin:0;font-size:15px;" class="text-slate-800 font-semibold">পরিবহন ও যন্ত্র মেরামত শাখা</p>
+                    <h2 class="text-emerald-950 font-black text-lg md:text-xl mt-1">হাজী মোহাম্মদ দানেশ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়, দিনাজপুর</h2>
                 </div>
-                <div class="memo-row flex justify-between text-xs text-slate-500 my-3">
+                <div class="memo-row flex justify-between text-xs text-slate-700 my-2.5 font-medium">
                     <span>স্মারক নং: হাবিপ্রবি/২০২৬/পশা/</span>
                     <span>তারিখ: ২০/০৭/২০২৬ খ্রি:</span>
                 </div>
-                <div class="title-box text-center my-3"><span class="border-2 border-emerald-800 bg-emerald-50 text-emerald-900 px-5 py-1.5 rounded-lg font-bold">গাড়ীর সময় সূচী</span></div>
-                <div class="subtitle text-center text-xs font-semibold text-slate-600 mb-3">রবিবার হতে বৃহস্পতিবার (কার্যকর: ২১/০৭/২০২৬ খ্রীঃ হতে)</div>
-                <div class="overflow-x-auto rounded-xl border border-slate-200 touch-pan-x mb-4">
-                    <table class="w-full text-xs text-center border-collapse min-w-[620px]">
+                <div class="title-box text-center my-2.5">
+                    <span style="border: 1.5px solid #000; background: #fff; color: #000; padding: 4px 22px; font-weight: 800; font-size: 16px; border-radius: 4px; display: inline-block;">গাড়ীর সময় সূচী</span>
+                </div>
+                <div class="subtitle text-center text-xs font-bold text-slate-800 mb-2.5">রবিবার হতে বৃহস্পতিবার (কার্যকর: ২১/০৭/২০২৬ খ্রীঃ হতে)</div>
+                <div class="text-[12px] text-slate-600 text-center mb-1 font-medium">👉 টেবিলটি পাশে scroll করে সম্পূর্ণ দেখুন</div>
+                <div class="overflow-x-auto rounded border border-[#737373] touch-pan-x mb-4 bg-white">
+                    <table class="w-full text-xs text-center border-collapse min-w-[720px] text-black">
                         <thead>
-                            <tr class="bg-slate-100 text-slate-800 font-bold"><th colspan="3" class="p-2 border">ক্যাম্পাস হতে</th><th colspan="3" class="p-2 border">শহর হতে</th></tr>
-                            <tr class="bg-slate-50 text-slate-700"><th class="p-2 border">ট্রিপের নাম</th><th class="p-2 border">ছাড়ার সময়</th><th class="p-2 border">গাড়ীর নম্বর</th><th class="p-2 border">ট্রিপের নাম</th><th class="p-2 border">ছাড়ার স্থান ও সময়</th><th class="p-2 border">গাড়ীর নম্বর</th></tr>
+                            <tr style="background:#dcd8c9;" class="text-black font-extrabold border-b border-[#737373]">
+                                <th colspan="3" class="p-2 border border-[#737373] text-sm">ক্যাম্পাস হতে</th>
+                                <th colspan="3" class="p-2 border border-[#737373] text-sm">শহর হতে</th>
+                            </tr>
+                            <tr style="background:#dcd8c9;" class="text-black font-bold border-b border-[#737373]">
+                                <th class="p-2 border border-[#737373]">ট্রিপের নাম</th>
+                                <th class="p-2 border border-[#737373]">ছাড়ার সময়</th>
+                                <th class="p-2 border border-[#737373]">গাড়ীর নম্বর</th>
+                                <th class="p-2 border border-[#737373]">ট্রিপের নাম</th>
+                                <th class="p-2 border border-[#737373]">ছাড়ার স্থান ও সময়</th>
+                                <th class="p-2 border border-[#737373]">গাড়ীর নম্বর</th>
+                            </tr>
                         </thead>
-                        <tbody>${rows}</tbody>
+                        <tbody class="divide-y divide-[#737373]">${rows}</tbody>
                     </table>
                 </div>
-                <div class="overflow-x-auto rounded-xl border border-slate-200 touch-pan-x mb-4">
-                    <table class="w-full text-xs text-center border-collapse min-w-[540px]">
+                <div class="overflow-x-auto rounded border border-[#737373] touch-pan-x mb-4 bg-white">
+                    <table class="w-full text-xs text-center border-collapse min-w-[600px] text-black">
                         <thead>
-                            <tr class="bg-slate-100 text-slate-800 font-bold"><th colspan="6" class="p-2 border">বিশেষ ট্রিপ</th></tr>
-                            <tr class="bg-slate-50 text-slate-700"><th class="p-2 border">বার</th><th class="p-2 border">যাত্রী</th><th class="p-2 border">ছাড়ার সময়</th><th class="p-2 border">বার</th><th class="p-2 border">যাত্রী</th><th class="p-2 border">ছাড়ার সময়</th></tr>
+                            <tr style="background:#dcd8c9;" class="text-black font-extrabold border-b border-[#737373]">
+                                <th colspan="6" class="p-2 border border-[#737373] text-sm">বিশেষ ট্রিপ</th>
+                            </tr>
+                            <tr style="background:#dcd8c9;" class="text-black font-bold border-b border-[#737373]">
+                                <th class="p-2 border border-[#737373]">বার</th>
+                                <th class="p-2 border border-[#737373]">যাত্রী</th>
+                                <th class="p-2 border border-[#737373]">ছাড়ার সময়</th>
+                                <th class="p-2 border border-[#737373]">বার</th>
+                                <th class="p-2 border border-[#737373]">যাত্রী</th>
+                                <th class="p-2 border border-[#737373]">ছাড়ার সময়</th>
+                            </tr>
                         </thead>
-                        <tbody>${specialRows}</tbody>
+                        <tbody class="divide-y divide-[#737373]">${specialRows}</tbody>
                     </table>
                 </div>
-                <div class="text-xs bg-slate-50 p-3 rounded-lg border-l-4 border-emerald-600 text-slate-600">
+                <div class="text-xs bg-slate-50 p-3 rounded border-l-4 border-emerald-600 text-slate-700">
                     ***ছাত্র-ছাত্রীদের গাড়ীগুলি বাইপাস হয়ে চলাচল করবে এবং শিক্ষক/কর্মকর্তা ও কর্মচারীগণের গাড়ীগুলি নির্ধারিত রুটে চলাচল করবে।
                 </div>
             </div>

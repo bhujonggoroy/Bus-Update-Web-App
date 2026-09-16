@@ -269,36 +269,41 @@
     </div>
 
     <!-- Desktop Navigation Bar -->
-    <nav class="bg-white border-b border-slate-200 shadow-sm sticky top-[49px] sm:top-[57px] md:top-[61px] z-30 hidden md:block">
+    <nav class="bg-white border-b border-slate-200 shadow-xs sticky top-[49px] sm:top-[57px] md:top-[61px] z-30 hidden md:block">
         <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
-            <div class="flex space-x-1 py-1.5 sm:py-2 overflow-x-auto no-scrollbar" id="desktopNavTabs">
-                <button onclick="showPage('live', this)" class="nav-tab active whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3.5 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-bold rounded-xl text-white bg-violet-700 shadow-sm ring-2 ring-violet-400 border border-violet-700 transition cursor-pointer">
-                    <span class="text-base">🟢</span> <span id="desktopNavLiveText">লাইভ বাস ট্র্যাকার</span>
+            <div class="flex space-x-1.5 py-2 overflow-x-auto no-scrollbar" id="desktopNavTabs">
+                <button onclick="showPage('live', this)" class="nav-tab active whitespace-nowrap inline-flex items-center gap-2 px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-bold rounded-xl text-white bg-violet-700 shadow-sm border border-violet-800 transition cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    <span id="desktopNavLiveText">লাইভ বাস ট্র্যাকার</span>
                 </button>
-                <button onclick="showPage('map', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3.5 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent transition cursor-pointer">
-                    <span class="text-base">🗺️</span> <span id="desktopNavMapText">রুট ও স্টপ ম্যাপ</span>
+                <button onclick="showPage('map', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-2 px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent transition cursor-pointer">
+                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                    <span id="desktopNavMapText">রুট ও স্টপ ম্যাপ</span>
                 </button>
-                <button onclick="showPage('schedule', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3.5 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent transition cursor-pointer">
-                    <span class="text-base">📅</span> <span id="desktopNavScheduleText">বাস শিডিউল</span>
+                <button onclick="showPage('schedule', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-2 px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent transition cursor-pointer">
+                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 2v4M8 2v4M3 10h18"/></svg>
+                    <span id="desktopNavScheduleText">বাস শিডিউল</span>
                 </button>
-                <button onclick="showPage('report', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3.5 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent transition cursor-pointer">
-                    <span class="text-base">📡</span> <span id="desktopNavReportText">অবস্থান আপডেট ও GPS</span>
+                <button onclick="showPage('report', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-2 px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent transition cursor-pointer">
+                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 8.5c0 5.25-7.5 12.5-7.5 12.5S4.5 13.75 4.5 8.5a7.5 7.5 0 1115 0z"/></svg>
+                    <span id="desktopNavReportText">অবস্থান আপডেট ও GPS</span>
                 </button>
-                <button onclick="showPage('contacts', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3.5 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent transition cursor-pointer">
-                    <span class="text-base">📞</span> <span id="desktopNavContactsText">জরুরি হেল্পলাইন</span>
+                <button onclick="showPage('contacts', this)" class="nav-tab whitespace-nowrap inline-flex items-center gap-2 px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent transition cursor-pointer">
+                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    <span id="desktopNavContactsText">জরুরি হেল্পলাইন</span>
                 </button>
             </div>
 
             <!-- Current Dashboard Indicator & Active Bus Counter Summary & Refresh Button -->
             <div class="text-xs text-slate-500 font-medium flex items-center gap-2 flex-shrink-0 ml-2">
                 <!-- Highlight Current Dashboard Badge -->
-                <div id="desktopCurrentDashboardBadge" class="hidden xl:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-100 text-violet-950 font-extrabold border border-violet-300/80 shadow-xs">
+                <div id="desktopCurrentDashboardBadge" class="hidden xl:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-50 text-violet-900 font-bold border border-violet-200 shadow-2xs">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span id="currentDashboardPrefix" class="text-violet-700 font-medium">বর্তমান ড্যাশবোর্ড:</span>
-                    <span id="currentDashboardName" class="text-violet-900 font-black">লাইভ বাস ট্র্যাকার</span>
+                    <span id="currentDashboardPrefix" class="text-violet-600 font-medium">বর্তমান ড্যাশবোর্ড:</span>
+                    <span id="currentDashboardName" class="text-violet-950 font-bold">লাইভ বাস ট্র্যাকার</span>
                 </div>
                 <span id="activeBusCountPill" class="px-2.5 py-1 rounded-full bg-violet-50 text-violet-900 font-bold border border-violet-200">০টি বাস সক্রিয়</span>
-                <button id="refreshNavBtn" onclick="forceRefreshData(this)" title="এখনই তথ্য রিফ্রেশ করুন" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-slate-600 hover:text-violet-700 hover:bg-violet-50 border border-slate-200 transition cursor-pointer text-xs font-semibold active:scale-95 min-h-[32px]">
+                <button id="refreshNavBtn" onclick="forceRefreshData(this)" title="এখনই তথ্য রিফ্রেশ করুন" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-slate-600 hover:text-violet-700 hover:bg-violet-50 border border-slate-200 transition cursor-pointer text-xs font-semibold active:scale-95 min-h-[32px]">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                     </svg>
@@ -311,13 +316,16 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto w-full px-3 sm:px-4 py-3 md:py-6 flex-1">
 
-        <!-- Mobile Active Dashboard Highlight Bar -->
-        <div class="md:hidden flex items-center justify-between px-3 py-1.5 mb-2.5 bg-gradient-to-r from-violet-100 to-indigo-50 border border-violet-200 rounded-xl">
+        <!-- Mobile Active Dashboard Compact Indicator -->
+        <div class="md:hidden flex items-center justify-between px-3 py-1.5 mb-2 bg-white border border-slate-200/90 rounded-xl shadow-2xs">
             <div class="flex items-center gap-2 min-w-0">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                <span class="text-xs font-black text-violet-950 truncate" id="mobileCurrentDashboardName">ড্যাশবোর্ড: লাইভ বাস ট্র্যাকার</span>
+                <span class="relative flex h-2 w-2 flex-shrink-0">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span class="text-xs font-bold text-slate-800 truncate" id="mobileCurrentDashboardName">ড্যাশবোর্ড: লাইভ বাস ট্র্যাকার</span>
             </div>
-            <span id="mobileDashboardBadgeTag" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-violet-200 text-violet-900">সক্রিয়</span>
+            <span id="mobileDashboardBadgeTag" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex-shrink-0">সক্রিয়</span>
         </div>
 
         <!-- ==================================================================== -->
@@ -395,32 +403,32 @@
 
             <!-- Quick Live Stats Panel -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 pt-1 sm:pt-2">
-                <div class="bg-white p-3 sm:p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-2.5 sm:gap-3">
-                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-base sm:text-lg font-bold flex-shrink-0">🚍</div>
+                <div class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 shadow-xs flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center text-lg font-bold flex-shrink-0">🚍</div>
                     <div class="min-w-0">
                         <div id="statLabelBuses" class="text-[11px] sm:text-xs text-slate-500 font-medium truncate">মোট নথিভুক্ত বাস</div>
-                        <div id="statValBuses" class="text-sm sm:text-base font-bold text-slate-800 truncate">১১+ টি</div>
+                        <div id="statValBuses" class="text-sm sm:text-base font-extrabold text-slate-900 truncate">১১+ টি</div>
                     </div>
                 </div>
-                <div class="bg-white p-3 sm:p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-2.5 sm:gap-3">
-                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center text-base sm:text-lg font-bold flex-shrink-0">📍</div>
+                <div class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 shadow-xs flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-700 border border-sky-200 flex items-center justify-center text-lg font-bold flex-shrink-0">📍</div>
                     <div class="min-w-0">
                         <div id="statLabelStops" class="text-[11px] sm:text-xs text-slate-500 font-medium truncate">প্রধান স্টপসমূহ</div>
-                        <div id="statValStops" class="text-sm sm:text-base font-bold text-slate-800 truncate">৯টি স্টপেজ</div>
+                        <div id="statValStops" class="text-sm sm:text-base font-extrabold text-slate-900 truncate">৯টি স্টপেজ</div>
                     </div>
                 </div>
-                <div class="bg-white p-3 sm:p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-2.5 sm:gap-3">
-                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center text-base sm:text-lg font-bold flex-shrink-0">⏱️</div>
+                <div class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 shadow-xs flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-700 border border-violet-200 flex items-center justify-center text-lg font-bold flex-shrink-0">⏱️</div>
                     <div class="min-w-0">
                         <div id="statLabelTime" class="text-[11px] sm:text-xs text-slate-500 font-medium truncate">গড় যাত্রা সময়</div>
-                        <div id="statValTime" class="text-sm sm:text-base font-bold text-slate-800 truncate">২৫-৩৫ মিনিট</div>
+                        <div id="statValTime" class="text-sm sm:text-base font-extrabold text-slate-900 truncate">২৫-৩৫ মিনিট</div>
                     </div>
                 </div>
-                <div class="bg-white p-3 sm:p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-2.5 sm:gap-3">
-                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-base sm:text-lg font-bold flex-shrink-0">👥</div>
+                <div class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 shadow-xs flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 border border-amber-200 flex items-center justify-center text-lg font-bold flex-shrink-0">👥</div>
                     <div class="min-w-0">
                         <div id="statLabelUsers" class="text-[11px] sm:text-xs text-slate-500 font-medium truncate">এখন সাইটে আছেন</div>
-                        <div id="statActiveUsers" class="text-sm sm:text-base font-bold text-slate-800 truncate">...</div>
+                        <div id="statActiveUsers" class="text-sm sm:text-base font-extrabold text-slate-900 truncate">...</div>
                     </div>
                 </div>
             </div>
@@ -721,15 +729,29 @@
 
                         <div>
                             <label id="reportStep2Label" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">২. বাস নির্বাচন করুন</label>
-                            <select id="busSelect" class="w-full text-sm font-semibold p-3 rounded-xl border border-slate-300 bg-white text-slate-800 focus:ring-2 focus:ring-violet-500 focus:border-transparent">
-                                <!-- Options injected by JS -->
-                            </select>
+                            <div class="relative">
+                                <select id="busSelect" class="w-full text-base sm:text-sm font-bold pl-4 pr-10 py-3.5 rounded-xl border border-slate-300 bg-white text-slate-800 focus:ring-2 focus:ring-violet-500 focus:border-violet-600 shadow-2xs min-h-[48px] touch-manipulation cursor-pointer appearance-none transition">
+                                    <!-- Options injected by JS -->
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-slate-500">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
 
                         <div>
                             <label id="reportStep3Label" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">৩. বাসটি এখন কোন স্টপেজে আছে?</label>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2" id="stopRadioSelector">
-                                <!-- Interactive Stop Buttons -->
+                            <div class="relative">
+                                <select id="stopDropdownSelect" onchange="onStopDropdownChange(this.value)" class="w-full text-base sm:text-sm font-bold pl-4 pr-10 py-3.5 rounded-xl border border-slate-300 bg-white text-slate-800 focus:ring-2 focus:ring-violet-500 focus:border-violet-600 shadow-2xs min-h-[48px] touch-manipulation cursor-pointer appearance-none transition">
+                                    <!-- Options injected by JS -->
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-slate-500">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
                             </div>
                             <input type="hidden" id="stopSelect" value="0">
                         </div>
@@ -738,6 +760,29 @@
                         <button id="submitBtn" onclick="submitReport()" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-violet-700 to-indigo-700 hover:from-violet-800 hover:to-indigo-800 active:scale-[0.99] text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer touch-manipulation min-h-[48px]">
                             <span id="submitBtnText">📡 বাসের অবস্থান আপডেট করুন</span>
                         </button>
+
+                        <!-- Traffic Jam Manual Override Controls -->
+                        <div class="pt-1">
+                            <div class="flex flex-col sm:flex-row gap-2">
+                                <button id="trafficJamBtn" type="button" onclick="openTrafficJamModal()" class="flex-1 py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 active:scale-[0.99] text-amber-950 font-bold text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-2 cursor-pointer touch-manipulation min-h-[46px] border border-amber-600/30">
+                                    <span class="text-base">🚦</span>
+                                    <span id="trafficJamBtnText">Bus In Traffic Jam</span>
+                                </button>
+                                <button id="resumeAutoTrackingBtn" type="button" onclick="resumeAutoTracking()" class="hidden flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white font-bold text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-2 cursor-pointer touch-manipulation min-h-[46px]">
+                                    <span class="text-base">▶</span>
+                                    <span id="resumeAutoTrackingBtnText">Resume Automatic Tracking</span>
+                                </button>
+                            </div>
+                            <div id="trafficJamActiveBanner" class="hidden mt-2 p-3 rounded-xl bg-amber-50 border border-amber-300 flex items-center justify-between gap-2 text-xs">
+                                <div class="flex items-center gap-2 text-amber-950 font-bold min-w-0">
+                                    <span class="text-base flex-shrink-0">🚦</span>
+                                    <span id="trafficJamActiveBannerText" class="truncate">বাসটি ট্রাফিক জ্যামে আটকে আছে হিসেবে চিহ্নিত</span>
+                                </div>
+                                <button type="button" onclick="resumeAutoTracking()" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] shadow-xs transition flex-shrink-0 cursor-pointer">
+                                    ▶ চালু করুন
+                                </button>
+                            </div>
+                        </div>
 
                     </div>
 
@@ -1065,7 +1110,77 @@
         </div>
     </div>
 
-    <!-- Modal 4: Firebase Authorized Domain Guide & Instant Student Mode -->
+    <!-- Modal 4: Traffic Jam Manual Override Modal -->
+    <div id="trafficJamModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 p-5 text-white relative">
+                <button onclick="closeModal('trafficJamModal')" class="absolute top-4 right-4 text-amber-100 hover:text-white text-xl p-1 leading-none cursor-pointer" aria-label="Close">✕</button>
+                <div class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-2xl mb-2.5 border border-white/30">
+                    🚦
+                </div>
+                <h3 id="trafficJamModalTitle" class="text-lg sm:text-xl font-black">Bus In Traffic Jam</h3>
+                <p id="trafficJamModalSubtitle" class="text-xs text-amber-100 mt-0.5">বাসের বর্তমান ট্রাফিক স্থিতি নির্ধারণ করুন</p>
+            </div>
+
+            <!-- Body -->
+            <div class="p-5 space-y-4">
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs">
+                    <div class="flex items-center justify-between">
+                        <span id="tjBusLabel" class="text-slate-600">বাস:</span>
+                        <span id="tjBusNameVal" class="font-bold text-slate-900 bg-white px-2 py-0.5 rounded border border-slate-200">বাস</span>
+                    </div>
+                    <div class="flex items-center justify-between mt-1.5">
+                        <span id="tjStopLabel" class="text-slate-600">স্টপেজ:</span>
+                        <span id="tjStopNameVal" class="font-bold text-violet-700 bg-white px-2 py-0.5 rounded border border-slate-200">স্টপ</span>
+                    </div>
+                </div>
+
+                <div class="space-y-2.5">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">
+                        ট্রাফিক জ্যামের অবস্থান নির্বাচন করুন:
+                    </label>
+
+                    <!-- Option 1: At Stop -->
+                    <label class="flex items-start gap-3 p-3.5 rounded-2xl border-2 border-slate-200 hover:border-amber-400 bg-slate-50/60 has-checked:border-amber-500 has-checked:bg-amber-50/50 cursor-pointer transition">
+                        <input type="radio" name="trafficJamPos" value="at_stop" checked class="mt-1 text-amber-600 focus:ring-amber-500">
+                        <div class="min-w-0">
+                            <span class="block text-sm font-bold text-slate-900">১. এই স্টপেজেই</span>
+                            <span class="block text-xs text-slate-500 mt-0.5 leading-relaxed">
+                                বাস বর্তমানে এই স্টপেজের কাছাকাছি পৌঁছেছে এবং ট্রাফিক জ্যামের কারণে সেখানেই আটকে আছে।
+                            </span>
+                        </div>
+                    </label>
+
+                    <!-- Option 2: After Stop -->
+                    <label class="flex items-start gap-3 p-3.5 rounded-2xl border-2 border-slate-200 hover:border-amber-400 bg-slate-50/60 has-checked:border-amber-500 has-checked:bg-amber-50/50 cursor-pointer transition">
+                        <input type="radio" name="trafficJamPos" value="after_stop" class="mt-1 text-amber-600 focus:ring-amber-500">
+                        <div class="min-w-0">
+                            <span class="block text-sm font-bold text-slate-900">২. এই স্টপেজের পরে</span>
+                            <span class="block text-xs text-slate-500 mt-0.5 leading-relaxed">
+                                বাস এই স্টপেজটি পার হয়ে গেছে, কিন্তু পরবর্তী স্টপেজে পৌঁছানোর আগেই মাঝপথে জ্যামে আটকে আছে।
+                            </span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="p-3 bg-amber-50 rounded-xl border border-amber-200/80 text-[11px] text-amber-900 leading-relaxed">
+                    💡 <b>নোট:</b> ট্রাফিক জ্যাম মোড চলাকালীন অটো-জিপিএস ভুলবশত বাসটিকে পরবর্তী স্টপেজে এগিয়ে দেবে না। জ্যাম ছাড়লে <b>Resume Automatic Tracking</b> চাপুন।
+                </div>
+
+                <div class="flex gap-2.5 pt-1">
+                    <button type="button" onclick="closeModal('trafficJamModal')" class="flex-1 py-3 px-4 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-bold text-xs sm:text-sm transition cursor-pointer min-h-[44px]">
+                        বাতিল
+                    </button>
+                    <button type="button" onclick="confirmTrafficJamOverride()" class="flex-1 py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 active:scale-[0.99] text-white font-bold text-xs sm:text-sm shadow-md transition cursor-pointer min-h-[44px] flex items-center justify-center gap-1.5">
+                        <span>✓ Confirm</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 5: Firebase Authorized Domain Guide & Instant Student Mode -->
     <div id="unauthorizedDomainModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all">
             <!-- Header -->
@@ -1134,27 +1249,27 @@
     </div>
 
     <!-- Mobile Bottom Navigation Bar (Fixed for all mobile devices) -->
-    <nav aria-label="Mobile Navigation" class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-lg px-2 pt-1 pb-[calc(0.4rem+env(safe-area-inset-bottom,0px))]">
+    <nav aria-label="Mobile Navigation" class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-lg px-2 pt-1 pb-[calc(0.4rem+env(safe-area-inset-bottom,0px))]">
         <div class="flex justify-around items-center max-w-md mx-auto" id="mobileNavTabs">
-            <button onclick="showPage('live', this)" class="mobile-nav-btn active flex flex-col items-center justify-center py-1 px-2 rounded-xl text-violet-700 min-h-[44px] min-w-[54px] touch-manipulation">
-                <span class="text-lg leading-none">🟢</span>
-                <span id="mobNavLiveText" class="text-[10px] font-bold mt-1">লাইভ বাস</span>
+            <button onclick="showPage('live', this)" class="mobile-nav-btn active flex flex-col items-center justify-center py-1 px-2 rounded-xl text-violet-700 bg-violet-50 font-bold border border-violet-200/80 shadow-2xs min-h-[44px] min-w-[54px] touch-manipulation transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                <span id="mobNavLiveText" class="text-[10px] font-bold mt-0.5">লাইভ বাস</span>
             </button>
-            <button onclick="showPage('map', this)" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-500 hover:text-slate-800 min-h-[44px] min-w-[54px] touch-manipulation">
-                <span class="text-lg leading-none">🗺️</span>
-                <span id="mobNavMapText" class="text-[10px] font-medium mt-1">রুট ম্যাপ</span>
+            <button onclick="showPage('map', this)" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-500 hover:text-slate-800 font-medium min-h-[44px] min-w-[54px] touch-manipulation transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                <span id="mobNavMapText" class="text-[10px] font-medium mt-0.5">রুট ম্যাপ</span>
             </button>
-            <button onclick="showPage('schedule', this)" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-500 hover:text-slate-800 min-h-[44px] min-w-[54px] touch-manipulation">
-                <span class="text-lg leading-none">📅</span>
-                <span id="mobNavScheduleText" class="text-[10px] font-medium mt-1">সময়সূচী</span>
+            <button onclick="showPage('schedule', this)" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-500 hover:text-slate-800 font-medium min-h-[44px] min-w-[54px] touch-manipulation transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 2v4M8 2v4M3 10h18"/></svg>
+                <span id="mobNavScheduleText" class="text-[10px] font-medium mt-0.5">সময়সূচী</span>
             </button>
-            <button onclick="showPage('report', this)" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-500 hover:text-slate-800 min-h-[44px] min-w-[54px] touch-manipulation">
-                <span class="text-lg leading-none">📡</span>
-                <span id="mobNavReportText" class="text-[10px] font-medium mt-1">রিপোর্ট</span>
+            <button onclick="showPage('report', this)" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-500 hover:text-slate-800 font-medium min-h-[44px] min-w-[54px] touch-manipulation transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 8.5c0 5.25-7.5 12.5-7.5 12.5S4.5 13.75 4.5 8.5a7.5 7.5 0 1115 0z"/></svg>
+                <span id="mobNavReportText" class="text-[10px] font-medium mt-0.5">রিপোর্ট</span>
             </button>
-            <button onclick="showPage('contacts', this)" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-500 hover:text-slate-800 min-h-[44px] min-w-[54px] touch-manipulation">
-                <span class="text-lg leading-none">📞</span>
-                <span id="mobNavContactsText" class="text-[10px] font-medium mt-1">হেল্পলাইন</span>
+            <button onclick="showPage('contacts', this)" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-500 hover:text-slate-800 font-medium min-h-[44px] min-w-[54px] touch-manipulation transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                <span id="mobNavContactsText" class="text-[10px] font-medium mt-0.5">হেল্পলাইন</span>
             </button>
         </div>
     </nav>
@@ -1894,24 +2009,32 @@
 
             // Update Desktop Nav styles with prominent active highlight
             document.querySelectorAll("#desktopNavTabs .nav-tab").forEach(btn => {
-                btn.className = "nav-tab whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3.5 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent transition cursor-pointer";
+                btn.className = "nav-tab whitespace-nowrap inline-flex items-center gap-2 px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent transition cursor-pointer";
+                const svg = btn.querySelector("svg");
+                if (svg) svg.setAttribute("class", "w-4 h-4 text-slate-400");
             });
 
             // Update Mobile Nav styles
             document.querySelectorAll("#mobileNavTabs .mobile-nav-btn").forEach(btn => {
-                btn.className = "mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-500 hover:text-slate-800 font-medium min-h-[44px] min-w-[54px] touch-manipulation transition-all";
+                btn.className = "mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-500 hover:text-slate-800 font-medium min-h-[44px] min-w-[54px] touch-manipulation transition-colors";
+                const svg = btn.querySelector("svg");
+                if (svg) svg.setAttribute("class", "w-5 h-5");
             });
 
             // Highlight corresponding desktop active button
             const desktopMatches = Array.from(document.querySelectorAll("#desktopNavTabs .nav-tab")).filter(b => b.getAttribute('onclick')?.includes(id));
             desktopMatches.forEach(b => {
-                b.className = "nav-tab active whitespace-nowrap inline-flex items-center gap-1.5 lg:gap-2 px-3.5 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-bold rounded-xl text-white bg-violet-700 shadow-sm ring-2 ring-violet-400 border border-violet-700 transition cursor-pointer";
+                b.className = "nav-tab active whitespace-nowrap inline-flex items-center gap-2 px-3.5 lg:px-4 py-2 text-xs lg:text-sm font-bold rounded-xl text-white bg-violet-700 shadow-sm border border-violet-800 transition cursor-pointer";
+                const svg = b.querySelector("svg");
+                if (svg) svg.setAttribute("class", "w-4 h-4 text-white");
             });
 
             // Highlight corresponding mobile active button
             const mobileMatches = Array.from(document.querySelectorAll("#mobileNavTabs .mobile-nav-btn")).filter(b => b.getAttribute('onclick')?.includes(id));
             mobileMatches.forEach(b => {
-                b.className = "mobile-nav-btn active flex flex-col items-center justify-center py-1 px-2 rounded-xl text-violet-950 bg-violet-100/90 font-black border border-violet-300 shadow-xs scale-105 min-h-[44px] min-w-[54px] touch-manipulation transition-all";
+                b.className = "mobile-nav-btn active flex flex-col items-center justify-center py-1 px-2 rounded-xl text-violet-700 bg-violet-50 font-bold border border-violet-200/80 shadow-2xs min-h-[44px] min-w-[54px] touch-manipulation transition-colors";
+                const svg = b.querySelector("svg");
+                if (svg) svg.setAttribute("class", "w-5 h-5 text-violet-700");
             });
 
             // Update Active Dashboard Badges
@@ -1948,18 +2071,20 @@
             const routeDesc = document.getElementById("routeDescriptionText");
 
             const isEn = window.currentLang === 'en';
+            const activeClass = "flex-1 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm md:text-base text-white bg-violet-700 shadow-sm transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation border border-violet-800";
+            const inactiveClass = "flex-1 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm md:text-base text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation border border-transparent";
 
             if (direction === "campus_city") {
-                if (campusBtn) campusBtn.className = "flex-1 py-3 px-3 rounded-xl font-bold text-sm md:text-base text-white bg-violet-700 shadow-sm transition flex items-center justify-center gap-2 cursor-pointer";
-                if (boroBtn) boroBtn.className = "flex-1 py-3 px-3 rounded-xl font-semibold text-sm md:text-base text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-2 cursor-pointer";
+                if (campusBtn) campusBtn.className = activeClass;
+                if (boroBtn) boroBtn.className = inactiveClass;
                 if (routeDesc) {
                     routeDesc.textContent = isEn
                         ? "Route: Campus ➔ Gopalganj ➔ College Mor ➔ Bus Terminal ➔ Bot-toli ➔ Shahi Mosque ➔ Bolair Mor ➔ Sadar Hospital ➔ Boromath"
                         : "রুট: ক্যাম্পাস ➔ গোপালগঞ্জ ➔ কলেজ মোড় ➔ বাস টার্মিনাল ➔ বটতলী ➔ শাহী মসজিদ ➔ বলাইয়ের মোড় ➔ সদর হাসপাতাল ➔ বড়মাঠ";
                 }
             } else {
-                if (boroBtn) boroBtn.className = "flex-1 py-3 px-3 rounded-xl font-bold text-sm md:text-base text-white bg-violet-700 shadow-sm transition flex items-center justify-center gap-2 cursor-pointer";
-                if (campusBtn) campusBtn.className = "flex-1 py-3 px-3 rounded-xl font-semibold text-sm md:text-base text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-2 cursor-pointer";
+                if (boroBtn) boroBtn.className = activeClass;
+                if (campusBtn) campusBtn.className = inactiveClass;
                 if (routeDesc) {
                     routeDesc.textContent = isEn
                         ? "Route: Boromath ➔ Sadar Hospital ➔ Bolair Mor ➔ Shahi Mosque ➔ Bot-toli ➔ Bus Terminal ➔ College Mor ➔ Gopalganj ➔ Campus"
@@ -1994,32 +2119,29 @@
             updateStopOptions();
         }
 
+        window.onStopDropdownChange = function(val) {
+            const hiddenStop = document.getElementById("stopSelect");
+            if (hiddenStop) hiddenStop.value = val;
+        };
+
         function updateStopOptions() {
             const dir = document.getElementById("directionSelect")?.value || "campus_city";
             const stops = dir === "campus_city" ? campusToBoromath : boromathToCampus;
-            const container = document.getElementById("stopRadioSelector");
+            const stopDropdown = document.getElementById("stopDropdownSelect");
             const hiddenStop = document.getElementById("stopSelect");
-            if (!container) return;
-            container.innerHTML = "";
+            const selectedIdx = Number(hiddenStop?.value || 0);
 
-            stops.forEach((stop, i) => {
-                const btn = document.createElement("button");
-                btn.type = "button";
-                btn.className = `p-2.5 rounded-xl border text-xs font-semibold text-left transition cursor-pointer flex items-center justify-between min-h-[44px] touch-manipulation ${
-                    i === Number(hiddenStop.value || 0) 
-                        ? "border-violet-600 bg-violet-50 text-violet-950 ring-2 ring-violet-500/20 shadow-xs" 
-                        : "border-slate-200 bg-slate-50 text-slate-700 hover:bg-white"
-                }`;
-                btn.innerHTML = `
-                    <span class="truncate"><b class="text-violet-700 mr-1">${i + 1}.</b> ${getStopName(stop)}</span>
-                    ${i === Number(hiddenStop.value || 0) ? '<span class="text-violet-700 font-bold">✓</span>' : ''}
-                `;
-                btn.onclick = () => {
-                    hiddenStop.value = i;
-                    updateStopOptions();
-                };
-                container.appendChild(btn);
-            });
+            // Populate stop dropdown
+            if (stopDropdown) {
+                stopDropdown.innerHTML = "";
+                stops.forEach((stop, i) => {
+                    const opt = document.createElement("option");
+                    opt.value = i;
+                    opt.textContent = `${i + 1}. ${getStopName(stop)}`;
+                    if (i === selectedIdx) opt.selected = true;
+                    stopDropdown.appendChild(opt);
+                });
+            }
         }
 
         function isExpired(bus, direction) {
@@ -2085,20 +2207,21 @@
 
             if (!activeNames.length) {
                 list.innerHTML = `
-                    <div class="col-span-full bg-white border border-slate-200 rounded-2xl p-8 md:p-12 text-center shadow-sm">
-                        <div class="w-16 h-16 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center text-3xl mx-auto mb-3">
-                            🚌
+                    <div class="col-span-full bg-white border border-slate-200/90 rounded-2xl p-8 md:p-12 text-center shadow-xs">
+                        <div class="w-16 h-16 rounded-2xl bg-violet-50 text-violet-700 border border-violet-200/70 flex items-center justify-center text-3xl mx-auto mb-3.5 shadow-2xs">
+                            🚍
                         </div>
                         <h3 class="text-base md:text-lg font-bold text-slate-800">
                             ${isEn ? 'No Live Bus Updates Right Now' : 'বর্তমানে কোনো বাসের Live আপডেট নেই'}
                         </h3>
-                        <p class="text-xs md:text-sm text-slate-500 mt-1 max-w-md mx-auto">
+                        <p class="text-xs md:text-sm text-slate-500 mt-1.5 max-w-md mx-auto leading-relaxed">
                             ${isEn 
                                 ? 'Live bus locations will appear here automatically when students or staff share updates. If you are riding a bus, please report your location!' 
                                 : 'কোনো শিক্ষার্থী বা চালক বাসের অবস্থান আপডেট করলে সাথে সাথে এই ড্যাশবোর্ডে ভেসে উঠবে। আপনি বাসে থাকলে নিচের বাটন চেপে রিপোর্ট করুন!'}
                         </p>
-                        <button onclick="showPage('report', null)" class="mt-4 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold text-white bg-violet-700 hover:bg-violet-800 shadow-sm transition active:scale-95 cursor-pointer">
-                            <span>📡 ${isEn ? 'Report Bus Location' : 'বাসের অবস্থান রিপোর্ট করুন'}</span>
+                        <button onclick="showPage('report', null)" class="mt-4 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs md:text-sm font-bold text-white bg-violet-700 hover:bg-violet-800 shadow-sm transition active:scale-95 cursor-pointer">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 8.5c0 5.25-7.5 12.5-7.5 12.5S4.5 13.75 4.5 8.5a7.5 7.5 0 1115 0z"/></svg>
+                            <span>${isEn ? 'Report Bus Location' : 'বাসের অবস্থান রিপোর্ট করুন'}</span>
                         </button>
                     </div>
                 `;
@@ -2123,47 +2246,76 @@
                 const isExpanded = window.busViewMode === 'detailed' || window.expandedBusCards.has(safeNameKey);
 
                 return `
-                    <div class="bus-card bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between relative overflow-hidden" data-time="${bus.time}">
+                    <div class="bus-card bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between relative overflow-hidden" data-time="${bus.time}">
                         <div>
                             <!-- Card Header: Bus Name + Live status badge -->
                             <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-100">
                                 <div class="flex items-center gap-2.5 min-w-0">
-                                    <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-800 font-bold flex items-center justify-center text-lg flex-shrink-0 border border-violet-200 shadow-2xs">
+                                    <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-700 font-bold flex items-center justify-center text-lg flex-shrink-0 border border-violet-200/80 shadow-2xs">
                                         🚍
                                     </div>
                                     <div class="min-w-0">
-                                        <h3 class="font-extrabold text-base md:text-lg text-slate-800 leading-tight truncate">${escapeHtml(getBusDisplayName(bus.name))}</h3>
+                                        <h3 class="font-bold text-base md:text-lg text-slate-900 leading-tight truncate">${escapeHtml(getBusDisplayName(bus.name))}</h3>
                                         <div class="flex items-center gap-1.5 mt-0.5">
-                                            <span class="update-time text-[11px] text-slate-500 font-medium">${isEn ? 'Loading...' : 'লোড হচ্ছে...'}</span>
+                                            <span class="update-time text-xs text-slate-500 font-medium">${isEn ? 'Loading...' : 'লোড হচ্ছে...'}</span>
                                             <span class="text-slate-300">•</span>
-                                            <span class="text-[11px] text-slate-400 font-medium truncate">${dirLabel}</span>
+                                            <span class="text-xs text-slate-400 font-medium truncate">${dirLabel}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-1.5 flex-shrink-0">
-                                    <button onclick="forceRefreshData(this)" title="${isEn ? 'Refresh' : 'রিফ্রেশ'}" class="p-1 rounded-lg text-slate-400 hover:text-violet-700 hover:bg-slate-100 transition cursor-pointer" aria-label="Refresh">
+                                    <button onclick="forceRefreshData(this)" title="${isEn ? 'Refresh' : 'রিফ্রেশ'}" class="p-1.5 rounded-lg text-slate-400 hover:text-violet-700 hover:bg-slate-100 transition cursor-pointer" aria-label="Refresh">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                                         </svg>
                                     </button>
-                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300/40">
-                                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                                        LIVE
-                                    </span>
+                                    ${bus.status === 'traffic_jam' ? `
+                                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                                            <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
+                                            ${isEn ? 'TRAFFIC JAM' : 'ট্রাফিক জ্যাম'}
+                                        </span>
+                                    ` : `
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                            LIVE
+                                        </span>
+                                    `}
                                 </div>
                             </div>
 
                             <!-- Current Location / Updated Location -->
-                            <div class="mt-3.5 bg-gradient-to-r from-violet-50/80 to-slate-50 p-3 rounded-xl border border-violet-100/90">
-                                <div class="text-[10px] sm:text-[11px] font-bold text-violet-800 uppercase tracking-wider flex items-center justify-between">
-                                    <span>${isEn ? 'CURRENT LOCATION' : 'বর্তমান অবস্থান'}</span>
-                                    <span class="text-violet-600 font-semibold">${isEn ? `Stop ${stopIdx + 1} of ${stops.length}` : `স্টপ ${stopIdx + 1} / ${stops.length}`}</span>
+                            ${bus.status === 'traffic_jam' ? `
+                                <div class="mt-3.5 bg-amber-50/70 p-3 rounded-xl border border-amber-200/80 shadow-2xs">
+                                    <div class="text-[10px] sm:text-[11px] font-bold text-amber-800 uppercase tracking-wider flex items-center justify-between">
+                                        <span>${isEn ? 'TRAFFIC JAM STATUS' : 'ট্রাফিক জ্যাম স্থিতি'}</span>
+                                        <span class="text-amber-700 font-semibold">${bus.trafficPosition === 'after_stop' ? (isEn ? 'Between Stops' : 'স্টপেজের পরে') : (isEn ? 'At Stop' : 'এই স্টপেজেই')}</span>
+                                    </div>
+                                    <div class="text-base sm:text-lg font-bold text-slate-900 mt-1 flex items-center gap-2">
+                                        <span class="text-amber-600 flex-shrink-0">🚦</span>
+                                        <span class="truncate">
+                                            ${escapeHtml(stopNameDisplay)} ${bus.trafficPosition === 'after_stop' 
+                                                ? (isEn ? 'passed (stuck in traffic)' : 'পার হয়ে (জ্যামে আটকে আছে)') 
+                                                : (isEn ? '(stuck at stop)' : '-এ (জ্যামে আটকে আছে)')}
+                                        </span>
+                                    </div>
+                                    <p class="text-[11px] text-amber-800 mt-1 font-medium leading-relaxed">
+                                        ${bus.trafficPosition === 'after_stop'
+                                            ? (isEn ? `The bus crossed ${stopNameDisplay} and is delayed en-route before the next stop.` : `বাসটি ${stopNameDisplay} পার হয়েছে, কিন্তু পরবর্তী স্টপে পৌঁছানোর আগেই মাঝপথে জ্যামে আটকে আছে।`)
+                                            : (isEn ? `The bus is delayed at or near ${stopNameDisplay} due to traffic jam.` : `বাসটি বর্তমানে ${stopNameDisplay}-এর কাছে ট্রাফিক জ্যামে আটকে আছে।`)}
+                                    </p>
                                 </div>
-                                <div class="text-base sm:text-lg font-extrabold text-slate-900 mt-1 flex items-center gap-2">
-                                    <span class="text-rose-500 flex-shrink-0">📍</span>
-                                    <span class="truncate">${escapeHtml(stopNameDisplay)}</span>
+                            ` : `
+                                <div class="mt-3.5 bg-slate-50/80 p-3 rounded-xl border border-slate-200/80">
+                                    <div class="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider flex items-center justify-between">
+                                        <span>${isEn ? 'CURRENT LOCATION' : 'বর্তমান অবস্থান'}</span>
+                                        <span class="text-violet-700 font-semibold">${isEn ? `Stop ${stopIdx + 1} of ${stops.length}` : `স্টপ ${stopIdx + 1} / ${stops.length}`}</span>
+                                    </div>
+                                    <div class="text-base sm:text-lg font-bold text-slate-900 mt-1 flex items-center gap-2">
+                                        <span class="text-rose-500 flex-shrink-0">📍</span>
+                                        <span class="truncate">${escapeHtml(stopNameDisplay)}</span>
+                                    </div>
                                 </div>
-                            </div>
+                            `}
 
                             <!-- Optional Expandable Details -->
                             ${isExpanded ? `
@@ -2186,7 +2338,7 @@
                                     <!-- Next Stop Info -->
                                     <div class="text-xs text-slate-600 flex items-center justify-between px-1">
                                         <span class="text-slate-400">${isEn ? 'Next Stop:' : 'পরবর্তী স্টপ:'}</span>
-                                        <span class="font-bold text-slate-700">${escapeHtml(nextStopName)}</span>
+                                        <span class="font-bold text-slate-800">${escapeHtml(nextStopName)}</span>
                                     </div>
                                 </div>
                             ` : ''}
@@ -2199,8 +2351,8 @@
                             </button>
                             
                             ${mapsUrl ? `
-                                <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] font-bold text-sky-700 hover:text-sky-800 bg-sky-50 hover:bg-sky-100 px-2.5 py-1.5 rounded-lg border border-sky-200 transition">
-                                    <span>🗺️</span>
+                                <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-bold text-sky-800 hover:text-sky-900 bg-sky-50 hover:bg-sky-100 px-2.5 py-1.5 rounded-lg border border-sky-200 transition">
+                                    <svg class="w-3.5 h-3.5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
                                     <span>${isEn ? 'Map' : 'ম্যাপে দেখুন'}</span>
                                 </a>
                             ` : ''}
@@ -2235,32 +2387,37 @@
             const stops = currentDirection === "campus_city" ? campusToBoromath : boromathToCampus;
             const liveData = window.buses[currentDirection] || {};
             const activeBusStops = {};
+            const stopHasTrafficJam = {};
 
             Object.values(liveData).forEach(bus => {
                 if (!isExpired(bus, currentDirection) && bus.stopName) {
                     if (!activeBusStops[bus.stopName]) activeBusStops[bus.stopName] = [];
                     activeBusStops[bus.stopName].push(bus.name);
+                    if (bus.status === 'traffic_jam') {
+                        stopHasTrafficJam[bus.stopName] = true;
+                    }
                 }
             });
 
             container.innerHTML = stops.map((stop, i) => {
                 const hasBus = activeBusStops[stop] && activeBusStops[stop].length > 0;
+                const isJam = stopHasTrafficJam[stop];
                 return `
                     <div class="flex flex-col items-center group relative z-10">
                         ${hasBus ? `
                             <div class="absolute -top-11 z-30 flex flex-col items-center animate-bounce pointer-events-none">
-                                <div class="bg-gradient-to-r from-violet-700 to-sky-600 text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-lg flex items-center gap-1.5 whitespace-nowrap border border-sky-300/50">
-                                    <span class="text-xs">🚍</span>
-                                    <span>${escapeHtml(activeBusStops[stop].map(getBusDisplayName).join(', '))}</span>
+                                <div class="${isJam ? 'bg-gradient-to-r from-amber-600 to-orange-600 border-amber-300/60' : 'bg-gradient-to-r from-violet-700 to-sky-600 border-sky-300/50'} text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-lg flex items-center gap-1.5 whitespace-nowrap border">
+                                    <span class="text-xs">${isJam ? '🚦' : '🚍'}</span>
+                                    <span>${escapeHtml(activeBusStops[stop].map(getBusDisplayName).join(', '))}${isJam ? ' (জ্যাম)' : ''}</span>
                                 </div>
-                                <div class="w-0 h-0 border-x-4 border-x-transparent border-t-[5px] border-t-sky-600 -mt-[1px]"></div>
+                                <div class="w-0 h-0 border-x-4 border-x-transparent border-t-[5px] ${isJam ? 'border-t-orange-600' : 'border-t-sky-600'} -mt-[1px]"></div>
                             </div>
                         ` : ''}
                         <div class="relative flex items-center justify-center">
-                            ${hasBus ? `<span class="absolute w-12 h-12 rounded-full bg-sky-400/40 animate-ping"></span>` : ''}
+                            ${hasBus ? `<span class="absolute w-12 h-12 rounded-full ${isJam ? 'bg-amber-400/50' : 'bg-sky-400/40'} animate-ping"></span>` : ''}
                             <div class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs shadow-md border-2 transition relative z-10 ${
                                 hasBus 
-                                    ? 'bg-violet-700 border-white text-white ring-4 ring-sky-400/40' 
+                                    ? (isJam ? 'bg-amber-600 border-white text-white ring-4 ring-amber-400/40' : 'bg-violet-700 border-white text-white ring-4 ring-sky-400/40') 
                                     : 'bg-white border-slate-300 text-slate-700'
                             }">
                                 ${i + 1}
@@ -2431,8 +2588,166 @@
         }
 
         // ====================================================================
-        // GPS LIVE TRACKING & LOOPHOLE SAFEGUARDS
+        // TRAFFIC JAM MANUAL OVERRIDE ENGINE
+        // Status is ONLY activated manually via panel - NEVER automatically by speed 0 km/h
         // ====================================================================
+        window.trafficJamActive = false;
+        window.trafficJamBus = null;
+        window.trafficJamPosition = null; // 'at_stop' | 'after_stop'
+        window.trafficJamStopIndex = null;
+
+        window.openTrafficJamModal = function() {
+            const isEn = window.currentLang === 'en';
+            const busSelect = document.getElementById("busSelect");
+            if (!busSelect || !busSelect.value) {
+                alert(isEn ? "Please select a bus first." : "অনুগ্রহ করে আগে একটি বাস নির্বাচন করুন।");
+                return;
+            }
+            const direction = document.getElementById("directionSelect")?.value || "campus_city";
+            const busName = busNames[busSelect.value];
+            const stopIndex = Number(document.getElementById("stopSelect")?.value || 0);
+            const stops = direction === "campus_city" ? campusToBoromath : boromathToCampus;
+            const stopName = stops[stopIndex] || stops[0];
+
+            const busNameValEl = document.getElementById("tjBusNameVal");
+            const stopNameValEl = document.getElementById("tjStopNameVal");
+            if (busNameValEl) busNameValEl.textContent = getBusDisplayName(busName);
+            if (stopNameValEl) stopNameValEl.textContent = getStopName(stopName);
+
+            openModal('trafficJamModal');
+        };
+
+        window.confirmTrafficJamOverride = async function() {
+            const isEn = window.currentLang === 'en';
+            if (!window.currentUser) {
+                alert(isEn ? "🔐 Please sign in or continue as student to report traffic jam." : "🔐 ট্রাফিক জ্যাম স্থিতি নিশ্চিত করতে অনুগ্রহ করে লগইন করুন বা ছাত্র হিসেবে প্রবেশ করুন।");
+                window.doLogin();
+                return;
+            }
+            const busSelect = document.getElementById("busSelect");
+            const direction = document.getElementById("directionSelect")?.value || "campus_city";
+            const busName = busNames[busSelect.value];
+            const stopIndex = Number(document.getElementById("stopSelect")?.value || 0);
+            const stops = direction === "campus_city" ? campusToBoromath : boromathToCampus;
+            const stopName = stops[stopIndex] || stops[0];
+
+            const selectedRadio = document.querySelector('input[name="trafficJamPos"]:checked');
+            const trafficPosition = selectedRadio ? selectedRadio.value : "at_stop";
+
+            const busData = {
+                name: busName,
+                stopIndex: stopIndex,
+                stopName: stopName,
+                status: "traffic_jam",
+                trafficPosition: trafficPosition,
+                time: Date.now(),
+                updatedBy: window.currentUser.displayName || window.currentUser.email || window.currentUser.uid
+            };
+
+            try {
+                if (window.firebaseSaveBus) {
+                    await window.firebaseSaveBus(direction, busName, busData);
+                }
+                if (!window.buses[direction]) window.buses[direction] = {};
+                const safeName = busName.replace(/[.#$[\]]/g, "_");
+                window.buses[direction][safeName] = busData;
+                const opp = direction === "campus_city" ? "boromath_campus" : "campus_city";
+                if (window.buses[opp]) delete window.buses[opp][safeName];
+
+                window.trafficJamActive = true;
+                window.trafficJamBus = busName;
+                window.trafficJamPosition = trafficPosition;
+                window.trafficJamStopIndex = stopIndex;
+
+                closeModal('trafficJamModal');
+                updateTrafficJamUI(true, busName, stopName, trafficPosition);
+                changeDirection(direction);
+
+                const posText = trafficPosition === "after_stop" 
+                    ? (isEn ? `${getStopName(stopName)} (After Stop / En-Route)` : `${getStopName(stopName)} পার হয়ে (মাঝপথে)`)
+                    : (isEn ? `${getStopName(stopName)} (At Stop)` : `${getStopName(stopName)}-এ`);
+
+                alert(isEn 
+                    ? `🚦 Traffic Jam reported at ${posText}.\nAutomatic GPS stoppage progression is temporarily controlled.` 
+                    : `🚦 বাসের ট্রাফিক জ্যাম চিহ্নিত হয়েছে (${posText})!\nঅটো-জিপিএস স্টপেজ আপডেট সাময়িকভাবে স্থগিত রাখা হয়েছে।`);
+            } catch (err) {
+                console.error("Traffic jam save error:", err);
+                alert(isEn ? "❌ Failed to update traffic jam status." : "❌ ট্রাফিক জ্যাম স্থিতি সংরক্ষণ করা যায়নি।");
+            }
+        };
+
+        window.resumeAutoTracking = async function() {
+            const isEn = window.currentLang === 'en';
+            const busSelect = document.getElementById("busSelect");
+            const direction = document.getElementById("directionSelect")?.value || "campus_city";
+            const busName = (busSelect && busNames[busSelect.value]) || window.trafficJamBus;
+            const stopIndex = Number(document.getElementById("stopSelect")?.value || 0);
+            const stops = direction === "campus_city" ? campusToBoromath : boromathToCampus;
+            const stopName = stops[stopIndex] || stops[0];
+
+            window.trafficJamActive = false;
+            window.trafficJamBus = null;
+            window.trafficJamPosition = null;
+            window.trafficJamStopIndex = null;
+
+            if (busName && window.firebaseSaveBus) {
+                const busData = {
+                    name: busName,
+                    stopIndex: stopIndex,
+                    stopName: stopName,
+                    status: "active",
+                    trafficPosition: null,
+                    time: Date.now(),
+                    updatedBy: window.currentUser ? (window.currentUser.displayName || window.currentUser.email || window.currentUser.uid) : "Student"
+                };
+
+                try {
+                    await window.firebaseSaveBus(direction, busName, busData);
+                    if (!window.buses[direction]) window.buses[direction] = {};
+                    const safeName = busName.replace(/[.#$[\]]/g, "_");
+                    window.buses[direction][safeName] = busData;
+                } catch (e) {
+                    console.error("Resume tracking Firebase save error:", e);
+                }
+            }
+
+            updateTrafficJamUI(false);
+            changeDirection(direction);
+            alert(isEn ? "▶ Automatic tracking resumed normally!" : "▶ অটো ট্র্যাকিং স্বাভাবিকভাবে পুনরায় চালু করা হয়েছে!");
+        };
+
+        function updateTrafficJamUI(isActive, busName, stopName, pos) {
+            const isEn = window.currentLang === 'en';
+            const resumeBtn = document.getElementById("resumeAutoTrackingBtn");
+            const activeBanner = document.getElementById("trafficJamActiveBanner");
+            const bannerText = document.getElementById("trafficJamActiveBannerText");
+
+            if (isActive) {
+                if (resumeBtn) resumeBtn.classList.remove("hidden");
+                if (activeBanner) activeBanner.classList.remove("hidden");
+                if (bannerText) {
+                    const posDesc = pos === "after_stop" 
+                        ? (isEn ? "Crossed stop, stuck en-route" : "স্টপেজ পার হয়ে মাঝপথে জ্যামে আটকে আছে") 
+                        : (isEn ? "Stuck at stoppage" : "স্টপেজে জ্যামে আটকে আছে");
+                    bannerText.textContent = isEn 
+                        ? `🚦 Bus In Traffic Jam (${posDesc})` 
+                        : `🚦 বাসটি ট্রাফিক জ্যামে আটকে আছে (${posDesc})`;
+                }
+            } else {
+                if (resumeBtn) resumeBtn.classList.add("hidden");
+                if (activeBanner) activeBanner.classList.add("hidden");
+            }
+        }
+
+        // ====================================================================
+        // OFFICIAL ROUTE ENGINE & 200-METER VIRTUAL CHECKPOINTS
+        // Route Total: ~10,000 meters. 51 Checkpoints (0m to 10,000m)
+        // Internal tracking & position calculations only - actual stops unchanged
+        // ====================================================================
+        const ROUTE_TOTAL_METERS = 10000;
+        const CHECKPOINT_INTERVAL_METERS = 200;
+        const ROUTE_TOLERANCE_METERS = 250; // Perpendicular deviation threshold for bypass/off-route detection
+
         function distanceMeters(lat1, lon1, lat2, lon2) {
             const R = 6371000;
             const toRad = d => d * Math.PI / 180;
@@ -2441,23 +2756,165 @@
             return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         }
 
-        function findNearestStop(lat, lng, routeStops) {
-            let best = null, bestDist = Infinity, bestIndex = -1;
-            routeStops.forEach((stopName, i) => {
-                const c = stopCoords[stopName];
-                if (!c || c.lat == null || c.lng == null) return;
-                const d = distanceMeters(lat, lng, c.lat, c.lng);
-                if (d < bestDist) { bestDist = d; best = stopName; bestIndex = i; }
+        const routeCheckpointsCache = {};
+
+        function getRouteCheckpoints(direction = "campus_city") {
+            if (routeCheckpointsCache[direction]) return routeCheckpointsCache[direction];
+
+            const stopKeys = direction === "campus_city" ? campusToBoromath : boromathToCampus;
+            const points = stopKeys.map((k, idx) => ({
+                stopName: k,
+                stopIndex: idx,
+                lat: stopCoords[k].lat,
+                lng: stopCoords[k].lng
+            }));
+
+            // Compute raw distances between sequential stoppages
+            const segLens = [];
+            let rawTotalDist = 0;
+            for (let i = 0; i < points.length - 1; i++) {
+                const d = distanceMeters(points[i].lat, points[i].lng, points[i + 1].lat, points[i + 1].lng);
+                segLens.push(d);
+                rawTotalDist += d;
+            }
+
+            // Normalization scale to fit the exact 10,000m route requirement
+            const scale = rawTotalDist > 0 ? (ROUTE_TOTAL_METERS / rawTotalDist) : 1;
+            const cumDists = [0];
+            for (let i = 0; i < segLens.length; i++) {
+                cumDists.push(cumDists[i] + segLens[i] * scale);
+            }
+            cumDists[cumDists.length - 1] = ROUTE_TOTAL_METERS;
+
+            // Generate 51 virtual checkpoints (0m, 200m, 400m, ... 10000m)
+            const checkpoints = [];
+            const numCheckpoints = Math.floor(ROUTE_TOTAL_METERS / CHECKPOINT_INTERVAL_METERS) + 1; // 51 checkpoints
+
+            for (let i = 0; i < numCheckpoints; i++) {
+                const targetDist = i * CHECKPOINT_INTERVAL_METERS;
+
+                let segIdx = 0;
+                while (segIdx < cumDists.length - 2 && cumDists[segIdx + 1] < targetDist) {
+                    segIdx++;
+                }
+
+                const dStart = cumDists[segIdx];
+                const dEnd = cumDists[segIdx + 1];
+                const span = Math.max(1, dEnd - dStart);
+                const t = Math.max(0, Math.min(1, (targetDist - dStart) / span));
+
+                const pA = points[segIdx];
+                const pB = points[segIdx + 1];
+                const lat = pA.lat + t * (pB.lat - pA.lat);
+                const lng = pA.lng + t * (pB.lng - pA.lng);
+
+                // Associate with nearest stoppage
+                let nearestStop = points[0].stopName;
+                let nearestStopIndex = 0;
+                let minStopDist = Infinity;
+                for (let s = 0; s < points.length; s++) {
+                    const sd = Math.abs(targetDist - cumDists[s]);
+                    if (sd < minStopDist) {
+                        minStopDist = sd;
+                        nearestStop = points[s].stopName;
+                        nearestStopIndex = points[s].stopIndex;
+                    }
+                }
+
+                checkpoints.push({
+                    id: `CP_${String(i).padStart(2, '0')}`,
+                    index: i,
+                    distance: targetDist,
+                    lat,
+                    lng,
+                    nearestStop,
+                    nearestStopIndex
+                });
+            }
+
+            routeCheckpointsCache[direction] = { points, cumDists, checkpoints };
+            return routeCheckpointsCache[direction];
+        }
+
+        // Project arbitrary GPS coordinate onto official route polyline
+        function projectGpsOntoRoute(lat, lng, direction = "campus_city") {
+            const { points, cumDists, checkpoints } = getRouteCheckpoints(direction);
+
+            // Equirectangular projection around Dinajpur (latitude ~25.66 N)
+            const lat0 = 25.66 * Math.PI / 180;
+            const toMeters = (pLat, pLng) => ({
+                x: pLng * (Math.PI / 180) * 6371000 * Math.cos(lat0),
+                y: pLat * (Math.PI / 180) * 6371000
             });
-            return best ? { stopName: best, stopIndex: bestIndex, distance: bestDist } : null;
+
+            const p = toMeters(lat, lng);
+            let minDistance = Infinity;
+            let bestDistAlongRoute = 0;
+
+            for (let i = 0; i < points.length - 1; i++) {
+                const a = toMeters(points[i].lat, points[i].lng);
+                const b = toMeters(points[i + 1].lat, points[i + 1].lng);
+
+                const vx = b.x - a.x;
+                const vy = b.y - a.y;
+                const wx = p.x - a.x;
+                const wy = p.y - a.y;
+
+                const c1 = wx * vx + wy * vy;
+                const c2 = vx * vx + vy * vy;
+                let t = 0;
+                if (c2 > 0) {
+                    t = Math.max(0, Math.min(1, c1 / c2));
+                }
+
+                const projX = a.x + t * vx;
+                const projY = a.y + t * vy;
+                const d = Math.hypot(p.x - projX, p.y - projY);
+
+                if (d < minDistance) {
+                    minDistance = d;
+                    bestDistAlongRoute = cumDists[i] + t * (cumDists[i + 1] - cumDists[i]);
+                }
+            }
+
+            const isOnRoute = minDistance <= ROUTE_TOLERANCE_METERS;
+            const cpIndex = Math.max(0, Math.min(50, Math.round(bestDistAlongRoute / CHECKPOINT_INTERVAL_METERS)));
+            const nearestCp = checkpoints[cpIndex];
+
+            // Nearest actual stoppage along route progression
+            let nearestStopIdx = 0;
+            let minStopDelta = Infinity;
+            for (let s = 0; s < points.length; s++) {
+                const delta = Math.abs(bestDistAlongRoute - cumDists[s]);
+                if (delta < minStopDelta) {
+                    minStopDelta = delta;
+                    nearestStopIdx = s;
+                }
+            }
+
+            const directStopDist = distanceMeters(lat, lng, points[nearestStopIdx].lat, points[nearestStopIdx].lng);
+
+            return {
+                isOnRoute,
+                distanceToRoute: Math.round(minDistance),
+                distAlongRoute: Math.round(bestDistAlongRoute),
+                checkpointId: nearestCp.id,
+                checkpointIndex: cpIndex,
+                checkpointDistance: nearestCp.distance,
+                nearestStopIndex: nearestStopIdx,
+                nearestStopName: points[nearestStopIdx].stopName,
+                directStopDist: Math.round(directStopDist)
+            };
         }
 
         // GPS tracking timing constants (variables hoisted at top of script)
         gpsWatchId = null;
         gpsStartTime = 0;
         gpsLastSentStop = null;
+        gpsLastSentCheckpoint = null;
+        gpsHighestReachedStop = 0; // Ensures monotonic forward stoppage progression
         gpsLastSentTime = 0;
-        const GPS_HEARTBEAT_MS = 2 * 60 * 1000;
+        const GPS_HEARTBEAT_MS = 30 * 1000; // 30s heartbeat write
         const GPS_MAX_DURATION_MS = 45 * 60 * 1000; // 45 minutes max trip safeguard
 
         function toggleGpsShare() {
@@ -2480,12 +2937,14 @@
                 return;
             }
             const busSelectEl = document.getElementById("busSelect");
-            if (!busSelectEl.value) { 
+            if (!busSelectEl || !busSelectEl.value) { 
                 alert(isEn ? "Please select a bus first." : "আগে বাস নির্বাচন করুন।"); 
                 return; 
             }
 
             gpsLastSentStop = null;
+            gpsLastSentCheckpoint = null;
+            gpsHighestReachedStop = Number(document.getElementById("stopSelect")?.value || 0);
             gpsLastSentTime = 0;
             gpsStartTime = Date.now();
 
@@ -2503,11 +2962,11 @@
             const bannerText = document.getElementById("activeGpsStatusText");
             if (banner) banner.classList.remove("hidden");
             if (badge) badge.textContent = getBusDisplayName(busNames[busSelectEl.value]);
-            if (bannerText) bannerText.textContent = isEn ? "GPS connected, tracking bus route..." : "GPS সক্রিয়, বাসের অবস্থান পর্যবেক্ষণ করা হচ্ছে...";
+            if (bannerText) bannerText.textContent = isEn ? "GPS connected, validating official route..." : "GPS সক্রিয়, বাসের নির্ধারিত রুট যাচাই করা হচ্ছে...";
 
             gpsWatchId = navigator.geolocation.watchPosition(onGpsUpdate, onGpsError, {
                 enableHighAccuracy: true,
-                maximumAge: 15000,
+                maximumAge: 10000,
                 timeout: 20000
             });
         }
@@ -2545,7 +3004,7 @@
         async function onGpsUpdate(position) {
             const isEn = window.currentLang === 'en';
             const { latitude, longitude } = position.coords;
-            const direction = document.getElementById("directionSelect").value;
+            const direction = document.getElementById("directionSelect")?.value || "campus_city";
             const stops = direction === "campus_city" ? campusToBoromath : boromathToCampus;
             const statusEl = document.getElementById("gpsStatus");
             const bannerText = document.getElementById("activeGpsStatusText");
@@ -2556,39 +3015,80 @@
                 return;
             }
 
-            const match = findNearestStop(latitude, longitude, stops);
+            // Project GPS position onto the official 10,000m route and 200m checkpoints
+            const proj = projectGpsOntoRoute(latitude, longitude, direction);
 
             // ================================================================
-            // LOOPHOLE SAFEGUARD: Check if user walked away from the bus route
-            // If the user's current GPS is >700 meters from the nearest stop on this route,
-            // they have exited the bus or deviated away. Stop auto-updates immediately!
+            // OFFICIAL ROUTE VALIDATION:
+            // If the GPS position deviates onto a bypass or alternate road (> 250m),
+            // do NOT consider it official route movement. Pause auto stoppage updates!
             // ================================================================
-            if (!match || match.distance > 700) {
-                stopGpsShareWithReason('off_route');
-                openModal('routeDeviationModal');
-                return;
+            if (!proj.isOnRoute) {
+                const offMsg = isEn 
+                    ? `⚠️ Off official route (~${proj.distanceToRoute}m). Auto-updates paused.` 
+                    : `⚠️ অফিসিয়াল রুটের বাইরে (~${proj.distanceToRoute}মি.)। অটো-আপডেট স্থগিত।`;
+                if (statusEl) statusEl.textContent = offMsg;
+                if (bannerText) bannerText.textContent = offMsg;
+
+                // If passenger moved very far (> 800m), show route deviation alert
+                if (proj.distanceToRoute > 800) {
+                    stopGpsShareWithReason('off_route');
+                    openModal('routeDeviationModal');
+                }
+                return; // Cease automatic stoppage progression while off-route
             }
 
-            const stopDisplay = getStopName(match.stopName);
+            // ================================================================
+            // TRAFFIC JAM OVERRIDE CHECK:
+            // When Traffic Jam mode is active, automatic GPS must NOT advance the stoppage!
+            // ================================================================
+            if (window.trafficJamActive) {
+                const jamMsg = isEn
+                    ? `🚦 Traffic Jam active at ${getStopName(stops[window.trafficJamStopIndex || 0])}. Auto-progression held.`
+                    : `🚦 ট্রাফিক জ্যাম সক্রিয় (${getStopName(stops[window.trafficJamStopIndex || 0])})। স্টপেজ অগ্রগতি সাময়িক নিয়ন্ত্রিত।`;
+                if (statusEl) statusEl.textContent = jamMsg;
+                if (bannerText) bannerText.textContent = jamMsg;
+                return; // Held until student presses 'Resume Automatic Tracking'
+            }
+
+            // Monotonic forward stoppage progression: prevent GPS jitter from bouncing backward
+            let determinedStopIndex = Math.max(gpsHighestReachedStop, proj.nearestStopIndex);
+            gpsHighestReachedStop = determinedStopIndex;
+
+            const stopName = stops[determinedStopIndex];
+            const stopDisplay = getStopName(stopName);
             const statusMsg = isEn
-                ? `📍 Nearest: ${stopDisplay} (~${Math.round(match.distance)}m)`
-                : `📍 নিকটবর্তী: ${stopDisplay} (~${Math.round(match.distance)} মি.)`;
+                ? `📍 ${stopDisplay} • [${proj.checkpointId}: ${proj.checkpointDistance}m] (~${proj.directStopDist}m away)`
+                : `📍 ${stopDisplay} • [${proj.checkpointId}: ${proj.checkpointDistance}মি.] (${proj.directStopDist} মি. দূরে)`;
 
             if (statusEl) statusEl.textContent = statusMsg;
             if (bannerText) bannerText.textContent = `${statusMsg} • ${isEn ? 'On Route' : 'বাস রুটে আছে'}`;
 
+            // FIREBASE OPTIMIZATION:
+            // Write only when:
+            // 1. Stoppage changes
+            // 2. OR 200m checkpoint boundary is crossed
+            // 3. OR Heartbeat interval (30s) elapses
             const now = Date.now();
-            const stopChanged = match.stopName !== gpsLastSentStop;
+            const stopChanged = determinedStopIndex !== gpsLastSentStop;
+            const checkpointChanged = proj.checkpointId !== gpsLastSentCheckpoint;
             const heartbeatDue = now - gpsLastSentTime >= GPS_HEARTBEAT_MS;
 
-            if (!stopChanged && !heartbeatDue) return;
+            if (!stopChanged && !checkpointChanged && !heartbeatDue) {
+                return; // Skip redundant writes
+            }
+
             if (!window.firebaseSaveBus || !window.currentUser) return;
 
-            const busName = busNames[document.getElementById("busSelect").value];
+            const busSelectEl = document.getElementById("busSelect");
+            const busName = busNames[busSelectEl.value];
             const busData = {
                 name: busName,
-                stopIndex: match.stopIndex,
-                stopName: match.stopName,
+                stopIndex: determinedStopIndex,
+                stopName: stopName,
+                checkpoint: proj.checkpointId,
+                checkpointDist: proj.checkpointDistance,
+                status: "active",
                 time: now,
                 updatedBy: window.currentUser.displayName || window.currentUser.email || window.currentUser.uid
             };
@@ -2601,12 +3101,13 @@
                 const opp2 = direction === "campus_city" ? "boromath_campus" : "campus_city";
                 if (window.buses[opp2]) delete window.buses[opp2][safeName2];
 
-                gpsLastSentStop = match.stopName;
+                gpsLastSentStop = determinedStopIndex;
+                gpsLastSentCheckpoint = proj.checkpointId;
                 gpsLastSentTime = now;
                 changeDirection(direction);
 
                 // Check if bus reached the final destination stop
-                if (match.stopIndex === stops.length - 1) {
+                if (determinedStopIndex === stops.length - 1 && proj.directStopDist < 200) {
                     setTimeout(() => {
                         stopGpsShareWithReason('reached_destination');
                     }, 8000);
@@ -2745,8 +3246,7 @@
                 const busDataForFirebase = { ...busData, time: serverTimestamp() };
                 await Promise.all([
                     set(ref(db, `buses/${direction}/${safeBusName}`), busDataForFirebase),
-                    remove(ref(db, `buses/${opp}/${safeBusName}`)).catch(() => {}),
-                    push(ref(db, `history/${direction}/${safeBusName}`), busData).catch(() => {})
+                    remove(ref(db, `buses/${opp}/${safeBusName}`)).catch(() => {})
                 ]);
             };
 
