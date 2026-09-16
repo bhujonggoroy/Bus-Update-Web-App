@@ -128,6 +128,120 @@
             background: #94a3b8;
         }
 
+        /* Modern In-App Custom Dropdown System */
+        .custom-dropdown-container {
+            position: relative;
+            width: 100%;
+        }
+        .custom-dropdown-trigger {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 0.85rem;
+            padding: 0.55rem 0.85rem;
+            min-height: 42px;
+            font-weight: 700;
+            color: #0f172a;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .custom-dropdown-trigger:hover {
+            border-color: #cbd5e1;
+            background: #f8fafc;
+        }
+        .custom-dropdown-trigger:focus,
+        .custom-dropdown-container.open .custom-dropdown-trigger {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+            background: #ffffff;
+            outline: none;
+        }
+        .custom-dropdown-menu {
+            display: none;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: calc(100% + 5px);
+            z-index: 60;
+            max-height: 250px;
+            overflow-y: auto;
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 0.85rem;
+            padding: 0.35rem;
+            box-shadow: 0 14px 28px -6px rgba(15, 23, 42, 0.16), 0 6px 12px -4px rgba(15, 23, 42, 0.08);
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+        .custom-dropdown-container.open .custom-dropdown-menu {
+            display: block;
+            animation: customDropFadeIn 0.14s ease-out;
+        }
+        @keyframes customDropFadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .custom-dropdown-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.6rem;
+            font-size: 0.825rem;
+            font-weight: 600;
+            color: #1e293b;
+            cursor: pointer;
+            transition: all 0.12s ease;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .custom-dropdown-item:hover, .custom-dropdown-item.focused {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        .custom-dropdown-item.active, .custom-dropdown-item.selected {
+            background: #eef2ff;
+            color: #4338ca;
+            font-weight: 800;
+        }
+        .custom-dropdown-item.active .check-indicator, .custom-dropdown-item.selected .check-mark {
+            display: inline-flex;
+        }
+        .custom-dropdown-item .check-indicator, .custom-dropdown-item .check-mark {
+            display: none;
+            color: #4f46e5;
+        }
+        .custom-dropdown-container.open .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Route Distinct Badge & Card Visual Hierarchy */
+        .route-chip-up {
+            background: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+        .route-chip-down {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
+        .bus-card.route-campus-city {
+            border-top: 3.5px solid #059669;
+        }
+        .bus-card.route-boromath-campus {
+            border-top: 3.5px solid #2563eb;
+        }
+
         /* Cohesive Schedule Styling for both Bangla and English Circulars */
         #scheduleFragment .sheet, #scheduleEnglishContainer .sheet {
             max-width: 1180px;
@@ -287,6 +401,9 @@
 </head>
 
 <body class="flex flex-col bg-slate-100 text-slate-800 pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] md:pb-8 min-h-screen">
+
+    <!-- Global Toast Notification Container -->
+    <div id="toastContainer" class="fixed top-4 inset-x-3 sm:inset-x-auto sm:right-4 z-[99999] pointer-events-none flex flex-col gap-2.5 max-w-sm w-full transition-all"></div>
 
     <!-- Top Sticky Header -->
     <header class="sticky top-0 z-40 bg-gradient-to-r from-violet-950 via-purple-900 to-indigo-950 text-white shadow-md border-b border-violet-800/80">
@@ -459,17 +576,17 @@
                 </div>
             </div>
 
-            <!-- Direction Selector Tabs -->
-            <div class="bg-white rounded-2xl p-1.5 shadow-sm border border-slate-200/80 flex items-center gap-1.5">
-                <button id="campusCityBtn" onclick="changeDirection('campus_city')" class="flex-1 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm md:text-base text-white bg-violet-700 shadow-sm transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation">
+            <!-- Direction Selector Tabs (Color-coded: Emerald for Up/Campus->City, Blue for Down/City->Campus) -->
+            <div class="bg-white rounded-2xl p-1.5 shadow-xs border border-slate-200/80 flex items-center gap-1.5">
+                <button id="campusCityBtn" onclick="changeDirection('campus_city')" class="flex-1 py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm md:text-base text-white bg-emerald-700 shadow-xs transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation border border-emerald-800">
                     <span>🏫</span>
-                    <span id="campusCityBtnText" class="truncate">ক্যাম্পাস হতে শহর</span>
-                    <span id="campusCityCountBadge" class="ml-0.5 sm:ml-1 text-[11px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full bg-sky-500/40 text-white font-semibold">০</span>
+                    <span id="campusCityBtnText" class="truncate">ক্যাম্পাস হতে শহর (Up)</span>
+                    <span id="campusCityCountBadge" class="ml-0.5 sm:ml-1 text-[11px] sm:text-xs px-2 py-0.5 rounded-full bg-emerald-800 text-white font-semibold">০</span>
                 </button>
-                <button id="boroMathCampusBtn" onclick="changeDirection('boromath_campus')" class="flex-1 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm md:text-base text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation">
+                <button id="boroMathCampusBtn" onclick="changeDirection('boromath_campus')" class="flex-1 py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm md:text-base text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation border border-transparent">
                     <span>🏙️</span>
-                    <span id="boroMathBtnText" class="truncate">বড়মাঠ হতে ক্যাম্পাস</span>
-                    <span id="boroMathCountBadge" class="ml-0.5 sm:ml-1 text-[11px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 font-semibold">০</span>
+                    <span id="boroMathBtnText" class="truncate">বড়মাঠ হতে ক্যাম্পাস (Down)</span>
+                    <span id="boroMathCountBadge" class="ml-0.5 sm:ml-1 text-[11px] sm:text-xs px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 font-semibold">০</span>
                 </button>
             </div>
 
@@ -671,103 +788,121 @@
             
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 
-                <!-- Main Report Form -->
-                <div class="lg:col-span-2 bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
-                    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <!-- Main Report Form (Compacted & modern in-app dropdowns) -->
+                <div class="lg:col-span-2 bg-white rounded-2xl p-3.5 sm:p-4 shadow-xs border border-slate-200">
+                    <div class="flex items-center justify-between pb-2.5 border-b border-slate-100">
                         <div>
-                            <h2 id="reportHeadingText" class="text-lg md:text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <h2 id="reportHeadingText" class="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-1.5">
                                 <span>📡</span> বাসের অবস্থান জানান
                             </h2>
-                            <p id="reportSubheadingText" class="text-xs text-slate-500">আপনার আপডেট সহপাঠীদের সময় বাঁচাবে</p>
+                            <p id="reportSubheadingText" class="text-[11px] sm:text-xs text-slate-500">আপনার আপডেট সহপাঠীদের সময় বাঁচাবে</p>
                         </div>
-                        <span id="reportBadgeText" class="text-xs px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold">আপডেট</span>
+                        <span id="reportBadgeText" class="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">লাইভ আপডেট</span>
                     </div>
 
                     <!-- Auth Requirement Notice -->
-                    <div id="reportLoginNotice" class="mt-4 bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl text-xs text-amber-900 flex items-start gap-2.5">
-                        <span class="text-lg">🔐</span>
+                    <div id="reportLoginNotice" class="mt-3 bg-amber-50 border-l-4 border-amber-500 p-2.5 sm:p-3 rounded-r-xl text-xs text-amber-900 flex items-start gap-2">
+                        <span class="text-base flex-shrink-0">🔐</span>
                         <div>
                             <span id="reportLoginNoticeTitle" class="font-bold block">লগইন আবশ্যক</span>
                             <span id="reportLoginNoticeDesc">সঠিক তথ্যের জন্য Google দিয়ে লগইন আবশ্যক। উপরের <b class="underline cursor-pointer" onclick="doLogin()"><span id="reportLoginNoticeBtn">লগইন বাটন</span></b> চাপুন।</span>
                         </div>
                     </div>
 
-                    <!-- Report Inputs -->
-                    <div class="mt-5 space-y-4">
+                    <!-- Report Inputs (Compact, streamlined layout) -->
+                    <div class="mt-3.5 space-y-3">
                         
                         <div>
-                            <label id="reportStep1Label" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">১. যাত্রার দিক</label>
+                            <label id="reportStep1Label" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">১. যাত্রার দিক</label>
                             <div class="grid grid-cols-2 gap-2">
                                 <label class="cursor-pointer">
                                     <input type="radio" name="directionRadio" value="campus_city" checked onchange="onDirectionRadioChange(this.value)" class="peer sr-only">
-                                    <div class="p-3 rounded-xl border border-slate-200 peer-checked:border-violet-600 peer-checked:bg-violet-50 text-center transition">
-                                        <div id="reportDirCampusCityTitle" class="font-bold text-sm text-slate-800 peer-checked:text-violet-950">🏫 ক্যাম্পাস ➔ শহর</div>
-                                        <div id="reportDirCampusCitySub" class="text-[11px] text-slate-500">বড়মাঠের দিকে</div>
+                                    <div class="p-2 sm:p-2.5 rounded-xl border border-slate-200 peer-checked:border-emerald-600 peer-checked:bg-emerald-50 text-center transition">
+                                        <div id="reportDirCampusCityTitle" class="font-bold text-xs sm:text-sm text-slate-800 peer-checked:text-emerald-950">🏫 ক্যাম্পাস ➔ শহর (Up)</div>
+                                        <div id="reportDirCampusCitySub" class="text-[10px] text-slate-500">বড়মাঠের দিকে</div>
                                     </div>
                                 </label>
                                 <label class="cursor-pointer">
                                     <input type="radio" name="directionRadio" value="boromath_campus" onchange="onDirectionRadioChange(this.value)" class="peer sr-only">
-                                    <div class="p-3 rounded-xl border border-slate-200 peer-checked:border-violet-600 peer-checked:bg-violet-50 text-center transition">
-                                        <div id="reportDirCityCampusTitle" class="font-bold text-sm text-slate-800 peer-checked:text-violet-950">🏙️ বড়মাঠ ➔ ক্যাম্পাস</div>
-                                        <div id="reportDirCityCampusSub" class="text-[11px] text-slate-500">ক্যাম্পাসের দিকে</div>
+                                    <div class="p-2 sm:p-2.5 rounded-xl border border-slate-200 peer-checked:border-blue-600 peer-checked:bg-blue-50 text-center transition">
+                                        <div id="reportDirCityCampusTitle" class="font-bold text-xs sm:text-sm text-slate-800 peer-checked:text-blue-950">🏙️ বড়মাঠ ➔ ক্যাম্পাস (Down)</div>
+                                        <div id="reportDirCityCampusSub" class="text-[10px] text-slate-500">ক্যাম্পাসের দিকে</div>
                                     </div>
                                 </label>
                             </div>
                             <input type="hidden" id="directionSelect" value="campus_city">
                         </div>
 
+                        <!-- 2. Modern In-App Bus Selection Dropdown -->
                         <div>
-                            <label id="reportStep2Label" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">২. বাস নির্বাচন</label>
-                            <div class="relative">
-                                <select id="busSelect" class="w-full text-base sm:text-sm font-bold pl-4 pr-10 py-3.5 rounded-xl border border-slate-300 bg-white text-slate-800 focus:ring-2 focus:ring-violet-500 focus:border-violet-600 shadow-2xs min-h-[48px] touch-manipulation cursor-pointer appearance-none transition">
-                                    <!-- Options injected by JS -->
-                                </select>
-                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-slate-500">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <label id="reportStep2Label" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">২. বাস নির্বাচন</label>
+                            <div class="custom-dropdown-container" id="customBusDropdown">
+                                <button type="button" class="custom-dropdown-trigger" id="customBusTrigger" onclick="toggleCustomDropdown('customBusDropdown')" aria-haspopup="listbox">
+                                    <div class="flex items-center gap-2 min-w-0">
+                                        <span class="text-base flex-shrink-0">🚍</span>
+                                        <span id="customBusSelectedText" class="truncate text-sm font-bold text-slate-800">বাস নির্বাচন করুন</span>
+                                    </div>
+                                    <svg class="w-4 h-4 text-slate-400 flex-shrink-0 transition-transform duration-200 dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
                                     </svg>
+                                </button>
+                                <div class="custom-dropdown-menu" id="customBusMenu" role="listbox">
+                                    <!-- Injected by JS -->
                                 </div>
                             </div>
+                            <!-- Hidden native select retained for complete backwards compatibility -->
+                            <select id="busSelect" class="sr-only" aria-hidden="true" tabindex="-1">
+                                <!-- Injected by JS -->
+                            </select>
                         </div>
 
+                        <!-- 3. Modern In-App Stop Selection Dropdown -->
                         <div>
-                            <label id="reportStep3Label" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">৩. বর্তমান স্টপেজ</label>
-                            <div class="relative">
-                                <select id="stopDropdownSelect" onchange="onStopDropdownChange(this.value)" class="w-full text-base sm:text-sm font-bold pl-4 pr-10 py-3.5 rounded-xl border border-slate-300 bg-white text-slate-800 focus:ring-2 focus:ring-violet-500 focus:border-violet-600 shadow-2xs min-h-[48px] touch-manipulation cursor-pointer appearance-none transition">
-                                    <!-- Options injected by JS -->
-                                </select>
-                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-slate-500">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <label id="reportStep3Label" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">৩. বর্তমান স্টপেজ</label>
+                            <div class="custom-dropdown-container" id="customStopDropdown">
+                                <button type="button" class="custom-dropdown-trigger" id="customStopTrigger" onclick="toggleCustomDropdown('customStopDropdown')" aria-haspopup="listbox">
+                                    <div class="flex items-center gap-2 min-w-0">
+                                        <span class="text-base flex-shrink-0">📍</span>
+                                        <span id="customStopSelectedText" class="truncate text-sm font-bold text-slate-800">স্টপেজ নির্বাচন করুন</span>
+                                    </div>
+                                    <svg class="w-4 h-4 text-slate-400 flex-shrink-0 transition-transform duration-200 dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
                                     </svg>
+                                </button>
+                                <div class="custom-dropdown-menu" id="customStopMenu" role="listbox">
+                                    <!-- Injected by JS -->
                                 </div>
                             </div>
+                            <!-- Hidden native select and input retained for backwards compatibility -->
+                            <select id="stopDropdownSelect" onchange="onStopDropdownChange(this.value)" class="sr-only" aria-hidden="true" tabindex="-1">
+                                <!-- Injected by JS -->
+                            </select>
                             <input type="hidden" id="stopSelect" value="0">
                         </div>
 
                         <!-- Manual Update Button -->
-                        <button id="submitBtn" onclick="submitReport()" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-violet-700 to-indigo-700 hover:from-violet-800 hover:to-indigo-800 active:scale-[0.99] text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer touch-manipulation min-h-[48px]">
+                        <button id="submitBtn" onclick="submitReport()" class="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-gradient-to-r from-violet-700 to-indigo-700 hover:from-violet-800 hover:to-indigo-800 active:scale-[0.99] text-white font-bold text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-2 cursor-pointer touch-manipulation min-h-[44px]">
                             <span id="submitBtnText">📡 অবস্থান আপডেট করুন</span>
                         </button>
 
                         <!-- Traffic Jam Manual Override Controls -->
-                        <div class="pt-1">
+                        <div class="pt-0.5">
                             <div class="flex flex-col sm:flex-row gap-2">
-                                <button id="trafficJamBtn" type="button" onclick="openTrafficJamModal()" class="flex-1 py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 active:scale-[0.99] text-amber-950 font-bold text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-2 cursor-pointer touch-manipulation min-h-[46px] border border-amber-600/30">
-                                    <span class="text-base">🚦</span>
+                                <button id="trafficJamBtn" type="button" onclick="openTrafficJamModal()" class="flex-1 py-2 sm:py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-600 active:scale-[0.99] text-amber-950 font-bold text-xs sm:text-sm shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer touch-manipulation min-h-[40px] border border-amber-600/30">
+                                    <span class="text-sm">🚦</span>
                                     <span id="trafficJamBtnText">Traffic Jam</span>
                                 </button>
-                                <button id="resumeAutoTrackingBtn" type="button" onclick="resumeAutoTracking()" class="hidden flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white font-bold text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-2 cursor-pointer touch-manipulation min-h-[46px]">
-                                    <span class="text-base">▶</span>
+                                <button id="resumeAutoTrackingBtn" type="button" onclick="resumeAutoTracking()" class="hidden flex-1 py-2 sm:py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white font-bold text-xs sm:text-sm shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer touch-manipulation min-h-[40px]">
+                                    <span class="text-sm">▶</span>
                                     <span id="resumeAutoTrackingBtnText">Resume Tracking</span>
                                 </button>
                             </div>
-                            <div id="trafficJamActiveBanner" class="hidden mt-2 p-3 rounded-xl bg-amber-50 border border-amber-300 flex items-center justify-between gap-2 text-xs">
+                            <div id="trafficJamActiveBanner" class="hidden mt-2 p-2.5 rounded-xl bg-amber-50 border border-amber-300 flex items-center justify-between gap-2 text-xs">
                                 <div class="flex items-center gap-2 text-amber-950 font-bold min-w-0">
                                     <span class="text-base flex-shrink-0">🚦</span>
                                     <span id="trafficJamActiveBannerText" class="truncate">বাসটি ট্রাফিক জ্যামে আটকে আছে</span>
                                 </div>
-                                <button type="button" onclick="resumeAutoTracking()" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] shadow-xs transition flex-shrink-0 cursor-pointer">
+                                <button type="button" onclick="resumeAutoTracking()" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] shadow-xs transition flex-shrink-0 cursor-pointer">
                                     ▶ চালু করুন
                                 </button>
                             </div>
@@ -775,25 +910,25 @@
 
                     </div>
 
-                    <!-- Auto GPS Section -->
-                    <div class="mt-6 pt-5 border-t border-slate-200">
-                        <div class="flex items-start justify-between gap-3">
+                    <!-- Auto GPS Section (Compacted) -->
+                    <div class="mt-4 pt-3.5 border-t border-slate-200">
+                        <div class="flex items-start justify-between gap-2">
                             <div>
-                                <h3 id="reportGpsHeadingText" class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                                <h3 id="reportGpsHeadingText" class="text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-1.5">
                                     <span>🛰️</span> অটো জিপিএস ট্র্যাকিং
                                 </h3>
-                                <p id="reportGpsDescText" class="text-xs text-slate-500 mt-1 max-w-lg">
+                                <p id="reportGpsDescText" class="text-[11px] sm:text-xs text-slate-500 mt-0.5 max-w-lg">
                                     বাসে থাকাকালীন চালু রাখলে নিকটস্থ স্টপ নিজে থেকেই আপডেট হবে।
                                 </p>
                             </div>
                         </div>
 
-                        <div class="mt-3.5 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                            <button id="gpsBtn" onclick="toggleGpsShare()" class="py-2.5 px-4 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs md:text-sm shadow-sm transition flex items-center justify-center gap-2 cursor-pointer touch-manipulation min-h-[44px]">
+                        <div class="mt-2.5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                            <button id="gpsBtn" onclick="toggleGpsShare()" class="py-2 px-3.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer touch-manipulation min-h-[40px]">
                                 <span>📍</span>
                                 <span id="gpsBtnText">লোকেশন শেয়ার শুরু করুন</span>
                             </button>
-                            <div id="gpsStatus" class="text-xs text-slate-600 bg-slate-100 rounded-xl px-3 py-2 flex-1 border border-slate-200">
+                            <div id="gpsStatus" class="text-[11px] sm:text-xs text-slate-600 bg-slate-100 rounded-xl px-2.5 py-1.5 flex-1 border border-slate-200">
                                 জিপিএস শেয়ার বন্ধ আছে।
                             </div>
                         </div>
@@ -1169,69 +1304,137 @@
         </div>
     </div>
 
-    <!-- Modal 5: Firebase Authorized Domain Guide & Instant Student Mode -->
-    <div id="unauthorizedDomainModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+    <!-- Modal 5: Authentication & Student Direct Entry Modal -->
+    <div id="authModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all">
             <!-- Header -->
-            <div class="bg-gradient-to-r from-violet-900 to-indigo-900 p-5 text-white relative">
-                <button onclick="closeModal('unauthorizedDomainModal')" class="absolute top-4 right-4 text-violet-200 hover:text-white text-xl p-1 leading-none cursor-pointer" aria-label="Close">✕</button>
+            <div class="bg-gradient-to-r from-violet-900 via-purple-900 to-indigo-900 p-5 text-white relative">
+                <button onclick="closeModal('authModal'); closeModal('unauthorizedDomainModal');" class="absolute top-4 right-4 text-violet-200 hover:text-white text-xl p-1 leading-none cursor-pointer" aria-label="Close">✕</button>
                 <div class="w-11 h-11 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center text-2xl mb-2 border border-white/20">
-                    🔐
+                    🎓
                 </div>
-                <h3 class="text-lg font-black" id="authDomainModalTitle">Firebase ডোমেন অনুমোদন</h3>
-                <p class="text-xs text-violet-200 mt-0.5" id="authDomainModalSubtitle">Google লগইন অথবা সরাসরি শিক্ষার্থী হিসেবে প্রবেশ</p>
+                <h3 class="text-lg sm:text-xl font-black" id="authDomainModalTitle">লগইন ও শিক্ষার্থী প্রবেশ</h3>
+                <p class="text-xs text-violet-200 mt-0.5" id="authDomainModalSubtitle">বাসের অবস্থান আপডেট বা লাইভ ট্র্যাকিং নিশ্চিত করতে প্রবেশ করুন</p>
             </div>
 
             <!-- Body -->
             <div class="p-5 sm:p-6 space-y-4 text-slate-800">
-                <div class="p-3.5 bg-amber-50 border border-amber-200 rounded-2xl text-xs space-y-1.5 text-amber-900">
-                    <div class="font-bold flex items-center gap-1.5 text-amber-950 text-sm">
-                        <span>⚠️</span>
-                        <span id="authDomainNoticeTitle">ডোমেনটি অনুমোদিত নয়</span>
-                    </div>
-                    <p id="authDomainNoticeDesc" class="text-[12px] leading-relaxed">
-                        বর্তমান ওয়েব ঠিকানাটি Firebase Console-এ অনুমোদন না করা পর্যন্ত Google সাইন-ইন সাময়িকভাবে সম্ভব নয়।
-                    </p>
+                <!-- Option 1: Continue with Google -->
+                <div>
+                    <button id="modalGoogleLoginBtn" onclick="signInWithGooglePopup()" class="w-full py-3 px-4 rounded-2xl bg-white hover:bg-slate-50 border border-slate-300 active:scale-98 text-slate-800 font-bold text-xs sm:text-sm shadow-xs transition flex items-center justify-center gap-3 cursor-pointer min-h-[46px] touch-manipulation">
+                        <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                        <span id="modalGoogleLoginBtnText">Google দিয়ে সাইন-ইন করুন</span>
+                    </button>
                 </div>
 
-                <!-- Current Domain Box with 1-click copy -->
-                <div class="space-y-1.5">
-                    <label class="text-xs font-bold text-slate-700 block" id="authDomainCopyLabel">বর্তমান ওয়েব ডোমেন:</label>
-                    <div class="flex items-center gap-2 bg-slate-100 p-2.5 rounded-xl border border-slate-200">
-                        <code id="currentHostDomainDisplay" class="text-xs font-mono font-bold text-violet-950 flex-1 truncate select-all">--</code>
-                        <button id="copyDomainBtn" onclick="copyDomainToClipboard()" class="px-3 py-1.5 rounded-lg bg-violet-700 hover:bg-violet-800 text-white font-bold text-xs shadow-xs transition flex items-center gap-1 cursor-pointer flex-shrink-0">
-                            <span>📋</span>
-                            <span id="copyDomainBtnText">কপি করুন</span>
+                <!-- Divider -->
+                <div class="relative flex py-1 items-center">
+                    <div class="flex-grow border-t border-slate-200"></div>
+                    <span class="flex-shrink mx-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider" id="modalOrDivider">অথবা</span>
+                    <div class="flex-grow border-t border-slate-200"></div>
+                </div>
+
+                <!-- Option 2: Instant Student Entry Card -->
+                <div class="p-4 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50/60 border border-emerald-200 space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2 text-emerald-950 font-bold text-xs sm:text-sm">
+                            <span class="text-base">👨‍🎓</span>
+                            <span id="modalStudentEntryTitle">সরাসরি শিক্ষার্থী হিসেবে প্রবেশ</span>
+                        </div>
+                        <span class="text-[10px] bg-emerald-200 text-emerald-900 font-semibold px-2 py-0.5 rounded-full">১-ক্লিক</span>
+                    </div>
+                    <p class="text-[11px] sm:text-xs text-emerald-900 leading-relaxed" id="modalStudentEntryDesc">
+                        Google লগইন ছাড়াও তাৎক্ষণিকভাবে নিজের নাম বা আইডি দিয়ে বাসের অবস্থান ও ট্র্যাকিং আপডেট করতে পারবেন।
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-2 pt-1">
+                        <input type="text" id="guestStudentNameInput" placeholder="আপনার নাম বা স্টুডেন্ট আইডি (ঐচ্ছিক)" class="flex-1 px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-emerald-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-600 font-medium text-slate-800 placeholder-slate-400 shadow-2xs">
+                        <button onclick="submitGuestStudentFromInput()" class="py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 active:scale-95 text-white font-bold text-xs sm:text-sm shadow-sm transition cursor-pointer flex items-center justify-center gap-1.5 flex-shrink-0 min-h-[44px] touch-manipulation">
+                            <span id="modalStudentSubmitBtnText">প্রবেশ করুন</span>
+                            <span>➔</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- How to fix in Firebase Console -->
-                <div class="text-[11px] sm:text-xs text-slate-600 bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1.5">
-                    <div class="font-bold text-slate-800 flex items-center gap-1.5" id="authDomainStepsTitle">
-                        <span>🛠️</span> Google Login চালুর ধাপ:
+                <!-- Dynamic Domain Notice Box (Only reveals if domain requires authorization) -->
+                <div id="authDomainNoticeBox" class="hidden p-3.5 bg-amber-50 border border-amber-200 rounded-2xl text-xs space-y-2 text-amber-900">
+                    <div class="font-bold flex items-center gap-1.5 text-amber-950 text-xs sm:text-sm">
+                        <span>ℹ️</span>
+                        <span id="authDomainNoticeTitle">ডোমেন অনুমোদন প্রক্রিয়াধীন</span>
                     </div>
-                    <ol class="list-decimal list-inside space-y-1 text-slate-600">
-                        <li>Firebase Console ➔ Project <b class="font-mono text-violet-900">student-bus-tracker-bc55b</b> খুলুন</li>
-                        <li><b>Authentication ➔ Settings ➔ Authorized Domains</b> এ যান</li>
-                        <li><b>Add domain</b> এ উপরের কপি করা ডোমেনটি পেস্ট করে সেভ করুন</li>
+                    <p id="authDomainNoticeDesc" class="text-[11px] sm:text-xs leading-relaxed text-amber-900">
+                        বর্তমান ওয়েব ঠিকানায় সরাসরি Google সাইন-ইন সাময়িক প্রক্রিয়াধীন রয়েছে। তবে আপনি উপরের <b>'শিক্ষার্থী হিসেবে প্রবেশ'</b> বোতাম চেপে স্বাভাবিকভাবেই বাসের অবস্থান ও লাইভ ট্র্যাকিং আপডেট করতে পারেন।
+                    </p>
+                    <!-- Developer domain setup details folded neatly away from regular students -->
+                    <details class="text-[11px] bg-white p-2.5 rounded-xl border border-amber-200 text-slate-700">
+                        <summary class="font-bold text-slate-800 text-[11px] cursor-pointer select-none">
+                            ⚙️ অ্যাডমিন/ডেভেলপার ডোমেন সেটআপ তথ্য
+                        </summary>
+                        <div class="mt-2 space-y-2 text-slate-600 text-[11px]">
+                            <p>Google সাইন-ইন সচল রাখতে বর্তমান ওয়েব ডোমেনটি Authorized Domains তালিকায় যোগ করুন:</p>
+                            <div class="flex items-center gap-1.5 bg-slate-100 p-2 rounded-lg border border-slate-200">
+                                <code id="currentHostDomainDisplay" class="text-[10px] font-mono font-bold text-violet-950 flex-1 truncate select-all">--</code>
+                                <button id="copyDomainBtn" onclick="copyDomainToClipboard()" class="px-2.5 py-1 rounded bg-violet-700 hover:bg-violet-800 text-white font-bold text-[10px] transition flex items-center gap-1 cursor-pointer flex-shrink-0">
+                                    <span>📋</span>
+                                    <span id="copyDomainBtnText">কপি</span>
+                                </button>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="pt-1 flex justify-end">
+                    <button onclick="closeModal('authModal'); closeModal('unauthorizedDomainModal');" class="py-2 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition cursor-pointer min-h-[40px]">
+                        <span id="modalCloseBtnText">বন্ধ করুন</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 6: PWA App Installation Guide Modal -->
+    <div id="pwaInstallGuideModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all">
+            <div class="bg-gradient-to-r from-violet-900 via-purple-900 to-indigo-900 p-5 text-white relative">
+                <button onclick="closeModal('pwaInstallGuideModal')" class="absolute top-4 right-4 text-violet-200 hover:text-white text-xl p-1 leading-none cursor-pointer" aria-label="Close">✕</button>
+                <div class="w-11 h-11 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center text-2xl mb-2 border border-white/20">
+                    📲
+                </div>
+                <h3 class="text-lg font-black" id="pwaGuideTitle">অ্যাপ হিসেবে ইনস্টল করুন</h3>
+                <p class="text-xs text-violet-200 mt-0.5" id="pwaGuideSubtitle">হোম স্ক্রিনে আইকন যুক্ত করে সহজে ১-ট্যাপে ব্যবহার করুন</p>
+            </div>
+            <div class="p-5 space-y-3.5 text-slate-800 text-xs">
+                <!-- Android Guide Card -->
+                <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-1.5">
+                    <div class="font-bold text-slate-900 flex items-center gap-1.5 text-xs sm:text-sm">
+                        <span>🤖</span> <span>অ্যান্ড্রয়েড (Android / Chrome)</span>
+                    </div>
+                    <ol class="list-decimal list-inside space-y-1 text-slate-600 leading-relaxed text-[11px] sm:text-xs">
+                        <li>ব্রাউজারের উপরের ডানদিকের <b>৩-ডট মেন্যু (⋮)</b> চাপুন</li>
+                        <li><b>'Install app'</b> বা <b>'Add to Home screen'</b> (হোম স্ক্রিনে যোগ করুন) সিলেক্ট করুন</li>
                     </ol>
                 </div>
 
-                <!-- Instant Fallback: Continue as Student / Guest -->
-                <div class="pt-3 border-t border-slate-200">
-                    <p class="text-xs text-slate-600 font-medium mb-2.5 text-center" id="authDomainGuestPrompt">
-                        অথবা তাৎক্ষণিক বাস লোকেশন আপডেট করতে:
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-2.5">
-                        <button onclick="promptCustomGuestStudent()" class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold text-xs sm:text-sm shadow-md transition cursor-pointer flex items-center justify-center gap-2 min-h-[44px] touch-manipulation">
-                            <span>👨‍🎓</span>
-                            <span id="authDomainBtnStudent">শিক্ষার্থী হিসেবে প্রবেশ</span>
-                        </button>
-                        <button onclick="closeModal('unauthorizedDomainModal')" class="py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition cursor-pointer min-h-[44px]">
-                            বন্ধ করুন
-                        </button>
+                <!-- iPhone Guide Card -->
+                <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-1.5">
+                    <div class="font-bold text-slate-900 flex items-center gap-1.5 text-xs sm:text-sm">
+                        <span>🍎</span> <span>আইফোন / আইপ্যাড (iPhone / Safari)</span>
                     </div>
+                    <ol class="list-decimal list-inside space-y-1 text-slate-600 leading-relaxed text-[11px] sm:text-xs">
+                        <li>Safari ব্রাউজারের নিচে <b>Share (শেয়ার ⎋)</b> বোতাম চাপুন</li>
+                        <li>মেনু স্ক্রল করে <b>'Add to Home Screen'</b> (হোম স্ক্রিনে যোগ করুন) সিলেক্ট করুন</li>
+                    </ol>
+                </div>
+
+                <div class="pt-2">
+                    <button onclick="closeModal('pwaInstallGuideModal')" class="w-full py-2.5 px-4 rounded-xl bg-violet-950 hover:bg-violet-900 text-white font-bold text-xs sm:text-sm transition cursor-pointer min-h-[44px]">
+                        বুঝেছি / ঠিক আছে
+                    </button>
                 </div>
             </div>
         </div>
@@ -1312,14 +1515,104 @@
             }
         };
 
+        // ====================================================================
+        // IN-APP TOAST SYSTEM (Zero browser alert popups)
+        // ====================================================================
+        window.showToast = function(message, type = 'info', duration = 3500) {
+            let container = document.getElementById('toastContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'toastContainer';
+                container.className = 'fixed top-4 inset-x-3 sm:inset-x-auto sm:right-4 z-[99999] pointer-events-none flex flex-col gap-2.5 max-w-sm w-full transition-all';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            let icon = 'ℹ️';
+            let bgClasses = 'bg-slate-900 text-white border-slate-700 shadow-xl';
+            if (type === 'success') {
+                icon = '✅';
+                bgClasses = 'bg-slate-900 text-emerald-100 border-emerald-500/60 shadow-emerald-950/20';
+            } else if (type === 'error') {
+                icon = '❌';
+                bgClasses = 'bg-slate-900 text-rose-100 border-rose-500/60 shadow-rose-950/20';
+            } else if (type === 'warning') {
+                icon = '⚠️';
+                bgClasses = 'bg-slate-900 text-amber-100 border-amber-500/60 shadow-amber-950/20';
+            }
+
+            toast.className = `pointer-events-auto transform transition-all duration-300 -translate-y-2 opacity-0 rounded-2xl p-3.5 flex items-start gap-3 border backdrop-blur-md cursor-pointer select-none ${bgClasses}`;
+            toast.innerHTML = `
+                <span class="text-base flex-shrink-0 mt-0.5 leading-none">${icon}</span>
+                <div class="flex-1 min-w-0">
+                    <p class="text-xs sm:text-sm font-semibold leading-snug break-words">${message}</p>
+                </div>
+                <button class="text-white/50 hover:text-white text-sm leading-none p-0.5 ml-1 flex-shrink-0 cursor-pointer" aria-label="Close">✕</button>
+            `;
+
+            let dismissed = false;
+            const dismiss = () => {
+                if (dismissed) return;
+                dismissed = true;
+                toast.classList.add('opacity-0', '-translate-y-2', 'scale-95');
+                setTimeout(() => {
+                    if (toast.parentElement) toast.parentElement.removeChild(toast);
+                }, 300);
+            };
+
+            toast.onclick = dismiss;
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.classList.remove('-translate-y-2', 'opacity-0');
+                toast.classList.add('translate-y-0', 'opacity-100');
+            });
+
+            if (duration > 0) {
+                setTimeout(dismiss, duration);
+            }
+        };
+
+        // Window-level alert override to prevent any native browser alerts
+        window.alert = function(msg) {
+            if (typeof window.showToast === 'function') {
+                window.showToast(msg, 'info');
+            } else {
+                console.log('App Notice:', msg);
+            }
+        };
+
         // Student guest / fallback session handlers
-        window.promptCustomGuestStudent = function() {
+        window.openAuthModal = function(showDomainNotice = false) {
+            const domainNotice = document.getElementById("authDomainNoticeBox");
+            if (domainNotice) {
+                if (showDomainNotice) {
+                    domainNotice.classList.remove("hidden");
+                } else {
+                    domainNotice.classList.add("hidden");
+                }
+            }
+            const hostEl = document.getElementById("currentHostDomainDisplay");
+            if (hostEl) hostEl.textContent = window.location.hostname;
+            openModal("authModal");
+        };
+
+        window.submitGuestStudentFromInput = function() {
             const isEn = window.currentLang === 'en';
-            const defaultName = isEn ? "HSTU Student" : "হাবিপ্রবি শিক্ষার্থী";
-            let name = prompt(isEn ? "Enter your name or student ID (Optional):" : "আপনার নাম বা স্টুডেন্ট আইডি লিখুন (ঐচ্ছিক):", defaultName);
-            if (name === null) return;
-            name = name.trim() || defaultName;
+            const inputEl = document.getElementById("guestStudentNameInput");
+            let name = inputEl ? inputEl.value.trim() : "";
+            if (!name) {
+                name = isEn ? "HSTU Student" : "হাবিপ্রবি শিক্ষার্থী";
+            }
             window.setGuestStudentUser(name);
+        };
+
+        window.promptCustomGuestStudent = function() {
+            window.openAuthModal();
+            const inputEl = document.getElementById("guestStudentNameInput");
+            if (inputEl) {
+                setTimeout(() => inputEl.focus(), 150);
+            }
         };
 
         window.setGuestStudentUser = function(name = "HSTU Student") {
@@ -1334,12 +1627,13 @@
             } catch (e) {}
             window.currentUser = guestUser;
             window.currentRole = "student";
+            closeModal("authModal");
             closeModal("unauthorizedDomainModal");
             if (typeof window.updateAuthUI === "function") {
                 window.updateAuthUI(guestUser);
             }
             const isEn = window.currentLang === 'en';
-            alert(isEn ? `✅ Signed in as ${name}. You can now update bus locations!` : `✅ ${name} হিসেবে সফলভাবে প্রবেশ করেছেন। এখন আপনি বাসের অবস্থান আপডেট করতে পারবেন!`);
+            showToast(isEn ? `Signed in as ${name}. You can now update bus locations!` : `✅ ${name} হিসেবে সফলভাবে প্রবেশ করেছেন। এখন বাসের অবস্থান আপডেট করতে পারবেন!`, "success");
         };
 
         window.copyDomainToClipboard = async function() {
@@ -1352,8 +1646,9 @@
                     btnText.textContent = "✅ কপি হয়েছে!";
                     setTimeout(() => { btnText.textContent = orig; }, 2000);
                 }
+                showToast("ডোমেন কপি হয়েছে!", "success");
             } catch (e) {
-                prompt("কপি করতে চাপুন:", domain);
+                showToast("ডোমেন টেক্সটটি সিলেক্ট করে কপি করুন।", "info");
             }
         };
 
@@ -1434,15 +1729,11 @@
                     const banner = document.getElementById('pwaInstallBanner');
                     if (btn) btn.classList.add('hidden');
                     if (banner) banner.classList.add('hidden');
+                    showToast(window.currentLang === 'en' ? "App installed successfully!" : "অ্যাপটি সফলভাবে ইনস্টল হয়েছে!", "success");
                 }
                 deferredPwaPrompt = null;
             } else {
-                const isIOS = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-                if (isIOS) {
-                    alert("📱 আইফোনে অ্যাপ ইনস্টল করতে:\n১. Safari ব্রাউজারের নিচে Share (শেয়ার) বোতাম চাপুন।\n২. স্ক্রল করে 'Add to Home Screen' (হোম স্ক্রিনে যোগ করুন) চাপুন।");
-                } else {
-                    alert("📱 অ্যাপ ইনস্টল করতে:\nব্রাউজারের ৩-ডট মেন্যু (⋮) চাপুন এবং 'Install app' বা 'Add to Home screen' (হোম স্ক্রিনে যোগ করুন) সিলেক্ট করুন।\nতাহলে ফেসবুকের মতো সুন্দর লোগো সহ অ্যাপ হিসেবে ইনস্টল হবে!");
-                }
+                openModal('pwaInstallGuideModal');
             }
         };
 
@@ -1649,7 +1940,19 @@
                 contactCard6Title: "স্টুডেন্ট ডেভেলপার টিম",
                 contactCard6Desc: "পরামর্শ ও কারিগরি সহায়তা",
                 contactCard6Role: "হাবিপ্রবি শিক্ষার্থী",
-                contactCard6Action: "ইমেইল"
+                contactCard6Action: "ইমেইল",
+
+                // Auth Modal & PWA Guide
+                authDomainModalTitle: "লগইন ও শিক্ষার্থী প্রবেশ",
+                authDomainModalSubtitle: "বাসের অবস্থান আপডেট বা লাইভ ট্র্যাকিং নিশ্চিত করতে প্রবেশ করুন",
+                modalGoogleLoginBtnText: "Google দিয়ে সাইন-ইন করুন",
+                modalOrDivider: "অথবা",
+                modalStudentEntryTitle: "সরাসরি শিক্ষার্থী হিসেবে প্রবেশ",
+                modalStudentEntryDesc: "Google লগইন ছাড়াও তাৎক্ষণিকভাবে নিজের নাম বা আইডি দিয়ে বাসের অবস্থান ও ট্র্যাকিং আপডেট করতে পারবেন।",
+                modalStudentSubmitBtnText: "প্রবেশ করুন",
+                modalCloseBtnText: "বন্ধ করুন",
+                pwaGuideTitle: "অ্যাপ হিসেবে ইনস্টল করুন",
+                pwaGuideSubtitle: "হোম স্ক্রিনে আইকন যুক্ত করে সহজে ১-ট্যাপে ব্যবহার করুন"
             },
             en: {
                 appHeaderTitle: "HSTU Bus Tracker",
@@ -1775,7 +2078,19 @@
                 contactCard6Title: "Student Developer Team",
                 contactCard6Desc: "Suggestions & tech support",
                 contactCard6Role: "HSTU Student",
-                contactCard6Action: "Email"
+                contactCard6Action: "Email",
+
+                // Auth Modal & PWA Guide
+                authDomainModalTitle: "Sign In & Student Access",
+                authDomainModalSubtitle: "Enter to submit live bus location updates and tracking",
+                modalGoogleLoginBtnText: "Sign in with Google",
+                modalOrDivider: "OR",
+                modalStudentEntryTitle: "Direct Student Entry",
+                modalStudentEntryDesc: "Update bus locations and track trips directly with your name or Student ID without Google sign-in.",
+                modalStudentSubmitBtnText: "Enter Now",
+                modalCloseBtnText: "Close",
+                pwaGuideTitle: "Install as App",
+                pwaGuideSubtitle: "Add to home screen for seamless 1-tap access"
             }
         };
 
@@ -2063,7 +2378,8 @@
 
         // Modal Open / Close Helpers
         function openModal(id) {
-            const el = document.getElementById(id);
+            const targetId = (id === 'unauthorizedDomainModal') ? 'authModal' : id;
+            const el = document.getElementById(targetId) || document.getElementById(id);
             if (el) {
                 el.classList.remove('hidden');
                 document.body.style.overflow = 'hidden';
@@ -2071,7 +2387,8 @@
         }
 
         function closeModal(id) {
-            const el = document.getElementById(id);
+            const targetId = (id === 'unauthorizedDomainModal') ? 'authModal' : id;
+            const el = document.getElementById(targetId) || document.getElementById(id);
             if (el) {
                 el.classList.add('hidden');
                 document.body.style.overflow = '';
@@ -2156,11 +2473,12 @@
             const routeDesc = document.getElementById("routeDescriptionText");
 
             const isEn = window.currentLang === 'en';
-            const activeClass = "flex-1 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm md:text-base text-white bg-violet-700 shadow-sm transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation border border-violet-800";
+            const campusActive = "flex-1 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm md:text-base text-white bg-emerald-700 shadow-sm transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation border border-emerald-800";
+            const boroActive = "flex-1 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm md:text-base text-white bg-blue-700 shadow-sm transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation border border-blue-800";
             const inactiveClass = "flex-1 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm md:text-base text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation border border-transparent";
 
             if (direction === "campus_city") {
-                if (campusBtn) campusBtn.className = activeClass;
+                if (campusBtn) campusBtn.className = campusActive;
                 if (boroBtn) boroBtn.className = inactiveClass;
                 if (routeDesc) {
                     routeDesc.textContent = isEn
@@ -2168,7 +2486,7 @@
                         : "রুট: ক্যাম্পাস ➔ গোপালগঞ্জ ➔ কলেজ মোড় ➔ বাস টার্মিনাল ➔ বটতলী ➔ শাহী মসজিদ ➔ বলাইয়ের মোড় ➔ সদর হাসপাতাল ➔ বড়মাঠ";
                 }
             } else {
-                if (boroBtn) boroBtn.className = activeClass;
+                if (boroBtn) boroBtn.className = boroActive;
                 if (campusBtn) campusBtn.className = inactiveClass;
                 if (routeDesc) {
                     routeDesc.textContent = isEn
@@ -2181,6 +2499,72 @@
             renderRouteMap();
         }
 
+        // Custom In-App Dropdown Toggle & Selection Controller
+        window.toggleCustomDropdown = function(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const isOpen = container.classList.contains("open");
+            // Close all dropdowns first
+            document.querySelectorAll(".custom-dropdown-container.open").forEach(el => {
+                if (el !== container) el.classList.remove("open");
+            });
+            container.classList.toggle("open", !isOpen);
+        };
+
+        // Close custom dropdowns on tap/click outside
+        document.addEventListener("click", function(e) {
+            if (!e.target.closest(".custom-dropdown-container")) {
+                document.querySelectorAll(".custom-dropdown-container.open").forEach(el => {
+                    el.classList.remove("open");
+                });
+            }
+        });
+
+        window.selectCustomBus = function(index) {
+            const b = document.getElementById("busSelect");
+            if (b) b.value = index;
+            const textEl = document.getElementById("customBusSelectedText");
+            if (textEl && busNames[index]) {
+                textEl.textContent = getBusDisplayName(busNames[index]);
+            }
+            // Update selected class in menu
+            const menu = document.getElementById("customBusMenu");
+            if (menu) {
+                menu.querySelectorAll(".custom-dropdown-item").forEach(item => {
+                    const isMatch = Number(item.dataset.value) === Number(index);
+                    item.classList.toggle("selected", isMatch);
+                });
+            }
+            const container = document.getElementById("customBusDropdown");
+            if (container) container.classList.remove("open");
+            updateStopOptions();
+        };
+
+        window.selectCustomStop = function(index) {
+            const s = document.getElementById("stopDropdownSelect");
+            const hiddenStop = document.getElementById("stopSelect");
+            if (s) s.value = index;
+            if (hiddenStop) hiddenStop.value = index;
+
+            const dir = document.getElementById("directionSelect")?.value || "campus_city";
+            const stops = dir === "campus_city" ? campusToBoromath : boromathToCampus;
+            const textEl = document.getElementById("customStopSelectedText");
+            if (textEl && stops[index]) {
+                textEl.textContent = `${Number(index) + 1}. ${getStopName(stops[index])}`;
+            }
+
+            // Update selected class in menu
+            const menu = document.getElementById("customStopMenu");
+            if (menu) {
+                menu.querySelectorAll(".custom-dropdown-item").forEach(item => {
+                    const isMatch = Number(item.dataset.value) === Number(index);
+                    item.classList.toggle("selected", isMatch);
+                });
+            }
+            const container = document.getElementById("customStopDropdown");
+            if (container) container.classList.remove("open");
+        };
+
         function onDirectionRadioChange(val) {
             const dirSel = document.getElementById("directionSelect");
             if (dirSel) dirSel.value = val;
@@ -2189,17 +2573,43 @@
 
         function updateBusOptions() {
             const b = document.getElementById("busSelect");
+            const customMenu = document.getElementById("customBusMenu");
+            const customText = document.getElementById("customBusSelectedText");
             if (!b) return;
             const currentVal = b.value;
             b.innerHTML = "";
+            if (customMenu) customMenu.innerHTML = "";
+
             busNames.forEach((name, i) => {
+                const displayName = getBusDisplayName(name);
+                // Native select fallback
                 const o = document.createElement("option");
                 o.value = i;
-                o.textContent = getBusDisplayName(name);
+                o.textContent = displayName;
                 b.appendChild(o);
+
+                // Custom In-App Dropdown item
+                if (customMenu) {
+                    const div = document.createElement("button");
+                    div.type = "button";
+                    div.className = "custom-dropdown-item" + (String(currentVal) === String(i) ? " selected" : "");
+                    div.dataset.value = i;
+                    div.onclick = function() { window.selectCustomBus(i); };
+                    div.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-md bg-violet-100 text-violet-700 font-bold flex items-center justify-center text-xs">🚍</span>
+                            <span class="font-bold text-slate-800 text-xs sm:text-sm">${escapeHtml(displayName)}</span>
+                        </div>
+                        <span class="text-xs text-violet-600 font-bold check-mark">✓</span>
+                    `;
+                    customMenu.appendChild(div);
+                }
             });
-            if (currentVal !== "" && Number(currentVal) < busNames.length) {
-                b.value = currentVal;
+
+            const activeIdx = (currentVal !== "" && Number(currentVal) < busNames.length) ? currentVal : 0;
+            b.value = activeIdx;
+            if (customText && busNames[activeIdx]) {
+                customText.textContent = getBusDisplayName(busNames[activeIdx]);
             }
             updateStopOptions();
         }
@@ -2213,10 +2623,13 @@
             const dir = document.getElementById("directionSelect")?.value || "campus_city";
             const stops = dir === "campus_city" ? campusToBoromath : boromathToCampus;
             const stopDropdown = document.getElementById("stopDropdownSelect");
+            const customStopMenu = document.getElementById("customStopMenu");
+            const customStopText = document.getElementById("customStopSelectedText");
             const hiddenStop = document.getElementById("stopSelect");
-            const selectedIdx = Number(hiddenStop?.value || 0);
+            let selectedIdx = Number(hiddenStop?.value || 0);
+            if (selectedIdx >= stops.length) selectedIdx = 0;
 
-            // Populate stop dropdown
+            // Populate native stop dropdown
             if (stopDropdown) {
                 stopDropdown.innerHTML = "";
                 stops.forEach((stop, i) => {
@@ -2226,6 +2639,32 @@
                     if (i === selectedIdx) opt.selected = true;
                     stopDropdown.appendChild(opt);
                 });
+            }
+
+            // Populate custom in-app stop dropdown
+            if (customStopMenu) {
+                customStopMenu.innerHTML = "";
+                const isCampusUp = dir === "campus_city";
+                stops.forEach((stop, i) => {
+                    const div = document.createElement("button");
+                    div.type = "button";
+                    div.className = "custom-dropdown-item" + (i === selectedIdx ? " selected" : "");
+                    div.dataset.value = i;
+                    div.onclick = function() { window.selectCustomStop(i); };
+                    const badgeClass = isCampusUp ? "bg-emerald-100 text-emerald-800" : "bg-blue-100 text-blue-800";
+                    div.innerHTML = `
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span class="w-6 h-6 rounded-md ${badgeClass} font-bold flex items-center justify-center text-[11px] flex-shrink-0">${i + 1}</span>
+                            <span class="font-bold text-slate-800 text-xs sm:text-sm truncate">${escapeHtml(getStopName(stop))}</span>
+                        </div>
+                        <span class="text-xs ${isCampusUp ? 'text-emerald-700' : 'text-blue-700'} font-bold check-mark">✓</span>
+                    `;
+                    customStopMenu.appendChild(div);
+                });
+            }
+
+            if (customStopText && stops[selectedIdx]) {
+                customStopText.textContent = `${selectedIdx + 1}. ${getStopName(stops[selectedIdx])}`;
             }
         }
 
@@ -2315,6 +2754,13 @@
 
             const stops = currentDirection === "campus_city" ? campusToBoromath : boromathToCampus;
 
+            const isCampusUp = currentDirection === "campus_city";
+            const routeThemeClass = isCampusUp ? "route-campus-city" : "route-boromath-campus";
+            const routeBadgeClass = isCampusUp ? "route-chip-up" : "route-chip-down";
+            const avatarBg = isCampusUp ? "bg-emerald-50 text-emerald-800 border-emerald-200/80" : "bg-blue-50 text-blue-800 border-blue-200/80";
+            const progressColor = isCampusUp ? "from-emerald-600 via-teal-600 to-green-500" : "from-blue-600 via-indigo-600 to-sky-500";
+            const progressText = isCampusUp ? "text-emerald-700" : "text-blue-700";
+
             list.innerHTML = activeNames.map(name => {
                 const bus = data[name];
                 const stopIdx = bus.stopIndex ?? 0;
@@ -2323,28 +2769,28 @@
                 const coords = stopCoords[bus.stopName];
                 const mapsUrl = coords ? `https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lng}` : null;
                 const nextStopName = (stopIdx + 1 < stops.length) ? getStopName(stops[stopIdx + 1]) : (isEn ? "Arrived" : "গন্তব্যে পৌঁছেছে");
-                const dirLabel = currentDirection === 'campus_city' 
-                    ? (isEn ? 'Campus ➔ City' : 'ক্যাম্পাস ➔ শহর') 
-                    : (isEn ? 'Boromath ➔ Campus' : 'বড়মাঠ ➔ ক্যাম্পাস');
+                const dirLabel = isCampusUp 
+                    ? (isEn ? 'Up • Campus ➔ City' : 'Up • ক্যাম্পাস ➔ শহর') 
+                    : (isEn ? 'Down • City ➔ Campus' : 'Down • বড়মাঠ ➔ ক্যাম্পাস');
 
                 const safeNameKey = name.replace(/[.#$[\]'"]/g, "_");
                 const isExpanded = window.busViewMode === 'detailed' || window.expandedBusCards.has(safeNameKey);
 
                 return `
-                    <div class="bus-card bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between relative overflow-hidden" data-time="${bus.time}">
+                    <div class="bus-card ${routeThemeClass} bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between relative overflow-hidden" data-time="${bus.time}">
                         <div>
                             <!-- Card Header: Bus Name + Live status badge -->
                             <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-100">
                                 <div class="flex items-center gap-2.5 min-w-0">
-                                    <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-700 font-bold flex items-center justify-center text-lg flex-shrink-0 border border-violet-200/80 shadow-2xs">
+                                    <div class="w-10 h-10 rounded-xl ${avatarBg} font-bold flex items-center justify-center text-lg flex-shrink-0 border shadow-2xs">
                                         🚍
                                     </div>
                                     <div class="min-w-0">
                                         <h3 class="font-bold text-base md:text-lg text-slate-900 leading-tight truncate">${escapeHtml(getBusDisplayName(bus.name))}</h3>
-                                        <div class="flex items-center gap-1.5 mt-0.5">
+                                        <div class="flex items-center gap-1.5 mt-1">
                                             <span class="update-time text-xs text-slate-500 font-medium">${isEn ? 'Loading...' : 'লোড হচ্ছে...'}</span>
                                             <span class="text-slate-300">•</span>
-                                            <span class="text-xs text-slate-400 font-medium truncate">${dirLabel}</span>
+                                            <span class="${routeBadgeClass} text-[10px] font-bold px-2 py-0.5 rounded-md truncate">${dirLabel}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -2388,10 +2834,10 @@
                                 <div class="mt-3.5 bg-slate-50/80 p-3 rounded-xl border border-slate-200/80">
                                     <div class="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider flex items-center justify-between">
                                         <span>${isEn ? 'LOCATION' : 'অবস্থান'}</span>
-                                        <span class="text-violet-700 font-semibold">${isEn ? `Stop ${stopIdx + 1} / ${stops.length}` : `স্টপ ${stopIdx + 1} / ${stops.length}`}</span>
+                                        <span class="${progressText} font-semibold">${isEn ? `Stop ${stopIdx + 1} / ${stops.length}` : `স্টপ ${stopIdx + 1} / ${stops.length}`}</span>
                                     </div>
                                     <div class="text-base sm:text-lg font-bold text-slate-900 mt-1 flex items-center gap-2">
-                                        <span class="text-rose-500 flex-shrink-0">📍</span>
+                                        <span class="${isCampusUp ? 'text-emerald-600' : 'text-blue-600'} flex-shrink-0">📍</span>
                                         <span class="truncate">${escapeHtml(stopNameDisplay)}</span>
                                     </div>
                                 </div>
@@ -2404,10 +2850,10 @@
                                     <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200/80">
                                         <div class="flex justify-between text-xs text-slate-600 font-medium mb-1.5">
                                             <span>${isEn ? 'Progress' : 'অগ্রগতি'}</span>
-                                            <span class="font-bold text-violet-700">${isEn ? `${progressPct}%` : `${progressPct}%`}</span>
+                                            <span class="font-bold ${progressText}">${progressPct}%</span>
                                         </div>
                                         <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
-                                            <div class="bg-gradient-to-r from-violet-600 via-indigo-600 to-sky-500 h-2 rounded-full transition-all duration-500" style="width: ${progressPct}%"></div>
+                                            <div class="bg-gradient-to-r ${progressColor} h-2 rounded-full transition-all duration-500" style="width: ${progressPct}%"></div>
                                         </div>
                                         <div class="flex justify-between text-[11px] text-slate-400 mt-1.5">
                                             <span class="truncate">${getStopName(stops[0])}</span>
@@ -2426,7 +2872,7 @@
 
                         <!-- Card Footer & Quick View More / Less Toggle -->
                         <div class="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between gap-2">
-                            <button onclick="toggleBusCardDetail('${safeNameKey}')" class="text-xs font-bold text-violet-700 hover:text-violet-900 hover:bg-violet-50 px-2.5 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1 touch-manipulation">
+                            <button onclick="toggleBusCardDetail('${safeNameKey}')" class="text-xs font-bold ${progressText} hover:opacity-80 px-2.5 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1 touch-manipulation">
                                 <span>${isExpanded ? (isEn ? '▲ Less' : '▲ সংক্ষেপ') : (isEn ? '▼ Details' : '▼ বিস্তারিত')}</span>
                             </button>
                             
@@ -2539,19 +2985,22 @@
         function submitReport() {
             const isEn = window.currentLang === 'en';
             if (!window.firebaseSaveBus) {
-                alert(isEn ? "❌ Firebase is not connected yet. Please reload the page." : "❌ Firebase এখনো সংযুক্ত হয়নি। পাতাটি রিলোড করুন।");
+                showToast(isEn ? "❌ Server is still initializing. Please wait a moment." : "❌ সার্ভার সংযোগ প্রক্রিয়াধীন। কিছুক্ষণ অপেক্ষা করুন।", "warning");
                 return;
             }
             if (!window.currentUser) {
-                const isEn = window.currentLang === 'en';
-                alert(isEn ? "🔐 Please sign in with Google or continue as student to update bus location." : "🔐 বাসের অবস্থান আপডেট করতে অনুগ্রহ করে লগইন করুন বা ছাত্র হিসেবে প্রবেশ করুন।");
-                window.doLogin();
+                showToast(isEn ? "🔐 Please choose your sign-in method or enter as student." : "🔐 বাসের অবস্থান আপডেট করতে অনুগ্রহ করে লগইন বা শিক্ষার্থী হিসেবে প্রবেশ করুন।", "info");
+                if (typeof window.openAuthModal === "function") {
+                    window.openAuthModal(false);
+                } else {
+                    window.doLogin();
+                }
                 return;
             }
 
             const busSelect = document.getElementById("busSelect");
             if (!busSelect || !busSelect.value) {
-                alert(isEn ? "Please select a bus first." : "অনুগ্রহ করে আগে একটি বাস নির্বাচন করুন।");
+                showToast(isEn ? "Please select a bus first." : "অনুগ্রহ করে আগে একটি বাস নির্বাচন করুন।", "warning");
                 return;
             }
 
@@ -2644,12 +3093,12 @@
                 const opp = direction === "campus_city" ? "boromath_campus" : "campus_city";
                 if (window.buses[opp]) delete window.buses[opp][safeName];
 
-                alert(isEn ? "✅ Location updated!" : "✅ অবস্থান আপডেট হয়েছে!");
+                showToast(isEn ? "✅ Location updated successfully!" : "✅ বাসের অবস্থান সফলভাবে আপডেট হয়েছে!", "success");
                 showPage('live', null);
                 changeDirection(direction);
             } catch (error) {
                 console.error("Firebase save error:", error);
-                alert(isEn ? ("❌ Update failed: " + (error?.message || "Unknown error")) : ("❌ আপডেট করা যায়নি: " + (error?.message || "অজানা সমস্যা")));
+                showToast(isEn ? "❌ Location could not be updated. Please try again." : "❌ বাসের অবস্থান আপডেট করা যায়নি। আবার চেষ্টা করুন।", "error");
             } finally {
                 if (btn) {
                     btn.disabled = false;
@@ -2682,7 +3131,7 @@
             const isEn = window.currentLang === 'en';
             const busSelect = document.getElementById("busSelect");
             if (!busSelect || !busSelect.value) {
-                alert(isEn ? "Please select a bus first." : "অনুগ্রহ করে আগে একটি বাস নির্বাচন করুন।");
+                showToast(isEn ? "Please select a bus first." : "অনুগ্রহ করে আগে একটি বাস নির্বাচন করুন।", "warning");
                 return;
             }
             const direction = document.getElementById("directionSelect")?.value || "campus_city";
@@ -2702,8 +3151,12 @@
         window.confirmTrafficJamOverride = async function() {
             const isEn = window.currentLang === 'en';
             if (!window.currentUser) {
-                alert(isEn ? "🔐 Please sign in or continue as student to report traffic jam." : "🔐 ট্রাফিক জ্যাম স্থিতি নিশ্চিত করতে অনুগ্রহ করে লগইন করুন বা ছাত্র হিসেবে প্রবেশ করুন।");
-                window.doLogin();
+                showToast(isEn ? "🔐 Please sign in or continue as student to report traffic jam." : "🔐 ট্রাফিক জ্যাম স্থিতি নিশ্চিত করতে লগইন বা শিক্ষার্থী হিসেবে প্রবেশ করুন।", "info");
+                if (typeof window.openAuthModal === "function") {
+                    window.openAuthModal(false);
+                } else {
+                    window.doLogin();
+                }
                 return;
             }
             const busSelect = document.getElementById("busSelect");
@@ -2749,12 +3202,12 @@
                     ? (isEn ? `${getStopName(stopName)} (After Stop / En-Route)` : `${getStopName(stopName)} পার হয়ে (মাঝপথে)`)
                     : (isEn ? `${getStopName(stopName)} (At Stop)` : `${getStopName(stopName)}-এ`);
 
-                alert(isEn 
-                    ? `🚦 Traffic Jam reported at ${posText}.\nAutomatic GPS stoppage progression is temporarily controlled.` 
-                    : `🚦 বাসের ট্রাফিক জ্যাম চিহ্নিত হয়েছে (${posText})!\nঅটো-জিপিএস স্টপেজ আপডেট সাময়িকভাবে স্থগিত রাখা হয়েছে।`);
+                showToast(isEn 
+                    ? `🚦 Traffic Jam reported at ${posText}. GPS stoppage progression paused.` 
+                    : `🚦 বাসের ট্রাফিক জ্যাম চিহ্নিত হয়েছে (${posText})! অটো-জিপিএস স্টপেজ আপডেট স্থগিত রাখা হয়েছে।`, "warning", 5000);
             } catch (err) {
                 console.error("Traffic jam save error:", err);
-                alert(isEn ? "❌ Failed to update traffic jam status." : "❌ ট্রাফিক জ্যাম স্থিতি সংরক্ষণ করা যায়নি।");
+                showToast(isEn ? "❌ Failed to update traffic jam status." : "❌ ট্রাফিক জ্যাম স্থিতি সংরক্ষণ করা যায়নি।", "error");
             }
         };
 
@@ -2789,13 +3242,13 @@
                     const safeName = busName.replace(/[.#$[\]]/g, "_");
                     window.buses[direction][safeName] = busData;
                 } catch (e) {
-                    console.error("Resume tracking Firebase save error:", e);
+                    console.error("Resume tracking save error:", e);
                 }
             }
 
             updateTrafficJamUI(false);
             changeDirection(direction);
-            alert(isEn ? "▶ Automatic tracking resumed normally!" : "▶ অটো ট্র্যাকিং স্বাভাবিকভাবে পুনরায় চালু করা হয়েছে!");
+            showToast(isEn ? "▶ Automatic tracking resumed normally!" : "▶ অটো ট্র্যাকিং স্বাভাবিকভাবে পুনরায় চালু করা হয়েছে!", "success");
         };
 
         function updateTrafficJamUI(isActive, busName, stopName, pos) {
@@ -3010,17 +3463,21 @@
         function startGpsShare() {
             const isEn = window.currentLang === 'en';
             if (!navigator.geolocation) {
-                alert(isEn ? "❌ Geolocation is not supported by your browser." : "❌ এই ব্রাউজারে GPS/Location সাপোর্ট নেই।");
+                showToast(isEn ? "❌ Geolocation is not supported by your browser." : "❌ এই ব্রাউজারে GPS/Location সাপোর্ট নেই।", "error");
                 return;
             }
             if (!window.currentUser) {
-                alert(isEn ? "🔐 Please sign in or continue as student first to share GPS." : "🔐 GPS শেয়ার করতে আগে Google দিয়ে লগইন করুন বা ছাত্র হিসেবে প্রবেশ করুন।");
-                window.doLogin();
+                showToast(isEn ? "🔐 Please choose your sign-in method or enter as student." : "🔐 GPS শেয়ার করতে লগইন করুন বা শিক্ষার্থী হিসেবে প্রবেশ করুন।", "info");
+                if (typeof window.openAuthModal === "function") {
+                    window.openAuthModal(false);
+                } else {
+                    window.doLogin();
+                }
                 return;
             }
             const busSelectEl = document.getElementById("busSelect");
             if (!busSelectEl || !busSelectEl.value) { 
-                alert(isEn ? "Please select a bus first." : "আগে বাস নির্বাচন করুন।"); 
+                showToast(isEn ? "Please select a bus first." : "আগে একটি বাস নির্বাচন করুন।", "warning"); 
                 return; 
             }
 
@@ -3077,9 +3534,9 @@
             if (banner) banner.classList.add("hidden");
 
             if (reason === 'user_exit') {
-                alert(isEn ? "🚪 GPS sharing stopped." : "🚪 ট্র্যাকিং বন্ধ করা হয়েছে।");
+                showToast(isEn ? "🚪 GPS sharing stopped." : "🚪 ট্র্যাকিং বন্ধ করা হয়েছে।", "info");
             } else if (reason === 'reached_destination') {
-                alert(isEn ? "🏁 Bus reached destination!" : "🏁 বাসটি গন্তব্যে পৌঁছে গেছে!");
+                showToast(isEn ? "🏁 Bus reached destination!" : "🏁 বাসটি গন্তব্যে পৌঁছে গেছে!", "success");
             }
         }
 
@@ -3245,22 +3702,43 @@
         window.doLogin = async () => {
             try {
                 await signInWithPopup(auth, provider);
+                if (typeof window.closeModal === "function") {
+                    window.closeModal("authModal");
+                    window.closeModal("unauthorizedDomainModal");
+                }
             } catch (err) {
                 if (err && err.code === "auth/unauthorized-domain") {
-                    console.warn("Firebase Auth: Current domain (" + window.location.hostname + ") is not authorized in Firebase Console.");
-                    const hostEl = document.getElementById("currentHostDomainDisplay");
-                    if (hostEl) hostEl.textContent = window.location.hostname;
-                    if (typeof window.openModal === "function") {
-                        window.openModal("unauthorizedDomainModal");
+                    console.warn("Auth Notice: Domain authorization required for Google popup on current host.");
+                    if (typeof window.openAuthModal === "function") {
+                        window.openAuthModal(true);
+                    } else if (typeof window.openModal === "function") {
+                        window.openModal("authModal");
                     }
                     return;
                 }
-                if (err && err.code !== "auth/popup-closed-by-user") {
-                    console.error("Login error:", err);
-                    alert("❌ লগইন করা যায়নি: " + (err.message || "অনুগ্রহ করে আবার চেষ্টা করুন।"));
+                if (err && (err.code === "auth/popup-closed-by-user" || err.code === "auth/cancelled-popup-request")) {
+                    // User closed popup without selecting an account
+                    return;
+                }
+                if (err && err.code === "auth/popup-blocked") {
+                    if (typeof window.showToast === "function") {
+                        window.showToast(window.currentLang === 'en' ? "⚠️ Popup blocked by browser. Please allow popups or enter as student." : "⚠️ ব্রাউজারে পপ-আপ ব্লক করা আছে। পপ-আপ চালু করুন অথবা 'শিক্ষার্থী হিসেবে প্রবেশ' চাপুন।", "warning", 4500);
+                    }
+                    if (typeof window.openAuthModal === "function") {
+                        window.openAuthModal(false);
+                    }
+                    return;
+                }
+                console.error("Login error:", err);
+                const friendlyMsg = window.currentLang === 'en'
+                    ? "Unable to complete sign-in. You can enter directly as student below."
+                    : "লগইন সম্পন্ন করা যায়নি। আপনি নিচে সরাসরি শিক্ষার্থী হিসেবেও প্রবেশ করতে পারেন।";
+                if (typeof window.showToast === "function") {
+                    window.showToast(friendlyMsg, "warning", 4500);
                 }
             }
         };
+        window.signInWithGooglePopup = window.doLogin;
 
         window.doLogout = async () => {
             try {
