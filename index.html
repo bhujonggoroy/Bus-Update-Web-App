@@ -241,22 +241,34 @@
             flex-shrink: 0;
         }
 
-        /* Route Distinct Badge & Card Visual Hierarchy */
+        /* Route Distinct Badge & Unique Light Card Backgrounds */
         .route-chip-up {
-            background: #ecfdf5;
-            color: #047857;
-            border: 1px solid #a7f3d0;
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
         }
         .route-chip-down {
-            background: #eff6ff;
-            color: #1d4ed8;
-            border: 1px solid #bfdbfe;
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
         }
+        /* Campus to Boromath: Unique Light Mint/Emerald Card Background */
         .bus-card.route-campus-city {
-            border-top: 3.5px solid #059669;
+            background-color: #f0fdf4 !important;
+            border: 1.5px solid #86efac !important;
         }
+        .bus-card.route-campus-city:hover {
+            background-color: #e6fced !important;
+            border-color: #4ade80 !important;
+        }
+        /* Boromath to Campus: Unique Light Azure/Sky Card Background */
         .bus-card.route-boromath-campus {
-            border-top: 3.5px solid #2563eb;
+            background-color: #eff6ff !important;
+            border: 1.5px solid #93c5fd !important;
+        }
+        .bus-card.route-boromath-campus:hover {
+            background-color: #e0effe !important;
+            border-color: #60a5fa !important;
         }
 
         /* Cohesive Schedule Styling for both Bangla and English Circulars */
@@ -595,15 +607,15 @@
 
             <!-- Direction Selector Tabs (Color-coded: Emerald for Up/Campus->City, Blue for Down/City->Campus) -->
             <div class="bg-white rounded-2xl p-1.5 shadow-xs border border-slate-200/80 flex items-center gap-1.5">
-                <button id="campusCityBtn" onclick="changeDirection('campus_city')" class="flex-1 py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm md:text-base text-white bg-emerald-700 shadow-xs transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation border border-emerald-800">
-                    <span>🏫</span>
-                    <span id="campusCityBtnText" class="truncate">ক্যাম্পাস হতে শহর (Up)</span>
-                    <span id="campusCityCountBadge" class="ml-0.5 sm:ml-1 text-[11px] sm:text-xs px-2 py-0.5 rounded-full bg-emerald-800 text-white font-semibold">০</span>
+                <button id="campusCityBtn" onclick="changeDirection('campus_city')" class="flex-1 min-w-0 py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm text-white bg-emerald-700 shadow-xs transition flex items-center justify-center gap-1 sm:gap-1.5 cursor-pointer touch-manipulation border border-emerald-800">
+                    <span class="flex-shrink-0">🏫</span>
+                    <span id="campusCityBtnText" class="truncate min-w-0">ক্যাম্পাস হতে শহর (Up)</span>
+                    <span id="campusCityCountBadge" class="ml-0.5 sm:ml-1 text-[11px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full bg-emerald-800 text-white font-semibold flex-shrink-0">০</span>
                 </button>
-                <button id="boroMathCampusBtn" onclick="changeDirection('boromath_campus')" class="flex-1 py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm md:text-base text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation border border-transparent">
-                    <span>🏙️</span>
-                    <span id="boroMathBtnText" class="truncate">বড়মাঠ হতে ক্যাম্পাস (Down)</span>
-                    <span id="boroMathCountBadge" class="ml-0.5 sm:ml-1 text-[11px] sm:text-xs px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 font-semibold">০</span>
+                <button id="boroMathCampusBtn" onclick="changeDirection('boromath_campus')" class="flex-1 min-w-0 py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-1 sm:gap-1.5 cursor-pointer touch-manipulation border border-transparent">
+                    <span class="flex-shrink-0">🏙️</span>
+                    <span id="boroMathBtnText" class="truncate min-w-0">বড়মাঠ হতে ক্যাম্পাস (Down)</span>
+                    <span id="boroMathCountBadge" class="ml-0.5 sm:ml-1 text-[11px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 font-semibold flex-shrink-0">০</span>
                 </button>
             </div>
 
@@ -671,50 +683,78 @@
         </section>
 
         <!-- ==================================================================== -->
-        <!-- TAB 2: INTERACTIVE ROUTE & STOPS MAP                                 -->
+        <!-- TAB 2: INTERACTIVE ROUTE & VERTICAL LIVE TRACKING                    -->
         <!-- ==================================================================== -->
         <section id="map" class="page-view hidden space-y-4">
-            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200">
-                    <div>
-                        <h2 id="mapHeadingText" class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                            <span>🗺️</span> বাস রুট ও স্টপ
+            <div class="bg-white rounded-2xl p-3.5 sm:p-5 shadow-xs border border-slate-200">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 sm:pb-4 border-b border-slate-200">
+                    <div class="min-w-0">
+                        <h2 id="mapHeadingText" class="text-base sm:text-lg md:text-xl font-bold text-slate-800 flex items-center gap-2 truncate">
+                            <span class="flex-shrink-0">🗺️</span> <span class="truncate">লাইভ বাস রুট ট্র্যাকিং</span>
                         </h2>
-                        <p id="mapSubheadingText" class="text-xs text-slate-500 mt-0.5">ক্যাম্পাস ও দিনাজপুর শহরের ৯টি স্টপ</p>
+                        <p id="mapSubheadingText" class="text-[11px] sm:text-xs text-slate-500 mt-0.5 break-words">বাম পাশে ক্যাম্পাস হতে বড়মাঠ ও ডান পাশে বড়মাঠ হতে ক্যাম্পাস লাইভ ট্র্যাকিং</p>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="centerMapRoute('campus')" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-violet-50 text-violet-800 border border-violet-200 hover:bg-violet-100 transition">
-                            <span id="mapBtnCampus">🏫 ক্যাম্পাস থেকে</span>
-                        </button>
-                        <button onclick="centerMapRoute('city')" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200 transition">
-                            <span id="mapBtnCity">🏙️ বড়মাঠ থেকে</span>
-                        </button>
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">
+                            <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+                            <span id="mapRealtimeLiveBadge">লাইভ আপডেট</span>
+                        </span>
                     </div>
                 </div>
 
-                <!-- Visual Route Flow Diagram -->
-                <div class="pt-10 sm:pt-14 pb-6 sm:pb-8 overflow-x-auto touch-pan-x">
-                    <div class="min-w-[760px] px-4 sm:px-6">
-                        <div class="relative">
-                            <!-- Route Line directly aligned through circle centers -->
-                            <div class="absolute top-[18px] left-6 right-6 -translate-y-1/2 h-2.5 bg-gradient-to-r from-violet-700 via-indigo-600 to-sky-500 rounded-full shadow-inner"></div>
-                            
-                            <!-- 9 Stops Nodes -->
-                            <div class="relative flex justify-between items-start" id="routeTimelineNodes">
-                                <!-- Generated dynamically via JavaScript -->
+                <!-- Dual-Track Vertical Live Bus Tracking Board (Left: Campus to Boromath, Right: Boromath to Campus) -->
+                <div class="pt-3 sm:pt-4 pb-2">
+                    <div class="grid grid-cols-2 gap-2 sm:gap-4 md:gap-6">
+                        
+                        <!-- Left Track: Campus ➔ Boromath (Up) -->
+                        <div class="bg-emerald-50/70 border border-emerald-200/90 rounded-2xl p-2.5 sm:p-4 shadow-2xs flex flex-col overflow-visible">
+                            <div class="flex items-center justify-between gap-1 pb-2 border-b border-emerald-200 mb-3 min-w-0">
+                                <div class="flex items-center gap-1.5 min-w-0">
+                                    <span class="text-base sm:text-lg flex-shrink-0">🏫</span>
+                                    <div class="min-w-0">
+                                        <h3 id="verticalLeftTrackTitle" class="font-bold text-xs sm:text-sm text-emerald-950 truncate leading-tight">Campus ➔ Boromath</h3>
+                                        <span id="verticalLeftTrackSub" class="text-[10px] sm:text-[11px] font-semibold text-emerald-700 block truncate">Up • ০৯টি স্টপ</span>
+                                    </div>
+                                </div>
+                                <span id="campusTrackCountBadge" class="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-700 text-white flex-shrink-0 shadow-2xs">০টি সক্রিয়</span>
+                            </div>
+
+                            <!-- Vertical Timeline Container -->
+                            <div class="relative py-1 flex-1 overflow-visible" id="verticalTrackCampusCity">
+                                <!-- Injected dynamically via renderRouteMap() -->
                             </div>
                         </div>
+
+                        <!-- Right Track: Boromath ➔ Campus (Down) -->
+                        <div class="bg-blue-50/70 border border-blue-200/90 rounded-2xl p-2.5 sm:p-4 shadow-2xs flex flex-col overflow-visible">
+                            <div class="flex items-center justify-between gap-1 pb-2 border-b border-blue-200 mb-3 min-w-0">
+                                <div class="flex items-center gap-1.5 min-w-0">
+                                    <span class="text-base sm:text-lg flex-shrink-0">🏙️</span>
+                                    <div class="min-w-0">
+                                        <h3 id="verticalRightTrackTitle" class="font-bold text-xs sm:text-sm text-blue-950 truncate leading-tight">Boromath ➔ Campus</h3>
+                                        <span id="verticalRightTrackSub" class="text-[10px] sm:text-[11px] font-semibold text-blue-700 block truncate">Down • ০৯টি স্টপ</span>
+                                    </div>
+                                </div>
+                                <span id="boromathTrackCountBadge" class="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full bg-blue-700 text-white flex-shrink-0 shadow-2xs">০টি সক্রিয়</span>
+                            </div>
+
+                            <!-- Vertical Timeline Container -->
+                            <div class="relative py-1 flex-1 overflow-visible" id="verticalTrackBoromathCampus">
+                                <!-- Injected dynamically via renderRouteMap() -->
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
-                <!-- Stops Grid & Google Maps Links -->
+                <!-- Stops Grid & Google Maps Direct Links -->
                 <div class="mt-4 pt-4 border-t border-slate-100">
-                    <h3 class="text-sm font-bold text-slate-700 mb-3 flex items-center justify-between">
-                        <span id="stopsListTitleText">স্টপ তালিকা</span>
-                        <span id="stopsListHintText" class="hidden"></span>
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-700 mb-2.5 flex items-center justify-between">
+                        <span id="stopsListTitleText" class="truncate">স্টপ তালিকা ও ম্যাপ লিঙ্ক</span>
+                        <span id="stopsListHintText" class="text-[10px] sm:text-xs text-slate-400 font-normal">গুগল ম্যাপে দেখতে ট্যাপ করুন</span>
                     </h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5" id="stopsGridContainer">
-                        <!-- Populated with stop names and coords -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2" id="stopsGridContainer">
+                        <!-- Populated with stop names and direct coords -->
                     </div>
                 </div>
 
@@ -1872,6 +1912,8 @@
                 campusCityBtnText: "ক্যাম্পাস ➔ শহর",
                 boroMathBtnText: "বড়মাঠ ➔ ক্যাম্পাস",
                 liveRouteMapLink: "রুট ম্যাপ ➔",
+                quickViewLabel: "এক নজরে",
+                detailedViewLabel: "বিস্তারিত",
                 statLabelBuses: "নথিভুক্ত বাস",
                 statValBuses: "১১+ টি",
                 statLabelStops: "স্টপেজ",
@@ -1881,12 +1923,15 @@
                 statLabelUsers: "অনলাইন",
 
                 // TAB 2: Map
-                mapHeadingText: "🗺️ বাস রুট ও স্টপ গাইড",
-                mapSubheadingText: "দিনাজপুর শহর ও হাবিপ্রবি ক্যাম্পাসের ৯টি স্টপেজ",
-                mapBtnCampus: "🏫 ক্যাম্পাস থেকে",
-                mapBtnCity: "🏙️ বড়মাঠ থেকে",
-                stopsListTitleText: "স্টপ তালিকা ও ম্যাপ লিঙ্ক:",
-                stopsListHintText: "ম্যাপে দেখতে ট্যাপ করুন",
+                mapHeadingText: "লাইভ বাস রুট ট্র্যাকিং",
+                mapSubheadingText: "বাম পাশে ক্যাম্পাস হতে বড়মাঠ ও ডান পাশে বড়মাঠ হতে ক্যাম্পাস লাইভ ট্র্যাকিং",
+                mapRealtimeLiveBadge: "লাইভ আপডেট",
+                verticalLeftTrackTitle: "ক্যাম্পাস ➔ বড়মাঠ",
+                verticalLeftTrackSub: "Up • ০৯টি স্টপ",
+                verticalRightTrackTitle: "বড়মাঠ ➔ ক্যাম্পাস",
+                verticalRightTrackSub: "Down • ০৯টি স্টপ",
+                stopsListTitleText: "স্টপ তালিকা ও গুগল ম্যাপ লিঙ্ক",
+                stopsListHintText: "গুগল ম্যাপে দেখতে ট্যাপ করুন",
 
                 // TAB 3: Schedule
                 scheduleHeadingText: "📅 বাসের সময়সূচী",
@@ -2007,9 +2052,11 @@
                 liveHeadingText: "Active HSTU Buses",
                 liveSubheadingText: "Verified bus locations from crowdsourcing & GPS",
                 liveImOnBusBtnText: "I'm on a Bus",
-                campusCityBtnText: "Campus ➔ Dinajpur City",
+                campusCityBtnText: "Campus ➔ City",
                 boroMathBtnText: "Boromath ➔ Campus",
                 liveRouteMapLink: "Route Map ➔",
+                quickViewLabel: "Quick",
+                detailedViewLabel: "Detailed",
                 statLabelBuses: "Fleet Buses",
                 statValBuses: "11+ Buses",
                 statLabelStops: "Bus Stops",
@@ -2019,12 +2066,15 @@
                 statLabelUsers: "Online Now",
 
                 // TAB 2: Map
-                mapHeadingText: "🗺️ Bus Route & Stops",
-                mapSubheadingText: "9 designated stops between Dinajpur and Campus",
-                mapBtnCampus: "🏫 From Campus",
-                mapBtnCity: "🏙️ From Boromath",
-                stopsListTitleText: "Bus Stops & Google Maps Links:",
-                stopsListHintText: "Tap to open in Google Maps",
+                mapHeadingText: "Live Bus Route Tracking",
+                mapSubheadingText: "Left: Campus to Boromath, Right: Boromath to Campus live tracking",
+                mapRealtimeLiveBadge: "Live Sync",
+                verticalLeftTrackTitle: "Campus ➔ Boromath",
+                verticalLeftTrackSub: "Up • 9 Stops",
+                verticalRightTrackTitle: "Boromath ➔ Campus",
+                verticalRightTrackSub: "Down • 9 Stops",
+                stopsListTitleText: "Bus Stops & Maps",
+                stopsListHintText: "Tap stop to open in Google Maps",
 
                 // TAB 3: Schedule
                 scheduleHeadingText: "📅 Bus Timetable",
@@ -2490,9 +2540,9 @@
             const routeDesc = document.getElementById("routeDescriptionText");
 
             const isEn = window.currentLang === 'en';
-            const campusActive = "flex-1 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm md:text-base text-white bg-emerald-700 shadow-sm transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation border border-emerald-800";
-            const boroActive = "flex-1 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm md:text-base text-white bg-blue-700 shadow-sm transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation border border-blue-800";
-            const inactiveClass = "flex-1 py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm md:text-base text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer touch-manipulation border border-transparent";
+            const campusActive = "flex-1 min-w-0 py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm text-white bg-emerald-700 shadow-xs transition flex items-center justify-center gap-1 sm:gap-1.5 cursor-pointer touch-manipulation border border-emerald-800";
+            const boroActive = "flex-1 min-w-0 py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm text-white bg-blue-700 shadow-xs transition flex items-center justify-center gap-1 sm:gap-1.5 cursor-pointer touch-manipulation border border-blue-800";
+            const inactiveClass = "flex-1 min-w-0 py-2 sm:py-2.5 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-1 sm:gap-1.5 cursor-pointer touch-manipulation border border-transparent";
 
             if (direction === "campus_city") {
                 if (campusBtn) campusBtn.className = campusActive;
@@ -2811,10 +2861,10 @@
                 // If not expanded: Render the Compact Small Box (Pic 1 & Pic 2 design)
                 if (!isExpanded) {
                     return `
-                        <div class="bus-card ${routeThemeClass} bg-white rounded-2xl p-3 sm:p-3.5 border border-slate-200/90 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between relative overflow-hidden" data-time="${bus.time}">
+                        <div class="bus-card ${routeThemeClass} rounded-2xl p-3 sm:p-3.5 border shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between relative overflow-hidden" data-time="${bus.time}">
                             <!-- Row 1: Avatar + Bus Name + Direction Chip + Live/Jam Signal in exact same spot -->
-                            <div class="flex items-center justify-between gap-2">
-                                <div class="flex items-center gap-2 min-w-0">
+                            <div class="flex items-center justify-between gap-2 min-w-0">
+                                <div class="flex items-center gap-2 min-w-0 flex-1">
                                     <div class="w-8 h-8 rounded-lg ${avatarBg} font-bold flex items-center justify-center text-sm flex-shrink-0 border shadow-2xs">
                                         🚍
                                     </div>
@@ -2825,14 +2875,14 @@
                                 </div>
 
                                 <!-- Live or Jam Signal: Identical position and dimensions -->
-                                <div class="status-badge-slot flex items-center justify-end">
+                                <div class="status-badge-slot flex items-center justify-end flex-shrink-0">
                                     ${bus.status === 'traffic_jam' ? `
-                                        <span class="inline-flex items-center justify-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-300 shadow-2xs whitespace-nowrap">
+                                        <span class="inline-flex items-center justify-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300 shadow-2xs whitespace-nowrap">
                                             <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping flex-shrink-0"></span>
                                             ${isEn ? 'JAM' : 'জ্যাম'}
                                         </span>
                                     ` : `
-                                        <span class="inline-flex items-center justify-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-300 shadow-2xs whitespace-nowrap">
+                                        <span class="inline-flex items-center justify-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-900 border border-emerald-300 shadow-2xs whitespace-nowrap">
                                             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0"></span>
                                             LIVE
                                         </span>
@@ -2841,23 +2891,23 @@
                             </div>
 
                             <!-- Row 2: Time update | Location | GS (Map) | [more] button -->
-                            <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
-                                <div class="flex items-center gap-1.5 min-w-0">
-                                    <span class="update-time text-xs text-slate-500 font-medium whitespace-nowrap">${isEn ? 'Loading...' : 'লোড হচ্ছে...'}</span>
-                                    <span class="text-slate-300 flex-shrink-0">•</span>
-                                    <div class="flex items-center gap-1 text-xs font-semibold ${bus.status === 'traffic_jam' ? 'text-amber-900' : 'text-slate-800'} truncate min-w-0">
-                                        <span class="${bus.status === 'traffic_jam' ? 'text-amber-600' : (isCampusUp ? 'text-emerald-600' : 'text-blue-600')} flex-shrink-0">${bus.status === 'traffic_jam' ? '🚦' : '📍'}</span>
+                            <div class="mt-2.5 pt-2 border-t ${isCampusUp ? 'border-emerald-200/80' : 'border-blue-200/80'} flex items-center justify-between gap-2 overflow-hidden">
+                                <div class="flex items-center gap-1.5 min-w-0 flex-1">
+                                    <span class="update-time text-xs text-slate-600 font-medium whitespace-nowrap flex-shrink-0">${isEn ? 'Loading...' : 'লোড হচ্ছে...'}</span>
+                                    <span class="text-slate-400 flex-shrink-0">•</span>
+                                    <div class="flex items-center gap-1 text-xs font-semibold ${bus.status === 'traffic_jam' ? 'text-amber-900' : 'text-slate-900'} truncate min-w-0">
+                                        <span class="${bus.status === 'traffic_jam' ? 'text-amber-600' : (isCampusUp ? 'text-emerald-700' : 'text-blue-700')} flex-shrink-0">${bus.status === 'traffic_jam' ? '🚦' : '📍'}</span>
                                         <span class="truncate">${escapeHtml(stopNameDisplay)}${bus.status === 'traffic_jam' ? (bus.trafficPosition === 'after_stop' ? (isEn ? ' (in jam)' : ' (জ্যামে)') : (isEn ? ' (in jam)' : ' (জ্যামে)')) : ''}</span>
                                     </div>
                                 </div>
 
                                 <div class="flex items-center gap-1.5 flex-shrink-0">
                                     ${mapsUrl ? `
-                                        <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" title="${isEn ? 'Map' : 'ম্যাপ'}" class="p-1 rounded-md text-xs font-bold text-sky-700 hover:text-sky-900 bg-sky-50 hover:bg-sky-100 border border-sky-200 transition flex items-center justify-center" aria-label="Map">
-                                            <svg class="w-3.5 h-3.5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                                        <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" title="${isEn ? 'Map' : 'ম্যাপ'}" class="p-1 rounded-md text-xs font-bold text-sky-800 hover:text-sky-950 bg-white hover:bg-slate-50 border ${isCampusUp ? 'border-emerald-300' : 'border-blue-300'} transition flex items-center justify-center shadow-2xs" aria-label="Map">
+                                            <svg class="w-3.5 h-3.5 text-sky-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
                                         </a>
                                     ` : ''}
-                                    <button onclick="toggleBusCardDetail('${safeNameKey}')" class="text-xs font-bold ${progressText} hover:bg-slate-100 px-2 py-1 rounded-md border border-slate-200 transition cursor-pointer flex items-center gap-1 touch-manipulation whitespace-nowrap shadow-2xs">
+                                    <button onclick="toggleBusCardDetail('${safeNameKey}')" class="text-xs font-bold ${progressText} bg-white hover:bg-slate-50 px-2 py-1 rounded-md border ${isCampusUp ? 'border-emerald-300' : 'border-blue-300'} transition cursor-pointer flex items-center gap-1 touch-manipulation whitespace-nowrap shadow-2xs">
                                         <span>${isEn ? 'More ▾' : 'আরও ▾'}</span>
                                     </button>
                                 </div>
@@ -2868,10 +2918,10 @@
 
                 // If expanded: Render the Full Detailed Current Version
                 return `
-                    <div class="bus-card ${routeThemeClass} bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between relative overflow-hidden" data-time="${bus.time}">
+                    <div class="bus-card ${routeThemeClass} rounded-2xl p-4 sm:p-5 border shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between relative overflow-hidden" data-time="${bus.time}">
                         <div>
                             <!-- Card Header: Bus Name + Direction + Refresh + Live/Jam Badge in the exact same position slot -->
-                            <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-100">
+                            <div class="flex items-center justify-between gap-2 pb-3 border-b ${isCampusUp ? 'border-emerald-200/80' : 'border-blue-200/80'}">
                                 <div class="flex items-center gap-2.5 min-w-0">
                                     <div class="w-10 h-10 rounded-xl ${avatarBg} font-bold flex items-center justify-center text-lg flex-shrink-0 border shadow-2xs">
                                         🚍
@@ -2879,14 +2929,14 @@
                                     <div class="min-w-0">
                                         <h3 class="font-bold text-base md:text-lg text-slate-900 leading-tight truncate">${escapeHtml(getBusDisplayName(bus.name))}</h3>
                                         <div class="flex items-center gap-1.5 mt-1">
-                                            <span class="update-time text-xs text-slate-500 font-medium">${isEn ? 'Loading...' : 'লোড হচ্ছে...'}</span>
-                                            <span class="text-slate-300">•</span>
+                                            <span class="update-time text-xs text-slate-600 font-medium whitespace-nowrap">${isEn ? 'Loading...' : 'লোড হচ্ছে...'}</span>
+                                            <span class="text-slate-400">•</span>
                                             <span class="${routeBadgeClass} text-[10px] font-bold px-2 py-0.5 rounded-md truncate">${dirLabel}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-1.5 flex-shrink-0">
-                                    <button onclick="forceRefreshData(this)" title="${isEn ? 'Refresh' : 'রিফ্রেশ'}" class="p-1.5 rounded-lg text-slate-400 hover:text-violet-700 hover:bg-slate-100 transition cursor-pointer" aria-label="Refresh">
+                                    <button onclick="forceRefreshData(this)" title="${isEn ? 'Refresh' : 'রিফ্রেশ'}" class="p-1.5 rounded-lg text-slate-500 hover:text-violet-700 hover:bg-white/80 transition cursor-pointer" aria-label="Refresh">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                                         </svg>
@@ -2894,12 +2944,12 @@
                                     <!-- Live or Jam Signal: Identical position and dimensions -->
                                     <div class="status-badge-slot flex items-center justify-end">
                                         ${bus.status === 'traffic_jam' ? `
-                                            <span class="inline-flex items-center justify-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-300 shadow-2xs whitespace-nowrap">
+                                            <span class="inline-flex items-center justify-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300 shadow-2xs whitespace-nowrap">
                                                 <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping flex-shrink-0"></span>
                                                 ${isEn ? 'JAM' : 'জ্যাম'}
                                             </span>
                                         ` : `
-                                            <span class="inline-flex items-center justify-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-300 shadow-2xs whitespace-nowrap">
+                                            <span class="inline-flex items-center justify-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-900 border border-emerald-300 shadow-2xs whitespace-nowrap">
                                                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0"></span>
                                                 LIVE
                                             </span>
@@ -2910,7 +2960,7 @@
 
                             <!-- Current Location / Updated Location -->
                             ${bus.status === 'traffic_jam' ? `
-                                <div class="mt-3.5 bg-amber-50/70 p-3 rounded-xl border border-amber-200/80 shadow-2xs">
+                                <div class="mt-3.5 bg-amber-50/90 p-3 rounded-xl border border-amber-300 shadow-2xs">
                                     <div class="text-[10px] sm:text-[11px] font-bold text-amber-800 uppercase tracking-wider flex items-center justify-between">
                                         <span>${isEn ? 'TRAFFIC JAM' : 'ট্রাফিক জ্যাম'}</span>
                                         <span class="text-amber-700 font-semibold">${bus.trafficPosition === 'after_stop' ? (isEn ? 'Between Stops' : 'মাঝপথে') : (isEn ? 'At Stop' : 'স্টপেজে')}</span>
@@ -2925,8 +2975,8 @@
                                     </div>
                                 </div>
                             ` : `
-                                <div class="mt-3.5 bg-slate-50/80 p-3 rounded-xl border border-slate-200/80">
-                                    <div class="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider flex items-center justify-between">
+                                <div class="mt-3.5 bg-white/90 p-3 rounded-xl border ${isCampusUp ? 'border-emerald-200' : 'border-blue-200'} shadow-2xs">
+                                    <div class="text-[10px] sm:text-[11px] font-bold text-slate-600 uppercase tracking-wider flex items-center justify-between">
                                         <span>${isEn ? 'LOCATION' : 'অবস্থান'}</span>
                                         <span class="${progressText} font-semibold">${isEn ? `Stop ${stopIdx + 1} / ${stops.length}` : `স্টপ ${stopIdx + 1} / ${stops.length}`}</span>
                                     </div>
@@ -2938,31 +2988,31 @@
                             `}
 
                             <!-- Detailed Visual Route Progress Bar & Next Stop -->
-                            <div class="mt-3 pt-3 border-t border-slate-100 space-y-3">
-                                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200/80">
-                                    <div class="flex justify-between text-xs text-slate-600 font-medium mb-1.5">
+                            <div class="mt-3 pt-3 border-t ${isCampusUp ? 'border-emerald-200/80' : 'border-blue-200/80'} space-y-3">
+                                <div class="bg-white/90 p-2.5 rounded-xl border ${isCampusUp ? 'border-emerald-200' : 'border-blue-200'} shadow-2xs">
+                                    <div class="flex justify-between text-xs text-slate-700 font-medium mb-1.5">
                                         <span>${isEn ? 'Progress' : 'অগ্রগতি'}</span>
                                         <span class="font-bold ${progressText}">${progressPct}%</span>
                                     </div>
                                     <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
                                         <div class="bg-gradient-to-r ${progressColor} h-2 rounded-full transition-all duration-500" style="width: ${progressPct}%"></div>
                                     </div>
-                                    <div class="flex justify-between text-[11px] text-slate-400 mt-1.5">
+                                    <div class="flex justify-between text-[11px] text-slate-500 mt-1.5">
                                         <span class="truncate">${getStopName(stops[0])}</span>
                                         <span class="truncate">${getStopName(stops[stops.length - 1])}</span>
                                     </div>
                                 </div>
 
-                                <div class="text-xs text-slate-600 flex items-center justify-between px-1">
-                                    <span class="text-slate-400">${isEn ? 'Next:' : 'পরবর্তী:'}</span>
-                                    <span class="font-bold text-slate-800">${escapeHtml(nextStopName)}</span>
+                                <div class="text-xs text-slate-700 flex items-center justify-between px-1">
+                                    <span class="text-slate-500">${isEn ? 'Next:' : 'পরবর্তী:'}</span>
+                                    <span class="font-bold text-slate-900">${escapeHtml(nextStopName)}</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Expanded Card Footer: Less button (collapses back) & Google Maps Link -->
-                        <div class="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between gap-2">
-                            <button onclick="toggleBusCardDetail('${safeNameKey}')" class="text-xs font-bold ${progressText} hover:opacity-80 px-2.5 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1 touch-manipulation">
+                        <div class="mt-3.5 pt-2.5 border-t ${isCampusUp ? 'border-emerald-200/80' : 'border-blue-200/80'} flex items-center justify-between gap-2">
+                            <button onclick="toggleBusCardDetail('${safeNameKey}')" class="text-xs font-bold ${progressText} bg-white hover:bg-slate-50 px-2.5 py-1.5 rounded-lg border ${isCampusUp ? 'border-emerald-300' : 'border-blue-300'} transition cursor-pointer flex items-center gap-1 touch-manipulation shadow-2xs">
                                 <span>${isEn ? '▲ Less' : '▲ সংক্ষেপ'}</span>
                             </button>
                             
@@ -2994,74 +3044,134 @@
             });
         }
 
-        // Render Interactive Route Map Timeline
-        function renderRouteMap() {
-            const container = document.getElementById("routeTimelineNodes");
-            const stopsGrid = document.getElementById("stopsGridContainer");
-            if (!container || !stopsGrid) return;
+        // Render Interactive Route Map with Vertical Dual-Track Tracking (Left: Campus->Boromath, Right: Boromath->Campus)
+        function renderSingleVerticalTrack(containerId, stopsList, busData, isLeftTrack, isEn) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
 
-            const stops = currentDirection === "campus_city" ? campusToBoromath : boromathToCampus;
-            const liveData = window.buses[currentDirection] || {};
+            const dir = isLeftTrack ? 'campus_city' : 'boromath_campus';
             const activeBusStops = {};
             const stopHasTrafficJam = {};
+            let totalActive = 0;
 
-            Object.values(liveData).forEach(bus => {
-                if (!isExpired(bus, currentDirection) && bus.stopName) {
+            Object.values(busData || {}).forEach(bus => {
+                if (!isExpired(bus, dir) && bus.stopName) {
                     if (!activeBusStops[bus.stopName]) activeBusStops[bus.stopName] = [];
-                    activeBusStops[bus.stopName].push(bus.name);
+                    activeBusStops[bus.stopName].push(bus);
+                    totalActive++;
                     if (bus.status === 'traffic_jam') {
                         stopHasTrafficJam[bus.stopName] = true;
                     }
                 }
             });
 
-            container.innerHTML = stops.map((stop, i) => {
-                const hasBus = activeBusStops[stop] && activeBusStops[stop].length > 0;
-                const isJam = stopHasTrafficJam[stop];
-                return `
-                    <div class="flex flex-col items-center group relative z-10">
-                        ${hasBus ? `
-                            <div class="absolute -top-11 z-30 flex flex-col items-center animate-bounce pointer-events-none">
-                                <div class="${isJam ? 'bg-gradient-to-r from-amber-600 to-orange-600 border-amber-300/60' : 'bg-gradient-to-r from-violet-700 to-sky-600 border-sky-300/50'} text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-lg flex items-center gap-1.5 whitespace-nowrap border">
-                                    <span class="text-xs">${isJam ? '🚦' : '🚍'}</span>
-                                    <span>${escapeHtml(activeBusStops[stop].map(getBusDisplayName).join(', '))}${isJam ? ' (জ্যাম)' : ''}</span>
-                                </div>
-                                <div class="w-0 h-0 border-x-4 border-x-transparent border-t-[5px] ${isJam ? 'border-t-orange-600' : 'border-t-sky-600'} -mt-[1px]"></div>
-                            </div>
-                        ` : ''}
-                        <div class="relative flex items-center justify-center">
-                            ${hasBus ? `<span class="absolute w-12 h-12 rounded-full ${isJam ? 'bg-amber-400/50' : 'bg-sky-400/40'} animate-ping"></span>` : ''}
-                            <div class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs shadow-md border-2 transition relative z-10 ${
-                                hasBus 
-                                    ? (isJam ? 'bg-amber-600 border-white text-white ring-4 ring-amber-400/40' : 'bg-violet-700 border-white text-white ring-4 ring-sky-400/40') 
-                                    : 'bg-white border-slate-300 text-slate-700'
-                            }">
-                                ${i + 1}
-                            </div>
-                        </div>
-                        <span class="mt-2 text-xs font-semibold text-slate-700 text-center max-w-[80px] leading-tight">
-                            ${getStopName(stop)}
-                        </span>
-                    </div>
-                `;
-            }).join("");
+            const badgeEl = document.getElementById(isLeftTrack ? "campusTrackCountBadge" : "boromathTrackCountBadge");
+            if (badgeEl) {
+                badgeEl.textContent = isEn ? `${totalActive} active` : `${totalActive}টি সক্রিয়`;
+            }
 
-            // Stops Grid
-            stopsGrid.innerHTML = stops.map((stop, i) => {
-                const coords = stopCoords[stop];
-                const mapsUrl = coords ? `https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lng}` : '#';
-                return `
-                    <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-violet-300 transition flex items-center justify-between group text-xs">
-                        <div class="flex items-center gap-2">
-                            <span class="w-5 h-5 rounded-md bg-violet-100 text-violet-800 font-bold flex items-center justify-center text-[10px]">
-                                ${i + 1}
-                            </span>
-                            <span class="font-semibold text-slate-800">${getStopName(stop)}</span>
-                        </div>
-                        <span class="text-slate-400 group-hover:text-violet-600">↗</span>
-                    </a>
-                `;
-            }).join("");
+            const lineColor = isLeftTrack
+                ? "from-emerald-600 via-emerald-400 to-teal-500"
+                : "from-blue-600 via-blue-400 to-indigo-500";
+
+            container.innerHTML = `
+                <!-- Continuous vertical connector line running top to bottom -->
+                <div class="absolute left-[13px] sm:left-[17px] top-3.5 bottom-3.5 w-1 bg-gradient-to-b ${lineColor} rounded-full shadow-2xs"></div>
+
+                <div class="space-y-3 sm:space-y-3.5 relative z-10 overflow-visible">
+                    ${stopsList.map((stop, i) => {
+                        const busesAtStop = activeBusStops[stop] || [];
+                        const hasBus = busesAtStop.length > 0;
+                        const isJam = stopHasTrafficJam[stop];
+                        const coords = stopCoords[stop];
+                        const mapsUrl = coords ? `https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lng}` : '#';
+
+                        const nodeActiveBg = isJam
+                            ? 'bg-amber-600 border-white text-white ring-4 ring-amber-400/50 shadow-md'
+                            : (isLeftTrack
+                                ? 'bg-emerald-600 border-white text-white ring-4 ring-emerald-400/50 shadow-md'
+                                : 'bg-blue-600 border-white text-white ring-4 ring-blue-400/50 shadow-md');
+
+                        const nodeIdleBg = isLeftTrack
+                            ? 'bg-white border-2 border-emerald-300 text-emerald-800 shadow-2xs'
+                            : 'bg-white border-2 border-blue-300 text-blue-800 shadow-2xs';
+
+                        return `
+                            <div class="relative flex items-start gap-2 sm:gap-2.5 py-0.5 overflow-visible">
+                                <!-- Node Circle with Animated Ping when bus is present -->
+                                <div class="relative flex items-center justify-center flex-shrink-0">
+                                    ${hasBus ? `
+                                        <span class="absolute w-7 h-7 sm:w-9 sm:h-9 rounded-full ${isJam ? 'bg-amber-400/40' : (isLeftTrack ? 'bg-emerald-400/40' : 'bg-blue-400/40')} animate-ping"></span>
+                                    ` : ''}
+                                    <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-extrabold text-[11px] sm:text-xs transition relative z-10 ${hasBus ? nodeActiveBg : nodeIdleBg}">
+                                        ${i + 1}
+                                    </div>
+                                </div>
+
+                                <!-- Stop Name & Active Bus Badges (With full animation visibility) -->
+                                <div class="min-w-0 flex-1 pt-0.5 overflow-visible">
+                                    <div class="flex items-center gap-1 min-w-0">
+                                        <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="font-bold text-xs sm:text-sm ${hasBus ? (isLeftTrack ? 'text-emerald-950 font-extrabold' : 'text-blue-950 font-extrabold') : 'text-slate-800'} hover:underline truncate" title="${isEn ? 'Open in Google Maps' : 'ম্যাপে দেখুন'}">
+                                            ${escapeHtml(getStopName(stop))}
+                                        </a>
+                                        <span class="text-[9px] text-slate-400 flex-shrink-0">↗</span>
+                                    </div>
+
+                                    <!-- Animated Bus Badges (Unclipped, fully visible) -->
+                                    ${hasBus ? `
+                                        <div class="mt-1 flex flex-wrap gap-1 items-center overflow-visible z-20">
+                                            ${busesAtStop.map(b => {
+                                                const busJam = b.status === 'traffic_jam';
+                                                return `
+                                                    <div class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold text-white shadow-md animate-pulse border transition-all ${
+                                                        busJam 
+                                                            ? 'bg-amber-600 border-amber-300 ring-2 ring-amber-400/40' 
+                                                            : (isLeftTrack ? 'bg-emerald-600 border-emerald-300 ring-2 ring-emerald-400/40' : 'bg-blue-600 border-blue-300 ring-2 ring-blue-400/40')
+                                                    }">
+                                                        <span class="text-xs sm:text-sm">${busJam ? '🚦' : '🚍'}</span>
+                                                        <span class="truncate max-w-[85px] sm:max-w-none">${escapeHtml(getBusDisplayName(b.name))}</span>
+                                                        ${busJam ? `<span class="text-[9px] bg-amber-800/90 px-1 py-0.2 rounded font-black">${isEn ? 'JAM' : 'জ্যাম'}</span>` : ''}
+                                                    </div>
+                                                `;
+                                            }).join('')}
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }).join("")}
+                </div>
+            `;
+        }
+
+        function renderRouteMap() {
+            const isEn = window.currentLang === 'en';
+            const stopsGrid = document.getElementById("stopsGridContainer");
+
+            // Render Left Track: Campus to Boromath
+            renderSingleVerticalTrack("verticalTrackCampusCity", campusToBoromath, window.buses.campus_city, true, isEn);
+
+            // Render Right Track: Boromath to Campus
+            renderSingleVerticalTrack("verticalTrackBoromathCampus", boromathToCampus, window.buses.boromath_campus, false, isEn);
+
+            // Stops Grid & Google Maps Links
+            if (stopsGrid) {
+                stopsGrid.innerHTML = campusToBoromath.map((stop, i) => {
+                    const coords = stopCoords[stop];
+                    const mapsUrl = coords ? `https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lng}` : '#';
+                    return `
+                        <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="p-2 sm:p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-violet-300 transition flex items-center justify-between group text-xs">
+                            <div class="flex items-center gap-1.5 min-w-0">
+                                <span class="w-5 h-5 rounded-md bg-violet-100 text-violet-800 font-bold flex items-center justify-center text-[10px] flex-shrink-0">
+                                    ${i + 1}
+                                </span>
+                                <span class="font-semibold text-slate-800 truncate">${getStopName(stop)}</span>
+                            </div>
+                            <span class="text-slate-400 group-hover:text-violet-600 flex-shrink-0">↗</span>
+                        </a>
+                    `;
+                }).join("");
+            }
         }
 
         function centerMapRoute(type) {
