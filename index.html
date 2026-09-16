@@ -498,10 +498,16 @@
             <div class="bg-white rounded-2xl p-4 md:p-5 shadow-sm border border-slate-200">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-slate-200">
                     <div>
-                        <h2 id="scheduleHeadingText" class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                            <span>📅</span> হাবিপ্রবি বাসের সময়সূচী
-                        </h2>
-                        <p id="scheduleSubheadingText" class="text-xs text-slate-500 mt-0.5">পরিবহন শাখা কর্তৃক সর্বশেষ কার্যকর সময়সূচী</p>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h2 id="scheduleHeadingText" class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                                <span>📅</span> হাবিপ্রবি বাসের সময়সূচী
+                            </h2>
+                            <span id="scheduleOfflineBadge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 transition shadow-xs">
+                                <span id="scheduleOfflineBadgeDot" class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                <span id="scheduleOfflineBadgeText">💾 অফলাইনে সংরক্ষিত</span>
+                            </span>
+                        </div>
+                        <p id="scheduleSubheadingText" class="text-xs text-slate-500 mt-0.5">পরিবহন শাখা কর্তৃক সর্বশেষ কার্যকর সময়সূচী • ইন্টারনেট ছাড়াও দেখতে পারবেন</p>
                     </div>
 
                     <!-- Search Filter & Schedule View Switcher -->
@@ -1386,9 +1392,31 @@
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(err => {
+                navigator.serviceWorker.register('./sw.js').then((reg) => {
+                    console.log('PWA Service Worker registered successfully');
+                    // Pre-warm bus schedule cache via Service Worker
+                    if (reg.active) {
+                        reg.active.postMessage({ type: 'CACHE_SCHEDULE_NOW' });
+                    }
+                    if (reg.installing) {
+                        reg.installing.addEventListener('statechange', () => {
+                            if (reg.installing && reg.installing.state === 'activated' && navigator.serviceWorker.controller) {
+                                navigator.serviceWorker.controller.postMessage({ type: 'CACHE_SCHEDULE_NOW' });
+                            }
+                        });
+                    }
+                }).catch(err => {
                     console.log('SW registration note:', err);
                 });
+            });
+
+            // Listen for background cache completion notifications
+            navigator.serviceWorker.addEventListener('message', (e) => {
+                if (e.data && (e.data.type === 'SCHEDULE_CACHE_COMPLETED' || e.data.type === 'OFFLINE_STATUS_REPORT')) {
+                    if (typeof window.updateScheduleOfflineBadge === 'function') {
+                        window.updateScheduleOfflineBadge(!navigator.onLine, true);
+                    }
+                }
             });
         }
 
@@ -1578,6 +1606,7 @@
                 scheduleTipTitleText: "উপকারী পরামর্শ",
                 scheduleTipDescText: "ছুটির দিন ছাড়া রবি থেকে বৃহস্পতিবার শিডিউল নিয়মিত চালু থাকে।",
                 schedulePrintBtnText: "প্রিন্ট / সেভ করুন",
+                scheduleOfflineBadgeText: "💾 অফলাইনে সংরক্ষিত",
 
                 // TAB 4: Report Location
                 reportHeadingText: "📡 বাসের বর্তমান অবস্থান জানান",
@@ -1703,6 +1732,7 @@
                 scheduleTipTitleText: "Helpful Advice",
                 scheduleTipDescText: "Regular schedule runs Sunday to Thursday. Double Decker buses run on student routes.",
                 schedulePrintBtnText: "Print / Save PDF",
+                scheduleOfflineBadgeText: "💾 Offline Ready",
 
                 // TAB 4: Report Location
                 reportHeadingText: "📡 Report Current Bus Location",
@@ -1920,7 +1950,13 @@
             const container = document.getElementById("scheduleFragment");
             if (!container) return;
 
-            // Prioritize modular schedule script if available
+            // Prioritize modular schedule script with offline cache support
+            if (window.HstuSchedule && typeof window.HstuSchedule.loadSchedule === "function") {
+                window.HstuSchedule.loadSchedule(force);
+                scheduleLoaded = true;
+                return;
+            }
+
             if (window.HstuSchedule && typeof window.HstuSchedule.renderScheduleBangla === "function") {
                 window.HstuSchedule.renderScheduleBangla("scheduleFragment");
                 if (typeof window.HstuSchedule.renderScheduleEnglish === "function") {
@@ -1938,14 +1974,23 @@
                     basePath += "/";
                 }
                 const scheduleUrl = window.location.origin + basePath + "bus-schedule.html";
-                const res = await fetch(scheduleUrl, { cache: "no-store" });
+                // Allow Service Worker caching by omitting cache: "no-store"
+                const res = await fetch(scheduleUrl);
                 if (res.ok) {
                     const html = await res.text();
                     container.innerHTML = html;
                     scheduleLoaded = true;
+                    try {
+                        localStorage.setItem("hstu_cached_bus_schedule_html", html);
+                    } catch (e) {}
                 }
             } catch (err) {
                 console.log("Schedule loaded via fallback", err);
+                const localHtml = localStorage.getItem("hstu_cached_bus_schedule_html");
+                if (localHtml) {
+                    container.innerHTML = localHtml;
+                    scheduleLoaded = true;
+                }
             }
         }
 
@@ -3383,7 +3428,59 @@
                     console.error("History render error:", err);
                 }
             }
+
+        // ====================================================================
+        // NETWORK CONNECTIVITY & OFFLINE SCHEDULE STATUS MANAGER
+        // ====================================================================
+        function handleConnectivityChange() {
+            const isOnline = navigator.onLine;
+            const toast = document.getElementById('offlineStatusToast');
+            const toastText = document.getElementById('offlineStatusToastText');
+            const dot = document.getElementById('offlineStatusToastDot');
+            const isEn = window.currentLang === 'en';
+
+            if (!toast) return;
+
+            if (!isOnline) {
+                toast.classList.remove('hidden');
+                toast.classList.add('flex');
+                if (toastText) {
+                    toastText.textContent = isEn
+                        ? 'Offline Mode — Cached bus schedule is available'
+                        : 'ইন্টারনেট সংযোগ বিচ্ছিন্ন — অফলাইনে বাসের সময়সূচী দেখতে পারবেন';
+                }
+                if (dot) dot.className = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
+            } else {
+                if (toastText) {
+                    toastText.textContent = isEn
+                        ? '🟢 Back Online'
+                        : '🟢 ইন্টারনেট সংযোগ পুনঃস্থাপিত হয়েছে';
+                }
+                if (dot) dot.className = 'w-2 h-2 rounded-full bg-emerald-400';
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                    toast.classList.remove('flex');
+                    if (dot) dot.className = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
+                }, 3000);
+            }
+
+            if (typeof window.updateScheduleOfflineBadge === 'function') {
+                window.updateScheduleOfflineBadge(!isOnline, true);
+            }
+        }
+
+        window.addEventListener('online', handleConnectivityChange);
+        window.addEventListener('offline', handleConnectivityChange);
+        if (!navigator.onLine) {
+            handleConnectivityChange();
+        }
     </script>
+
+    <!-- Offline Status Floating Indicator (Shown when connection is limited/lost) -->
+    <div id="offlineStatusToast" class="hidden fixed bottom-20 md:bottom-5 left-4 z-50 items-center gap-2 rounded-xl bg-slate-900/95 text-white px-3.5 py-2 text-xs font-medium shadow-xl border border-slate-700/80 transition-all duration-300 pointer-events-none">
+        <span id="offlineStatusToastDot" class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+        <span id="offlineStatusToastText">ইন্টারনেট সংযোগ বিচ্ছিন্ন — অফলাইনে বাসের সময়সূচী দেখতে পারবেন</span>
+    </div>
 </body>
 
 </html>

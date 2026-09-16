@@ -200,7 +200,29 @@
     }
 
     /**
+     * Update Schedule Offline Status Badge in UI
+     */
+    function updateScheduleOfflineBadge(isOffline, isCached = true) {
+        const badge = document.getElementById("scheduleOfflineBadge");
+        const text = document.getElementById("scheduleOfflineBadgeText");
+        const dot = document.getElementById("scheduleOfflineBadgeDot");
+        if (!badge || !text) return;
+
+        badge.classList.remove("hidden");
+        if (isOffline) {
+            badge.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300 transition shadow-xs";
+            text.textContent = "⚡ অফলাইন মোড (ক্যাশড সময়সূচী)";
+            if (dot) dot.className = "w-2 h-2 rounded-full bg-amber-500 animate-pulse";
+        } else {
+            badge.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 transition shadow-xs";
+            text.textContent = isCached ? "💾 অফলাইনে সংরক্ষিত" : "🌐 লাইভ কানেক্টেড";
+            if (dot) dot.className = "w-2 h-2 rounded-full bg-emerald-500";
+        }
+    }
+
+    /**
      * Load the Bangla notice schedule fragment from bus-schedule.html
+     * Enhanced with Service Worker caching + localStorage backup for offline access
      */
     let scheduleLoaded = false;
     async function loadSchedule(force = false) {
@@ -208,26 +230,55 @@
         const container = document.getElementById("scheduleFragment");
         if (!container) return;
 
+        let basePath = window.location.pathname;
+        if (basePath.endsWith("/index.html") || basePath.endsWith("/index.htm")) {
+            basePath = basePath.substring(0, basePath.lastIndexOf("/") + 1);
+        } else if (!basePath.endsWith("/")) {
+            basePath += "/";
+        }
+        const scheduleUrl = window.location.origin + basePath + "bus-schedule.html";
+
+        // Fast network controller with 2.5s timeout for spotty mobile networks
+        const controller = new AbortController();
+        const timeoutTimer = setTimeout(() => controller.abort(), 2500);
+
         try {
-            let basePath = window.location.pathname;
-            if (basePath.endsWith("/index.html") || basePath.endsWith("/index.htm")) {
-                basePath = basePath.substring(0, basePath.lastIndexOf("/") + 1);
-            } else if (!basePath.endsWith("/")) {
-                basePath += "/";
-            }
-            const scheduleUrl = window.location.origin + basePath + "bus-schedule.html";
-            const res = await fetch(scheduleUrl, { cache: "no-store" });
+            // Fetch without no-store to allow service worker caching
+            const res = await fetch(scheduleUrl, { signal: controller.signal });
+            clearTimeout(timeoutTimer);
             if (res.ok) {
                 const html = await res.text();
                 container.innerHTML = html;
                 scheduleLoaded = true;
-            } else {
-                renderBanglaFallback(container);
+
+                // Persist into localStorage for offline resilience
+                try {
+                    localStorage.setItem("hstu_cached_bus_schedule_html", html);
+                    localStorage.setItem("hstu_schedule_cached_time", Date.now().toString());
+                } catch (e) {}
+
+                updateScheduleOfflineBadge(!navigator.onLine, true);
+                return;
             }
         } catch (err) {
-            console.log("Schedule using dynamic fallback rendering");
-            renderBanglaFallback(container);
+            clearTimeout(timeoutTimer);
+            console.log("[Schedule] Network fetch failed or timed out, loading offline cache:", err.message);
         }
+
+        // TIER 2: Fallback to LocalStorage offline cache
+        try {
+            const cachedHtml = localStorage.getItem("hstu_cached_bus_schedule_html");
+            if (cachedHtml && cachedHtml.length > 200) {
+                container.innerHTML = cachedHtml;
+                scheduleLoaded = true;
+                updateScheduleOfflineBadge(true, true);
+                return;
+            }
+        } catch (e) {}
+
+        // TIER 3: Fallback to dynamic template generator built from HSTU_SCHEDULE_DATA
+        renderBanglaFallback(container);
+        updateScheduleOfflineBadge(!navigator.onLine, true);
     }
 
     /**
@@ -363,15 +414,39 @@
 
     window.loadSchedule = loadSchedule;
     window.renderEnglishSchedule = renderEnglishSchedule;
+    window.updateScheduleOfflineBadge = updateScheduleOfflineBadge;
+
+    window.HstuSchedule = {
+        data: HSTU_SCHEDULE_DATA,
+        renderScheduleBangla: function(containerId) {
+            const container = typeof containerId === 'string' ? document.getElementById(containerId) : containerId;
+            if (container) renderBanglaFallback(container);
+        },
+        renderScheduleEnglish: function(containerId) {
+            renderEnglishSchedule();
+        },
+        loadSchedule: loadSchedule,
+        isOffline: () => !navigator.onLine
+    };
+
+    // Monitor connectivity changes to dynamically update schedule badge
+    window.addEventListener("online", () => {
+        updateScheduleOfflineBadge(false, true);
+    });
+    window.addEventListener("offline", () => {
+        updateScheduleOfflineBadge(true, true);
+    });
 
     // Auto-initialize when DOM is ready
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", () => {
             renderEnglishSchedule();
             loadSchedule();
+            updateScheduleOfflineBadge(!navigator.onLine, true);
         });
     } else {
         renderEnglishSchedule();
         loadSchedule();
+        updateScheduleOfflineBadge(!navigator.onLine, true);
     }
 })();
