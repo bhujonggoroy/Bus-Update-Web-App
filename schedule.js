@@ -67,124 +67,104 @@
     /**
      * Render the English timetable container dynamically
      */
-    function renderEnglishSchedule() {
-        const enContainer = document.getElementById("scheduleEnglishContainer");
-        if (!enContainer) return;
+    /**
+     * Fallback English Schedule Generator in case bus-schedule-en.html cannot be fetched
+     */
+    function renderEnglishFallback(container) {
+        if (!container) return;
 
-        const weekdayRows = HSTU_SCHEDULE_DATA.weekdayTrips.map(t => {
-            const catBadgeClass = t.categoryEn.includes("Student")
-                ? "bg-emerald-100 text-emerald-800"
-                : t.categoryEn.includes("Faculty") || t.categoryEn.includes("Teacher")
-                ? "bg-purple-100 text-purple-800"
-                : t.categoryEn.includes("Officer") || t.categoryEn.includes("Staff")
-                ? "bg-amber-100 text-amber-800"
-                : "bg-slate-100 text-slate-800";
-
-            const cityCatBadgeClass = t.cityCategoryEn.includes("Student")
-                ? "bg-emerald-100 text-emerald-800"
-                : t.cityCategoryEn.includes("Faculty") || t.cityCategoryEn.includes("Teacher")
-                ? "bg-purple-100 text-purple-800"
-                : t.cityCategoryEn.includes("Officer") || t.cityCategoryEn.includes("Staff")
-                ? "bg-amber-100 text-amber-800"
-                : "bg-slate-100 text-slate-800";
-
-            return `
-                <tr class="hover:bg-slate-50 transition">
-                    <td class="px-3 py-2"><span class="px-2 py-0.5 rounded font-semibold text-xs ${catBadgeClass}">${t.categoryEn}</span></td>
-                    <td class="px-3 py-2 font-bold text-slate-900">${t.campusTime}</td>
-                    <td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">${t.campusBus}</td>
-                    <td class="px-3 py-2"><span class="px-2 py-0.5 rounded font-semibold text-xs ${cityCatBadgeClass}">${t.cityCategoryEn}</span></td>
-                    <td class="px-3 py-2 font-bold text-slate-900">${t.cityTime}</td>
-                    <td class="px-3 py-2 font-semibold text-violet-700">${t.cityBus}</td>
-                </tr>
-            `;
-        }).join("");
-
-        const specialRows = HSTU_SCHEDULE_DATA.specialTrips.map(s => `
-            <tr class="hover:bg-slate-50 transition">
-                <td class="px-3 py-2 font-bold text-violet-900">${s.dayEn}</td>
-                <td class="px-3 py-2 font-semibold ${s.targetEn === 'Students' ? 'text-emerald-800' : 'text-slate-700'}">${s.targetEn}</td>
-                <td class="px-3 py-2 font-medium">${s.campusDepEn}</td>
-                <td class="px-3 py-2 font-medium">${s.cityDepEn}</td>
+        const rows = HSTU_SCHEDULE_DATA.weekdayTrips.map(t => `
+            <tr>
+                <td class="p-2 border border-[#737373]">${t.categoryEn}</td>
+                <td class="p-2 border border-[#737373]">${t.campusTime}</td>
+                <td class="p-2 border border-[#737373] font-semibold">${t.campusBus}</td>
+                <td class="p-2 border border-[#737373]">${t.cityCategoryEn}</td>
+                <td class="p-2 border border-[#737373]">${t.cityTime}</td>
+                <td class="p-2 border border-[#737373] font-semibold">${t.cityBus}</td>
             </tr>
         `).join("");
 
-        enContainer.innerHTML = `
-            <div class="p-4 sm:p-6 space-y-6">
-                <!-- Top Header -->
-                <div class="border-b border-slate-200 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <div>
-                        <span class="text-xs font-bold text-violet-700 uppercase tracking-wider">Transport & Maintenance Section</span>
-                        <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mt-0.5">Hajee Mohammad Danesh Science and Technology University</h3>
-                        <p class="text-xs text-slate-500 mt-0.5">Regular Bus Timetable (Effective: Sunday to Thursday)</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-violet-100 text-violet-800 border border-violet-200">
-                            Official Routine
-                        </span>
-                    </div>
-                </div>
+        const specialRows = HSTU_SCHEDULE_DATA.specialTrips.map(s => `
+            <tr>
+                <td class="p-2 border border-[#737373]">${s.dayEn}</td>
+                <td class="p-2 border border-[#737373]">${s.targetEn}</td>
+                <td class="p-2 border border-[#737373]">${s.campusDepEn}</td>
+                <td class="p-2 border border-[#737373]">${s.dayEn}</td>
+                <td class="p-2 border border-[#737373]">${s.targetEn}</td>
+                <td class="p-2 border border-[#737373]">${s.cityDepEn}</td>
+            </tr>
+        `).join("");
 
-                <!-- Foreign Student Note -->
-                <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-blue-900 flex items-center gap-2">
-                    <span class="text-base flex-shrink-0">ℹ️</span>
-                    <span><b>Campus:</b> Main Terminal • <b>Boromath:</b> Dinajpur City Center • <b>Double Decker:</b> Buses 1, 2, 3</span>
+        container.innerHTML = `
+            <div class="sheet p-4 sm:p-6 bg-white border border-[#737373] rounded-lg max-w-[1150px] mx-auto shadow-sm" style="font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                <div class="header text-center pb-2.5 border-b border-slate-200">
+                    <p style="margin:0;font-size:15px;" class="text-slate-800 font-semibold">Transport &amp; Vehicle Repair Section</p>
+                    <h2 class="text-emerald-950 font-black text-lg md:text-xl mt-1">Hajee Mohammad Danesh Science &amp; Technology University, Dinajpur</h2>
                 </div>
-
-                <!-- Regular Weekday Table (Sunday to Thursday) -->
-                <div class="overflow-x-auto rounded-xl border border-slate-200 touch-pan-x">
-                    <table class="w-full text-left text-xs sm:text-sm border-collapse min-w-[620px]">
+                <div class="memo-row flex justify-between text-xs text-slate-700 my-2.5 font-medium">
+                    <span>Memo No: HSTU/2026/Transport/</span>
+                    <span>Date: 20/07/2026 AD</span>
+                </div>
+                <div class="title-box text-center my-2.5">
+                    <span style="border: 1.5px solid #000; background: #fff; color: #000; padding: 4px 22px; font-weight: 800; font-size: 16px; border-radius: 4px; display: inline-block;">Bus Time Schedule</span>
+                </div>
+                <div class="subtitle text-center text-xs font-bold text-slate-800 mb-2.5">Sunday to Thursday (Effective from: 21/07/2026 AD)</div>
+                <div class="overflow-x-auto rounded border border-[#737373] touch-pan-x mb-4 bg-white">
+                    <table class="w-full text-xs text-center border-collapse min-w-[720px] text-black">
                         <thead>
-                            <tr class="bg-slate-800 text-white text-xs">
-                                <th colspan="3" class="px-4 py-2.5 border-r border-slate-700 font-bold uppercase tracking-wider text-sky-300">
-                                    🏫 From HSTU Campus (To City)
-                                </th>
-                                <th colspan="3" class="px-4 py-2.5 font-bold uppercase tracking-wider text-emerald-300">
-                                    🏙️ From Dinajpur City (To Campus)
-                                </th>
+                            <tr style="background:#dcd8c9;" class="text-black font-extrabold border-b border-[#737373]">
+                                <th colspan="3" class="p-2 border border-[#737373] text-sm">From Campus</th>
+                                <th colspan="3" class="p-2 border border-[#737373] text-sm">From City</th>
                             </tr>
-                            <tr class="bg-slate-100 text-slate-700 text-xs font-bold border-b border-slate-200">
-                                <th class="px-3.5 py-2">Category</th>
-                                <th class="px-3.5 py-2">Departure</th>
-                                <th class="px-3.5 py-2 border-r border-slate-200">Bus No.</th>
-                                <th class="px-3.5 py-2">Category</th>
-                                <th class="px-3.5 py-2">Departure Point & Time</th>
-                                <th class="px-3.5 py-2">Bus No.</th>
+                            <tr style="background:#dcd8c9;" class="text-black font-bold border-b border-[#737373]">
+                                <th class="p-2 border border-[#737373]">Trip Name</th>
+                                <th class="p-2 border border-[#737373]">Departure Time</th>
+                                <th class="p-2 border border-[#737373]">Vehicle No.</th>
+                                <th class="p-2 border border-[#737373]">Trip Name</th>
+                                <th class="p-2 border border-[#737373]">Departure Place &amp; Time</th>
+                                <th class="p-2 border border-[#737373]">Vehicle No.</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-200 text-slate-700">
-                            ${weekdayRows}
-                        </tbody>
+                        <tbody class="divide-y divide-[#737373]">${rows}</tbody>
                     </table>
                 </div>
-
-                <!-- Weekend & Special Trips Table -->
-                <div>
-                    <h4 class="text-sm font-bold text-slate-800 mb-2 flex items-center gap-1.5">
-                        <span>⭐</span> Weekend & Special Service Trips (Friday, Saturday, Tuesday)
-                    </h4>
-                    <div class="overflow-x-auto rounded-xl border border-slate-200 touch-pan-x">
-                        <table class="w-full text-left text-xs sm:text-sm border-collapse min-w-[540px]">
-                            <thead>
-                                <tr class="bg-violet-900 text-white text-xs">
-                                    <th class="px-3.5 py-2">Day</th>
-                                    <th class="px-3.5 py-2">Target Passengers</th>
-                                    <th class="px-3.5 py-2">Campus Departure / Bus</th>
-                                    <th class="px-3.5 py-2">City Departure / Bus</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-200 text-slate-700">
-                                ${specialRows}
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="overflow-x-auto rounded border border-[#737373] touch-pan-x mb-4 bg-white">
+                    <table class="w-full text-xs text-center border-collapse min-w-[600px] text-black">
+                        <thead>
+                            <tr style="background:#dcd8c9;" class="text-black font-extrabold border-b border-[#737373]">
+                                <th colspan="6" class="p-2 border border-[#737373] text-sm">Special Trips</th>
+                            </tr>
+                            <tr style="background:#dcd8c9;" class="text-black font-bold border-b border-[#737373]">
+                                <th class="p-2 border border-[#737373]">Day</th>
+                                <th class="p-2 border border-[#737373]">Passengers</th>
+                                <th class="p-2 border border-[#737373]">Departure Time</th>
+                                <th class="p-2 border border-[#737373]">Day</th>
+                                <th class="p-2 border border-[#737373]">Passengers</th>
+                                <th class="p-2 border border-[#737373]">Departure Time</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-[#737373]">${specialRows}</tbody>
+                    </table>
                 </div>
-
-                <div class="text-xs text-slate-500 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    *** Student buses operate via the Bypass road. Teacher & Officer buses follow designated city routes.
+                <div class="text-xs bg-slate-50 p-3 rounded border-l-4 border-emerald-600 text-slate-700">
+                    ***Student buses will operate via the bypass road, and teacher/officer &amp; staff buses will operate on designated routes.<br>
+                    Special Note: The number of trips may increase or decrease as necessary.
+                </div>
+                <div class="flex justify-end mt-5 text-xs text-slate-700">
+                    <div class="text-right font-bold text-slate-900">
+                        <p>Director (Transport)<br>HSTU, Dinajpur.</p>
+                    </div>
                 </div>
             </div>
         `;
+    }
+
+    /**
+     * Backward-compatible alias
+     */
+    function renderEnglishSchedule(containerId) {
+        const container = containerId ? document.getElementById(containerId) : document.getElementById("scheduleEnglishContainer");
+        if (container) renderEnglishFallback(container);
     }
 
     /**
@@ -197,75 +177,138 @@
         if (!badge || !text) return;
 
         badge.classList.remove("hidden");
+        const isEn = window.currentLang === 'en';
         if (isOffline) {
             badge.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300 transition shadow-xs";
-            text.textContent = "⚡ অফলাইন মোড (ক্যাশড সময়সূচী)";
+            text.textContent = isEn ? "⚡ Offline Mode (Cached Schedule)" : "⚡ অফলাইন মোড (ক্যাশড সময়সূচী)";
             if (dot) dot.className = "w-2 h-2 rounded-full bg-amber-500 animate-pulse";
         } else {
             badge.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 transition shadow-xs";
-            text.textContent = isCached ? "💾 অফলাইনে সংরক্ষিত" : "🌐 লাইভ কানেক্টেড";
+            text.textContent = isCached 
+                ? (isEn ? "💾 Offline Ready" : "💾 অফলাইনে সংরক্ষিত")
+                : (isEn ? "🌐 Live Connected" : "🌐 লাইভ কানেক্টেড");
             if (dot) dot.className = "w-2 h-2 rounded-full bg-emerald-500";
         }
     }
 
     /**
-     * Load the Bangla notice schedule fragment from bus-schedule.html
-     * Enhanced with Service Worker caching + localStorage backup for offline access
+     * Helper to resolve asset path reliably across subpaths
      */
-    let scheduleLoaded = false;
-    async function loadSchedule(force = false) {
-        if (scheduleLoaded && !force) return;
-        const container = document.getElementById("scheduleFragment");
-        if (!container) return;
-
+    function getAssetPath(filename) {
         let basePath = window.location.pathname;
         if (basePath.endsWith("/index.html") || basePath.endsWith("/index.htm")) {
             basePath = basePath.substring(0, basePath.lastIndexOf("/") + 1);
         } else if (!basePath.endsWith("/")) {
             basePath += "/";
         }
-        const scheduleUrl = window.location.origin + basePath + "bus-schedule.html";
+        return window.location.origin + basePath + filename;
+    }
 
-        // Fast network controller with 2.5s timeout for spotty mobile networks
+    /**
+     * Load the Bangla notice schedule fragment from bus-schedule.html
+     * Enhanced with Instant Render + Service Worker caching + localStorage backup for offline access
+     */
+    let scheduleLoaded = false;
+    async function loadSchedule(force = false) {
+        const container = document.getElementById("scheduleFragment");
+        if (!container) return;
+        if (scheduleLoaded && !force && container.querySelector("table")) return;
+
+        // STEP 1: Instant render from cache or dynamic fallback
+        let rendered = false;
+        try {
+            const cachedHtml = localStorage.getItem("hstu_cached_bus_schedule_html");
+            if (cachedHtml && cachedHtml.length > 200 && cachedHtml.includes("<table")) {
+                container.innerHTML = cachedHtml;
+                scheduleLoaded = true;
+                rendered = true;
+            }
+        } catch (e) {}
+
+        if (!rendered && !container.querySelector("table")) {
+            renderBanglaFallback(container);
+            scheduleLoaded = true;
+        }
+
+        // STEP 2: Background refresh from bus-schedule.html
+        const scheduleUrl = getAssetPath("bus-schedule.html");
         const controller = new AbortController();
-        const timeoutTimer = setTimeout(() => controller.abort(), 2500);
+        const timeoutTimer = setTimeout(() => controller.abort(), 8000);
 
         try {
-            // Fetch without no-store to allow service worker caching
             const res = await fetch(scheduleUrl, { signal: controller.signal });
             clearTimeout(timeoutTimer);
             if (res.ok) {
                 const html = await res.text();
-                container.innerHTML = html;
-                scheduleLoaded = true;
+                if (html && html.includes("<table")) {
+                    container.innerHTML = html;
+                    scheduleLoaded = true;
 
-                // Persist into localStorage for offline resilience
-                try {
-                    localStorage.setItem("hstu_cached_bus_schedule_html", html);
-                    localStorage.setItem("hstu_schedule_cached_time", Date.now().toString());
-                } catch (e) {}
-
-                updateScheduleOfflineBadge(!navigator.onLine, true);
-                return;
+                    try {
+                        localStorage.setItem("hstu_cached_bus_schedule_html", html);
+                        localStorage.setItem("hstu_schedule_cached_time", Date.now().toString());
+                    } catch (e) {}
+                }
             }
         } catch (err) {
             clearTimeout(timeoutTimer);
-            console.log("[Schedule] Network fetch failed or timed out, loading offline cache:", err.message);
+            console.log("[Schedule BN] Network fetch note:", err.message);
         }
 
-        // TIER 2: Fallback to LocalStorage offline cache
+        updateScheduleOfflineBadge(!navigator.onLine, true);
+    }
+
+    /**
+     * Load the English schedule fragment from bus-schedule-en.html
+     * Enhanced with Instant Render + Service Worker caching + localStorage backup for offline access
+     */
+    let scheduleEnLoaded = false;
+    async function loadEnglishSchedule(force = false) {
+        const container = document.getElementById("scheduleEnglishContainer");
+        if (!container) return;
+        if (scheduleEnLoaded && !force && container.querySelector("table")) return;
+
+        // STEP 1: Instant render from cache or dynamic fallback
+        let rendered = false;
         try {
-            const cachedHtml = localStorage.getItem("hstu_cached_bus_schedule_html");
-            if (cachedHtml && cachedHtml.length > 200) {
+            const cachedHtml = localStorage.getItem("hstu_cached_bus_schedule_en_html");
+            if (cachedHtml && cachedHtml.length > 200 && cachedHtml.includes("<table") && !cachedHtml.includes("Times New Roman")) {
                 container.innerHTML = cachedHtml;
-                scheduleLoaded = true;
-                updateScheduleOfflineBadge(true, true);
-                return;
+                scheduleEnLoaded = true;
+                rendered = true;
             }
         } catch (e) {}
 
-        // TIER 3: Fallback to dynamic template generator built from HSTU_SCHEDULE_DATA
-        renderBanglaFallback(container);
+        if (!rendered && !container.querySelector("table")) {
+            renderEnglishFallback(container);
+            scheduleEnLoaded = true;
+        }
+
+        // STEP 2: Background refresh from bus-schedule-en.html
+        const scheduleUrl = getAssetPath("bus-schedule-en.html");
+        const controller = new AbortController();
+        const timeoutTimer = setTimeout(() => controller.abort(), 8000);
+
+        try {
+            const res = await fetch(scheduleUrl, { signal: controller.signal });
+            clearTimeout(timeoutTimer);
+            if (res.ok) {
+                const html = await res.text();
+                if (html && html.includes("<table")) {
+                    container.innerHTML = html;
+                    scheduleEnLoaded = true;
+
+                    try {
+                        localStorage.setItem("hstu_cached_bus_schedule_en_html", html);
+                        localStorage.setItem("hstu_schedule_en_cached_time", Date.now().toString());
+                    } catch (e) {}
+                }
+            }
+        } catch (err) {
+            clearTimeout(timeoutTimer);
+            console.log("[Schedule EN] Network fetch note:", err.message);
+        }
+
         updateScheduleOfflineBadge(!navigator.onLine, true);
     }
 
@@ -340,7 +383,13 @@
                     </table>
                 </div>
                 <div class="text-xs bg-slate-50 p-3 rounded border-l-4 border-emerald-600 text-slate-700">
-                    ***ছাত্র-ছাত্রীদের গাড়ীগুলি বাইপাস হয়ে চলাচল করবে এবং শিক্ষক/কর্মকর্তা ও কর্মচারীগণের গাড়ীগুলি নির্ধারিত রুটে চলাচল করবে।
+                    ***ছাত্র-ছাত্রীদের গাড়ীগুলি বাইপাস হয়ে চলাচল করবে এবং শিক্ষক/কর্মকর্তা ও কর্মচারীগণের গাড়ীগুলি নির্ধারিত রুটে চলাচল করবে।<br>
+                    বিশেষ দ্রষ্টব্য: প্রয়োজনে ট্রিপের সংখ্যা কম বা বেশী হতে পারে।
+                </div>
+                <div class="flex justify-end mt-5 text-xs text-slate-700">
+                    <div class="text-right font-bold text-slate-900">
+                        <p>পরিচালক (পরিবহন)<br>হাবিপ্রবি, দিনাজপুর।</p>
+                    </div>
                 </div>
             </div>
         `;
@@ -349,6 +398,7 @@
 
     /**
      * Switch Schedule View (Bangla Notice vs English Table)
+     * Animates smooth swipe transition and switches the active HTML fragment
      */
     window.switchScheduleView = function(view) {
         const bnContainer = document.getElementById("scheduleFragment");
@@ -358,8 +408,16 @@
         if (!bnContainer || !enContainer) return;
 
         if (view === "en") {
+            loadEnglishSchedule();
             bnContainer.classList.add("hidden");
             enContainer.classList.remove("hidden");
+
+            // Swipe / fade animation for switching to English
+            enContainer.classList.add("opacity-0", "translate-x-3");
+            requestAnimationFrame(() => {
+                enContainer.classList.remove("opacity-0", "translate-x-3");
+            });
+
             if (bnBtn) {
                 bnBtn.className = "px-3 py-1.5 rounded-lg font-semibold text-slate-600 hover:text-violet-900 transition cursor-pointer";
             }
@@ -367,17 +425,63 @@
                 enBtn.className = "px-3 py-1.5 rounded-lg font-bold transition bg-white text-violet-900 shadow-xs cursor-pointer";
             }
         } else {
+            loadSchedule();
             enContainer.classList.add("hidden");
             bnContainer.classList.remove("hidden");
+
+            // Swipe / fade animation for switching to Bangla
+            bnContainer.classList.add("opacity-0", "-translate-x-3");
+            requestAnimationFrame(() => {
+                bnContainer.classList.remove("opacity-0", "-translate-x-3");
+            });
+
             if (bnBtn) {
                 bnBtn.className = "px-3 py-1.5 rounded-lg font-bold transition bg-white text-violet-900 shadow-xs cursor-pointer";
             }
             if (enBtn) {
                 enBtn.className = "px-3 py-1.5 rounded-lg font-semibold text-slate-600 hover:text-violet-900 transition cursor-pointer";
             }
-            loadSchedule();
         }
     };
+
+    /**
+     * Touch Swipe Gesture: Swipe left to go to English, swipe right to go to Bangla
+     */
+    function initScheduleSwipeGestures() {
+        const wrapper = document.getElementById("scheduleViewWrapper") || document.getElementById("scheduleFragment")?.parentElement;
+        if (!wrapper) return;
+
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let isTouching = false;
+
+        wrapper.addEventListener("touchstart", (e) => {
+            if (!e.touches || e.touches.length !== 1) return;
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            isTouching = true;
+        }, { passive: true });
+
+        wrapper.addEventListener("touchend", (e) => {
+            if (!isTouching || !e.changedTouches || e.changedTouches.length !== 1) return;
+            isTouching = false;
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            const diffX = touchEndX - touchStartX;
+            const diffY = touchEndY - touchStartY;
+
+            // Trigger swipe if horizontal displacement is >= 50px and predominantly horizontal
+            if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY) * 1.4) {
+                if (diffX < 0) {
+                    // Swiped Left -> Go to English version
+                    window.switchScheduleView("en");
+                } else {
+                    // Swiped Right -> Go to Bangla version
+                    window.switchScheduleView("bn");
+                }
+            }
+        }, { passive: true });
+    }
 
     /**
      * Filter Schedule Table by search keyword
@@ -400,6 +504,7 @@
     };
 
     window.loadSchedule = loadSchedule;
+    window.loadEnglishSchedule = loadEnglishSchedule;
     window.renderEnglishSchedule = renderEnglishSchedule;
     window.updateScheduleOfflineBadge = updateScheduleOfflineBadge;
 
@@ -410,9 +515,12 @@
             if (container) renderBanglaFallback(container);
         },
         renderScheduleEnglish: function(containerId) {
-            renderEnglishSchedule();
+            const container = typeof containerId === 'string' ? document.getElementById(containerId) : containerId;
+            if (container) renderEnglishFallback(container);
         },
         loadSchedule: loadSchedule,
+        loadEnglishSchedule: loadEnglishSchedule,
+        switchScheduleView: window.switchScheduleView,
         isOffline: () => !navigator.onLine
     };
 
@@ -425,15 +533,24 @@
     });
 
     // Auto-initialize when DOM is ready
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", () => {
-            renderEnglishSchedule();
-            loadSchedule();
-            updateScheduleOfflineBadge(!navigator.onLine, true);
-        });
-    } else {
-        renderEnglishSchedule();
+    function initSchedule() {
+        initScheduleSwipeGestures();
+        // Preload both schedules immediately so switching between views is instantaneous with zero lag
         loadSchedule();
+        loadEnglishSchedule();
+
+        const currentLang = window.currentLang || (typeof localStorage !== 'undefined' && localStorage.getItem('hstu_bus_lang')) || 'bn';
+        if (currentLang === 'en') {
+            window.switchScheduleView('en');
+        } else {
+            window.switchScheduleView('bn');
+        }
         updateScheduleOfflineBadge(!navigator.onLine, true);
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initSchedule);
+    } else {
+        initSchedule();
     }
 })();

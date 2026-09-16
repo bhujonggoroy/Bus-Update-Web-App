@@ -3,7 +3,7 @@
  * Enhanced with dedicated Bus Schedule caching for offline & limited connection access.
  */
 
-const CACHE_VERSION = "hstu-bus-v2";
+const CACHE_VERSION = "hstu-bus-v5";
 const STATIC_CACHE = `hstu-static-${CACHE_VERSION}`;
 const SCHEDULE_CACHE = `hstu-schedule-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `hstu-runtime-${CACHE_VERSION}`;
@@ -27,12 +27,14 @@ const CORE_SHELL_ASSETS = [
 const SCHEDULE_ASSETS = [
   "./bus-schedule.html",
   "bus-schedule.html",
+  "./bus-schedule-en.html",
+  "bus-schedule-en.html",
   "./schedule.js",
   "schedule.js"
 ];
 
 // Helper: Fast network fetch with configurable timeout (prevents slow 2G/3G hanging)
-function fetchWithTimeout(request, timeoutMs = 2500) {
+function fetchWithTimeout(request, timeoutMs = 5000) {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
       reject(new Error("Network timeout"));
@@ -118,6 +120,7 @@ self.addEventListener("fetch", (event) => {
   // Allows instant offline schedule display at bus stands or during commute without internet
   const isScheduleAsset =
     url.pathname.endsWith("bus-schedule.html") ||
+    url.pathname.endsWith("bus-schedule-en.html") ||
     url.pathname.endsWith("schedule.js");
 
   if (isScheduleAsset) {

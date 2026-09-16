@@ -1,0 +1,121 @@
+<!--
+  Standalone Schedule Fragment (English Version)
+  Matches the official HSTU circular format from bus-schedule.html with 100% precision.
+  The only difference is the language (English).
+-->
+<style>
+  #scheduleEnglishContainer .sheet, #scheduleFragment .sheet, .sheet{max-width:1150px;margin:auto;background:#ffffff;border:1.5px solid #64748b;border-radius:8px;padding:24px 20px;font-family:"Plus Jakarta Sans",ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:#000000;box-shadow:0 4px 12px rgba(0,0,0,0.06);}
+  #scheduleEnglishContainer .header, #scheduleFragment .header{text-align:center;padding-bottom:10px;border-bottom:1px solid #cbd5e1;}
+  #scheduleEnglishContainer .header p, #scheduleFragment .header p{margin:0;font-size:15px;font-weight:600;color:#1e293b;}
+  #scheduleEnglishContainer .header h2, #scheduleFragment .header h2{font-size:clamp(18px,3.8vw,23px);margin:4px 0;color:#044e3b;font-weight:800;letter-spacing:-0.01em;}
+  #scheduleEnglishContainer .memo-row, #scheduleFragment .memo-row{display:flex;justify-content:space-between;font-size:13.5px;margin:12px 0 10px;flex-wrap:wrap;gap:6px;color:#334155;font-weight:500;}
+  #scheduleEnglishContainer .title-box, #scheduleFragment .title-box{text-align:center;margin:12px 0;}
+  #scheduleEnglishContainer .title-box span, #scheduleFragment .title-box span{border:1.5px solid #000000;background:#ffffff;color:#000000;padding:4px 24px;border-radius:4px;font-size:16px;font-weight:800;display:inline-block;letter-spacing:0.5px;}
+  #scheduleEnglishContainer .subtitle, #scheduleFragment .subtitle{text-align:center;font-size:13.5px;font-weight:700;margin-bottom:12px;color:#1e293b;}
+
+  #scheduleEnglishContainer .table-scroll, #scheduleFragment .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:16px;border:1.5px solid #737373;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.05);background:#ffffff;}
+  #scheduleEnglishContainer table, #scheduleFragment table{border-collapse:collapse;font-size:13px;min-width:760px;width:100%;color:#000000;}
+  #scheduleEnglishContainer th,#scheduleEnglishContainer td, #scheduleFragment th,#scheduleFragment td{border:1px solid #737373;padding:7px 8px;text-align:center;vertical-align:middle;white-space:nowrap;}
+  #scheduleEnglishContainer th, #scheduleFragment th{background:#dcd8c9;color:#000000;font-weight:700;}
+  #scheduleEnglishContainer .section-title, #scheduleFragment .section-title{background:#dcd8c9;font-weight:800;font-size:14.5px;color:#000000;}
+  #scheduleEnglishContainer tr:hover td, #scheduleFragment tr:hover td{background:#f8fafc;}
+  #scheduleEnglishContainer .note, #scheduleFragment .note{font-size:12.5px;margin-top:12px;line-height:1.6;color:#1e293b;background:#f8fafc;padding:10px 14px;border-radius:6px;border-left:4px solid #059669;}
+  #scheduleEnglishContainer .footer, #scheduleFragment .footer{display:flex;justify-content:flex-end;margin-top:24px;font-size:12.5px;flex-wrap:wrap;gap:14px;color:#475569;}
+  #scheduleEnglishContainer .sign, #scheduleFragment .sign{text-align:right;font-size:12.5px;color:#0f172a;font-weight:700;}
+
+  #scheduleEnglishContainer .scroll-hint, #scheduleFragment .scroll-hint{font-size:12px;color:#475569;text-align:center;margin:-2px 0 8px;font-weight:500;}
+
+  @media (max-width:700px){
+    #scheduleEnglishContainer .sheet, #scheduleFragment .sheet, .sheet{padding:14px 8px;border-width:1px;}
+    #scheduleEnglishContainer table, #scheduleFragment table{font-size:12px;min-width:680px;}
+    #scheduleEnglishContainer th,#scheduleEnglishContainer td, #scheduleFragment th,#scheduleFragment td{padding:6px 5px;}
+  }
+</style>
+
+<div class="sheet">
+
+  <div class="header">
+    <p style="margin:0;font-size:15px;">Transport &amp; Vehicle Repair Section</p>
+    <h2>Hajee Mohammad Danesh Science &amp; Technology University, Dinajpur</h2>
+  </div>
+
+  <div class="memo-row">
+    <span>Memo No: HSTU/2026/Transport/</span>
+    <span>Date: 20/07/2026 AD</span>
+  </div>
+
+  <div class="title-box"><span>Bus Time Schedule</span></div>
+  <div class="subtitle">Sunday to Thursday (Effective from: 21/07/2026 AD)</div>
+
+  <div class="table-scroll">
+  <table>
+    <tr>
+      <th colspan="3" class="section-title">From Campus</th>
+      <th colspan="3" class="section-title">From City</th>
+    </tr>
+    <tr>
+      <th>Trip Name</th><th>Departure Time</th><th>Vehicle No.</th>
+      <th>Trip Name</th><th>Departure Place &amp; Time</th><th>Vehicle No.</th>
+    </tr>
+    <tr><td>General</td><td>Morning 6:40 AM</td><td>15</td><td>Students</td><td>Morning 7:50 AM, Balubari (Sh.Mi.)</td><td>15</td></tr>
+    <tr><td>Students</td><td>Morning 8:00 AM</td><td>4, 20</td><td>Officers</td><td>Morning 8:20 AM (Balubari Sh.Mi.),</td><td>4, 20</td></tr>
+    <tr><td>Students</td><td>Morning 8:00 AM</td><td>8</td><td>Staff</td><td>Morning 8:15 AM (Balubari Sh.Mi.)</td><td>8</td></tr>
+    <tr><td>Students</td><td>Morning 8:00 AM</td><td>11</td><td>Students</td><td>Morning 8:20 AM (Boro: Double Decker-2) (M: 8:30 AM Sui: 12)</td><td>11, Double Decker-2</td></tr>
+    <tr><td>Teachers</td><td>Morning 8:00 AM</td><td>1, 2, 3, 15 (m-5)</td><td>Teachers</td><td>Morning 8:30 AM (Designated Route)</td><td>(1, 15) (2, m-5) (3)</td></tr>
+    <tr><td>Students</td><td>Morning 8:30 AM</td><td>7, 17</td><td>Students</td><td>Morning 9:00 AM (Boromath) (M: 9:15 AM Terminal-7)</td><td>7, 17, Double Decker-3</td></tr>
+    <tr><td>Students</td><td>Morning 9:00 AM</td><td>(Suihari 8, 16), 19</td><td>Students</td><td>M: 9:30 AM (Boro: DD-1, 19) (9:35 AM Sui: 8, 16)</td><td>8, 16, 19, Double Decker-1</td></tr>
+    <tr><td>Students</td><td>Morning 9:30 AM</td><td>15, 21</td><td>Students</td><td>Morning 10:00 AM (Boromath)</td><td>15, 21</td></tr>
+    <tr><td>Students</td><td>Morning 10:00 AM</td><td>8, 11, DD-2</td><td>Students</td><td>Morning 10:30 AM (Boro-DD-2) (Sui: 11) (Term-M: 10:45 AM 8)</td><td>8, 11, DD-2</td></tr>
+    <tr><td>Students</td><td>Morning 10:30 AM</td><td>16, 19, 20</td><td>Students</td><td>Morning 11:00 AM (Boromath) (Term-M: 11:15 AM 19)</td><td>16, 19, 20</td></tr>
+    <tr><td>Students</td><td>Morning 11:00 AM</td><td>17, Double Decker-3</td><td>Students</td><td>Morning 11:30 AM (Boro-DD-3) (Term-11:45 AM 17)</td><td>17, Double Decker-3</td></tr>
+    <tr><td>Students</td><td>Morning 11:30 AM</td><td>15, 21</td><td>Students</td><td>Noon 12:00 PM (Boromath)</td><td>15, 21</td></tr>
+    <tr><td>Students</td><td>Noon 12:00 PM</td><td>16, 19</td><td>Students</td><td>Noon 12:30 PM (Boromath)</td><td>16, 19</td></tr>
+    <tr><td>Students</td><td>Noon 12:30 PM</td><td>17, Double Decker-1</td><td>Students</td><td>Afternoon 1:00 PM (Boromath)</td><td>17, Double Decker-1</td></tr>
+    <tr><td>Students</td><td>Afternoon 1:00 PM</td><td>(Term-15), 21, 20</td><td>Students</td><td>Afternoon 1:30 PM (Boromath)</td><td>15, 21, 20</td></tr>
+    <tr><td>Students</td><td>Afternoon 1:30 PM</td><td>Double Decker-2</td><td>Students</td><td>Afternoon 2:00 PM (Boromath)</td><td>Double Decker-2</td></tr>
+    <tr><td>Students</td><td>Afternoon 2:00 PM</td><td>8, 11, 19</td><td>Students</td><td>Afternoon 2:30 PM (Boromath)</td><td>11, 19</td></tr>
+    <tr><td>Students</td><td>Afternoon 2:30 PM</td><td>7, Double Decker-3</td><td>Students</td><td>Afternoon 3:00 PM (Boromath)</td><td>Double Decker-3</td></tr>
+    <tr><td>Students</td><td>Afternoon 3:00 PM</td><td>16, 17</td><td>Students</td><td>Afternoon 3:30 PM (Boromath)</td><td>16, 17</td></tr>
+    <tr><td>Students</td><td>Afternoon 3:30 PM</td><td>21, Double Decker-1</td><td>Students</td><td>Afternoon 4:00 PM (Boromath)</td><td>21, Double Decker-1</td></tr>
+    <tr><td>Students</td><td>Afternoon 4:05 PM</td><td>11, 19, Double Decker-2</td><td>Students</td><td>Afternoon 4:30 PM (Boromath)</td><td>11, Double Decker-2</td></tr>
+    <tr><td>Teachers</td><td>Afternoon 4:05 PM</td><td>1, 2, 3, 15 (m-5)</td><td>Students</td><td>Afternoon 5:00 PM (Boromath)</td><td>15</td></tr>
+    <tr><td>Officers &amp; Staff</td><td>Afternoon 4:05 PM</td><td>4, 8, 20</td><td>Students</td><td>Afternoon 5:00 PM (Boromath)</td><td>8</td></tr>
+    <tr><td>Students</td><td>Afternoon 4:30 PM</td><td>17, Double Decker-3</td><td>Students</td><td>Afternoon 5:30 PM (Boromath)</td><td>17, Double Decker-3</td></tr>
+    <tr><td>Students</td><td>Afternoon 5:00 PM</td><td>21, DD-1</td><td>Students</td><td>Evening 6:00 PM (Boromath)</td><td>21, DD-1</td></tr>
+    <tr><td>Students</td><td>Afternoon 5:30 PM</td><td>11, 16, 19</td><td>Students</td><td>Evening 6:30 PM (Boromath)</td><td>11, 19</td></tr>
+    <tr><td>Students</td><td>Evening 6:00 PM</td><td>8, Double Decker-2</td><td>Students</td><td>Night 7:00 PM (Boromath)</td><td>8, Double Decker-2</td></tr>
+    <tr><td>Students</td><td>Evening 6:30 PM</td><td>17, Double Decker-3</td><td>Students</td><td>Night 7:30 PM (Boromath)</td><td>16, 17, (20 Female Students)</td></tr>
+    <tr><td>Students</td><td>Night 7:00 PM</td><td>21, Double Decker-1</td><td>Students</td><td>Night 8:00 PM (Boromath)</td><td>21, Double Decker-3</td></tr>
+    <tr><td>General</td><td>Night 7:30 PM</td><td>Up to BRTC Depot</td><td>Students</td><td>Night 9:00 PM (Boromath)</td><td>Double Decker-1</td></tr>
+    <tr><td>General</td><td>Night 8:30 PM</td><td></td><td colspan="3">Double Decker-3 (Up to BRTC Depot)</td></tr>
+    <tr><td></td><td>Night 9:30 PM</td><td></td><td colspan="3">Double Decker-1 (Up to BRTC Depot)</td></tr>
+  </table>
+  </div>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th colspan="6" class="section-title">Special Trips</th></tr>
+    <tr>
+      <th>Day</th><th>Passengers</th><th>Departure Time</th>
+      <th>Day</th><th>Passengers</th><th>Departure Time</th>
+    </tr>
+    <tr><td>Friday</td><td>Teachers, Officers, Staff</td><td>Morning 9:00 AM / 15</td><td>Friday</td><td>Teachers, Officers, Staff</td><td>Morning 11:00 AM / 15</td></tr>
+    <tr><td>Saturday</td><td>Teachers &amp; Officers</td><td>Afternoon 4:00 PM / 19</td><td>Saturday</td><td>Teachers &amp; Officers</td><td>Evening 6:00 PM Boromath / 19</td></tr>
+    <tr><td>Saturday</td><td>Staff</td><td>Afternoon 4:00 PM / 11</td><td>Saturday</td><td>Staff</td><td>Evening 6:00 PM Boromath / 11</td></tr>
+    <tr><td>Saturday</td><td>Students</td><td>Afternoon 4:00 PM / 8, 17, 21</td><td>Saturday</td><td>Students</td><td>Night 7:00 PM Boromath / 8, 17, 21</td></tr>
+    <tr><td>Tuesday</td><td>Teachers &amp; Officers</td><td>Afternoon 4:00 PM / 16, 20</td><td>Tuesday</td><td>Teachers &amp; Officers</td><td>Evening 6:00 PM Boromath / Moijee-5</td></tr>
+  </table>
+  </div>
+
+  <div class="note">
+    ***Student buses will operate via the bypass road, and teacher/officer &amp; staff buses will operate on designated routes.<br>
+    Special Note: The number of trips may increase or decrease as necessary.
+  </div>
+
+  <div class="footer" style="justify-content: flex-end;">
+    <div class="sign">
+      <p>Director (Transport)<br>HSTU, Dinajpur.</p>
+    </div>
+  </div>
+
+</div>

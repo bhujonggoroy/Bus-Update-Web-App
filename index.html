@@ -525,117 +525,21 @@
                     </button>
                 </div>
 
-                <!-- Schedule Fragment Container (Bangla Circular loaded dynamically from bus-schedule.html) -->
-                <div id="scheduleFragment" class="mt-4 overflow-x-auto rounded-xl border border-slate-200">
-                    <div class="p-8 text-center text-slate-500 bg-white">
-                        <span class="inline-block animate-spin text-2xl mb-2">⏳</span>
-                        <p class="text-xs font-semibold">বাসের সময়সূচী লোড হচ্ছে...</p>
+                <!-- Schedule Swipe View Wrapper -->
+                <div id="scheduleViewWrapper" class="relative overflow-hidden mt-4 select-none touch-pan-y">
+                    <!-- Schedule Fragment Container (Bangla Circular loaded dynamically from bus-schedule.html) -->
+                    <div id="scheduleFragment" class="overflow-x-auto rounded-xl border border-slate-200 transition-all duration-300">
+                        <div class="p-8 text-center text-slate-500 bg-white">
+                            <span class="inline-block animate-spin text-2xl mb-2">⏳</span>
+                            <p class="text-xs font-semibold">বাসের সময়সূচী লোড হচ্ছে...</p>
+                        </div>
                     </div>
-                </div>
 
-                <!-- English Schedule Container (For Foreign Students & English Mode) -->
-                <div id="scheduleEnglishContainer" class="hidden mt-4 overflow-x-auto rounded-xl border border-slate-200 bg-white">
-                    <div class="p-4 sm:p-6 space-y-6">
-                        <!-- Top Header -->
-                        <div class="border-b border-slate-200 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                            <div>
-                                <span class="text-xs font-bold text-violet-700 uppercase tracking-wider">Transport Section</span>
-                                <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mt-0.5">HSTU Bus Timetable</h3>
-                                <p class="text-xs text-slate-500 mt-0.5">Regular Bus Timetable (Sunday to Thursday)</p>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-violet-100 text-violet-800 border border-violet-200">
-                                    Official Routine
-                                </span>
-                            </div>
-                        </div>
-
-                        <!-- Regular Weekday Table (Sunday to Thursday) -->
-                        <div class="overflow-x-auto rounded-xl border border-slate-200 touch-pan-x">
-                            <table class="w-full text-left text-xs sm:text-sm border-collapse min-w-[620px]">
-                                <thead>
-                                    <tr class="bg-slate-800 text-white text-xs">
-                                        <th colspan="3" class="px-4 py-2.5 border-r border-slate-700 font-bold uppercase tracking-wider text-sky-300">
-                                            🏫 From HSTU Campus (To City)
-                                        </th>
-                                        <th colspan="3" class="px-4 py-2.5 font-bold uppercase tracking-wider text-emerald-300">
-                                            🏙️ From Dinajpur City (To Campus)
-                                        </th>
-                                    </tr>
-                                    <tr class="bg-slate-100 text-slate-700 text-xs font-bold border-b border-slate-200">
-                                        <th class="px-3.5 py-2">Category</th>
-                                        <th class="px-3.5 py-2">Departure</th>
-                                        <th class="px-3.5 py-2 border-r border-slate-200">Bus No.</th>
-                                        <th class="px-3.5 py-2">Category</th>
-                                        <th class="px-3.5 py-2">Departure Point & Time</th>
-                                        <th class="px-3.5 py-2">Bus No.</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-200 text-slate-700">
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-slate-100 font-semibold text-slate-800 text-xs">General</span></td><td class="px-3 py-2 font-bold text-slate-900">06:40 AM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 15</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">07:50 AM (Balubari / Shahi Masjid)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 15</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">08:00 AM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 4, 20</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-semibold text-xs">Officers</span></td><td class="px-3 py-2 font-bold text-slate-900">08:20 AM (Balubari / Shahi Masjid)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 4, 20</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">08:00 AM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 8</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-semibold text-xs">Staff</span></td><td class="px-3 py-2 font-bold text-slate-900">08:15 AM (Balubari / Shahi Masjid)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 8</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">08:00 AM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 11</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">08:20 AM (Boromath, DD-2) / 08:30 AM (Suihari)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 11, Double Decker 2</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-semibold text-xs">Faculty / Teachers</span></td><td class="px-3 py-2 font-bold text-slate-900">08:00 AM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 1, 2, 3, 15 (M-5)</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-semibold text-xs">Faculty / Teachers</span></td><td class="px-3 py-2 font-bold text-slate-900">08:30 AM (Designated Route)</td><td class="px-3 py-2 font-semibold text-violet-700">(1, 15), (2, M-5), (3)</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">08:30 AM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 7, 17</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">09:00 AM (Boromath) / 09:15 AM (Terminal)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 7, 17, Double Decker 3</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">09:00 AM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">(Suihari 8, 16), 19</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">09:30 AM (Boromath, DD-1, 19) / 09:35 AM (Suihari)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 8, 16, 19, Double Decker 1</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">09:30 AM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 15, 21</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">10:00 AM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 15, 21</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">10:00 AM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 8, 11, DD-2</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">10:30 AM (Boromath) / 10:45 AM (Terminal)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 8, 11, Double Decker 2</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">10:30 AM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 16, 19, 20</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">11:00 AM (Boromath) / 11:15 AM (Terminal)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 16, 19, 20</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">11:00 AM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 17, DD-3</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">11:30 AM (Boromath) / 11:45 AM (Terminal)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 17, Double Decker 3</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">11:30 AM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 15, 21</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">12:00 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 15, 21</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">12:00 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 16, 19</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">12:30 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 16, 19</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">12:30 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 17, DD-1</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">01:00 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 17, Double Decker 1</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">01:00 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 15 (Terminal), 21, 20</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">01:30 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 15, 21, 20</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">01:30 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Double Decker 2</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">02:00 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Double Decker 2</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">02:00 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 8, 11, 19</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">02:30 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 11, 19</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">02:30 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 7, DD-3</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">03:00 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Double Decker 3</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">03:00 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 16, 17</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">03:30 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 16, 17</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">03:30 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 21, DD-1</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">04:00 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 21, Double Decker 1</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">04:05 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 11, 19, DD-2</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">04:30 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 11, Double Decker 2</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-semibold text-xs">Faculty / Teachers</span></td><td class="px-3 py-2 font-bold text-slate-900">04:05 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 1, 2, 3, 15 (M-5)</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">05:00 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 15</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-semibold text-xs">Officers & Staff</span></td><td class="px-3 py-2 font-bold text-slate-900">04:05 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 4, 8, 20</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">05:00 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 8</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">04:30 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 17, DD-3</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">05:30 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 17, Double Decker 3</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">05:00 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 21, DD-1</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">06:00 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 21, Double Decker 1</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">05:30 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 11, 16, 19</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">06:30 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 11, 19</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">06:00 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 8, DD-2</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">07:00 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 8, Double Decker 2</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">06:30 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 17, DD-3</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">07:30 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 16, 17, (20 Female)</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">07:00 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Bus 21, DD-1</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">08:00 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Bus 21, Double Decker 3</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-800 font-semibold text-xs">General</span></td><td class="px-3 py-2 font-bold text-slate-900">07:30 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">To BRTC Bus Depot</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-xs">Students</span></td><td class="px-3 py-2 font-bold text-slate-900">09:00 PM (Boromath)</td><td class="px-3 py-2 font-semibold text-violet-700">Double Decker 1</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-800 font-semibold text-xs">General</span></td><td class="px-3 py-2 font-bold text-slate-900">08:30 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Double Decker 3 (To BRTC Depot)</td><td class="px-3 py-2 text-slate-400" colspan="3">—</td></tr>
-                                    <tr class="hover:bg-slate-50"><td class="px-3 py-2"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-800 font-semibold text-xs">General</span></td><td class="px-3 py-2 font-bold text-slate-900">09:30 PM</td><td class="px-3 py-2 border-r border-slate-200 font-semibold text-violet-700">Double Decker 1 (To BRTC Depot)</td><td class="px-3 py-2 text-slate-400" colspan="3">—</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Weekend & Special Trips Table -->
-                        <div>
-                            <h4 class="text-sm font-bold text-slate-800 mb-2 flex items-center gap-1.5">
-                                <span>⭐</span> Weekend & Special Service Trips (Friday, Saturday, Tuesday)
-                            </h4>
-                            <div class="overflow-x-auto rounded-xl border border-slate-200 touch-pan-x">
-                                <table class="w-full text-left text-xs sm:text-sm border-collapse min-w-[540px]">
-                                    <thead>
-                                        <tr class="bg-violet-900 text-white text-xs">
-                                            <th class="px-3.5 py-2">Day</th>
-                                            <th class="px-3.5 py-2">Target Passengers</th>
-                                            <th class="px-3.5 py-2">Campus Departure / Bus</th>
-                                            <th class="px-3.5 py-2">City Departure / Bus</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-slate-200 text-slate-700">
-                                        <tr class="hover:bg-slate-50"><td class="px-3 py-2 font-bold text-violet-900">Friday</td><td class="px-3 py-2">Teachers, Officers & Staff</td><td class="px-3 py-2 font-semibold">09:00 AM (Bus 15)</td><td class="px-3 py-2 font-semibold">11:00 AM (Bus 15)</td></tr>
-                                        <tr class="hover:bg-slate-50"><td class="px-3 py-2 font-bold text-violet-900">Saturday</td><td class="px-3 py-2">Teachers & Officers</td><td class="px-3 py-2 font-semibold">04:00 PM (Bus 19)</td><td class="px-3 py-2 font-semibold">06:00 PM Boromath (Bus 19)</td></tr>
-                                        <tr class="hover:bg-slate-50"><td class="px-3 py-2 font-bold text-violet-900">Saturday</td><td class="px-3 py-2">Staff & Employees</td><td class="px-3 py-2 font-semibold">04:00 PM (Bus 11)</td><td class="px-3 py-2 font-semibold">06:00 PM Boromath (Bus 11)</td></tr>
-                                        <tr class="hover:bg-slate-50"><td class="px-3 py-2 font-bold text-emerald-800">Saturday</td><td class="px-3 py-2 font-bold text-emerald-800">Students</td><td class="px-3 py-2 font-semibold">04:00 PM (Bus 8, 17, 21)</td><td class="px-3 py-2 font-semibold">07:00 PM Boromath (Bus 8, 17, 21)</td></tr>
-                                        <tr class="hover:bg-slate-50"><td class="px-3 py-2 font-bold text-violet-900">Tuesday</td><td class="px-3 py-2">Teachers & Officers</td><td class="px-3 py-2 font-semibold">04:00 PM (Bus 16, 20)</td><td class="px-3 py-2 font-semibold">06:00 PM Boromath (Microbus 5)</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="text-xs text-slate-500 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                            *** Student buses operate primarily via the Bypass road, while Teacher & Officer buses follow the designated city-crossing route. Trip counts may be adjusted by the Transport Director based on examination schedules and holiday seasons.
+                    <!-- English Schedule Container (Loaded dynamically from bus-schedule-en.html) -->
+                    <div id="scheduleEnglishContainer" class="hidden overflow-x-auto rounded-xl border border-slate-200 transition-all duration-300">
+                        <div class="p-8 text-center text-slate-500 bg-white">
+                            <span class="inline-block animate-spin text-2xl mb-2">⏳</span>
+                            <p class="text-xs font-semibold">Loading English schedule...</p>
                         </div>
                     </div>
                 </div>
@@ -1768,6 +1672,11 @@
             if (!bnContainer || !enContainer) return;
 
             if (view === "en") {
+                if (typeof window.loadEnglishSchedule === "function") {
+                    window.loadEnglishSchedule();
+                } else if (window.HstuSchedule && typeof window.HstuSchedule.loadEnglishSchedule === "function") {
+                    window.HstuSchedule.loadEnglishSchedule();
+                }
                 bnContainer.classList.add("hidden");
                 enContainer.classList.remove("hidden");
                 if (bnBtn) {
@@ -1777,6 +1686,11 @@
                     enBtn.className = "px-3 py-1.5 rounded-lg font-bold transition bg-white text-violet-900 shadow-xs cursor-pointer";
                 }
             } else {
+                if (typeof window.loadSchedule === "function") {
+                    window.loadSchedule();
+                } else if (window.HstuSchedule && typeof window.HstuSchedule.loadSchedule === "function") {
+                    window.HstuSchedule.loadSchedule();
+                }
                 enContainer.classList.add("hidden");
                 bnContainer.classList.remove("hidden");
                 if (bnBtn) {
@@ -1909,25 +1823,25 @@
 
         let scheduleLoaded = false;
         async function loadSchedule(force = false) {
-            if (scheduleLoaded && !force) return;
-            const container = document.getElementById("scheduleFragment");
-            if (!container) return;
-
             // Prioritize modular schedule script with offline cache support
             if (window.HstuSchedule && typeof window.HstuSchedule.loadSchedule === "function") {
-                window.HstuSchedule.loadSchedule(force);
+                await window.HstuSchedule.loadSchedule(force);
                 scheduleLoaded = true;
                 return;
             }
 
-            if (window.HstuSchedule && typeof window.HstuSchedule.renderScheduleBangla === "function") {
-                window.HstuSchedule.renderScheduleBangla("scheduleFragment");
-                if (typeof window.HstuSchedule.renderScheduleEnglish === "function") {
-                    window.HstuSchedule.renderScheduleEnglish("scheduleEnglishContainer");
+            const container = document.getElementById("scheduleFragment");
+            if (!container) return;
+            if (scheduleLoaded && !force && container.querySelector("table")) return;
+
+            // Instant render from cache
+            try {
+                const cachedHtml = localStorage.getItem("hstu_cached_bus_schedule_html");
+                if (cachedHtml && cachedHtml.includes("<table")) {
+                    container.innerHTML = cachedHtml;
+                    scheduleLoaded = true;
                 }
-                scheduleLoaded = true;
-                return;
-            }
+            } catch (e) {}
 
             try {
                 let basePath = window.location.pathname;
@@ -1937,25 +1851,69 @@
                     basePath += "/";
                 }
                 const scheduleUrl = window.location.origin + basePath + "bus-schedule.html";
-                // Allow Service Worker caching by omitting cache: "no-store"
                 const res = await fetch(scheduleUrl);
                 if (res.ok) {
                     const html = await res.text();
-                    container.innerHTML = html;
-                    scheduleLoaded = true;
-                    try {
-                        localStorage.setItem("hstu_cached_bus_schedule_html", html);
-                    } catch (e) {}
+                    if (html && html.includes("<table")) {
+                        container.innerHTML = html;
+                        scheduleLoaded = true;
+                        try {
+                            localStorage.setItem("hstu_cached_bus_schedule_html", html);
+                        } catch (e) {}
+                    }
                 }
             } catch (err) {
                 console.log("Schedule loaded via fallback", err);
-                const localHtml = localStorage.getItem("hstu_cached_bus_schedule_html");
-                if (localHtml) {
-                    container.innerHTML = localHtml;
-                    scheduleLoaded = true;
-                }
             }
         }
+        window.loadSchedule = loadSchedule;
+
+        let scheduleEnLoaded = false;
+        async function loadEnglishSchedule(force = false) {
+            // Prioritize modular schedule script with offline cache support
+            if (window.HstuSchedule && typeof window.HstuSchedule.loadEnglishSchedule === "function") {
+                await window.HstuSchedule.loadEnglishSchedule(force);
+                scheduleEnLoaded = true;
+                return;
+            }
+
+            const container = document.getElementById("scheduleEnglishContainer");
+            if (!container) return;
+            if (scheduleEnLoaded && !force && container.querySelector("table")) return;
+
+            // Instant render from cache
+            try {
+                const cachedHtml = localStorage.getItem("hstu_cached_bus_schedule_en_html");
+                if (cachedHtml && cachedHtml.includes("<table") && !cachedHtml.includes("Times New Roman")) {
+                    container.innerHTML = cachedHtml;
+                    scheduleEnLoaded = true;
+                }
+            } catch (e) {}
+
+            try {
+                let basePath = window.location.pathname;
+                if (basePath.endsWith("/index.html") || basePath.endsWith("/index.htm")) {
+                    basePath = basePath.substring(0, basePath.lastIndexOf("/") + 1);
+                } else if (!basePath.endsWith("/")) {
+                    basePath += "/";
+                }
+                const scheduleUrl = window.location.origin + basePath + "bus-schedule-en.html";
+                const res = await fetch(scheduleUrl);
+                if (res.ok) {
+                    const html = await res.text();
+                    if (html && html.includes("<table")) {
+                        container.innerHTML = html;
+                        scheduleEnLoaded = true;
+                        try {
+                            localStorage.setItem("hstu_cached_bus_schedule_en_html", html);
+                        } catch (e) {}
+                    }
+                }
+            } catch (err) {
+                console.log("English schedule loaded via fallback", err);
+            }
+        }
+        window.loadEnglishSchedule = loadEnglishSchedule;
 
         // Global Force Refresh Data function
         window.forceRefreshData = async function(buttonEl) {
@@ -2064,8 +2022,11 @@
 
             if (id === "schedule") {
                 loadSchedule();
+                loadEnglishSchedule();
                 if (window.currentLang === 'en' && typeof window.switchScheduleView === 'function') {
                     window.switchScheduleView('en');
+                } else if (typeof window.switchScheduleView === 'function') {
+                    window.switchScheduleView('bn');
                 }
             }
             if (id === "map") renderRouteMap();
@@ -2586,6 +2547,8 @@
         updateBusOptions();
         renderBuses();
         applyLanguage(currentLang);
+        if (typeof window.loadSchedule === 'function') window.loadSchedule();
+        if (typeof window.loadEnglishSchedule === 'function') window.loadEnglishSchedule();
         if (window.currentUser && typeof window.updateAuthUI === "function") {
             window.updateAuthUI(window.currentUser);
         }
